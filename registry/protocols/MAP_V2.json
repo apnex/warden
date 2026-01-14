@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "title": "System Mapping & Contextualization v2",
+    "version": "2.0.0",
+    "description": "Context precedes Logic: An entity cannot modify what it does not map."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_DISCOVERY"
+      }
+    },
+    "1_DISCOVERY": {
+      "description": "Locate Manifest",
+      "requirements": {
+        "metadata_file": {
+          "type": "file_exists",
+          "path": "registry/status_metadata.json"
+        }
+      },
+      "transitions": {
+        "next": "2_INGESTION"
+      }
+    },
+    "2_INGESTION": {
+      "description": "Contextual Echo",
+      "requirements": {
+        "structural_mapping": {
+          "type": "regex_match_output",
+          "pattern": "\\[DLR_MAP_STRUCT\\].*"
+        }
+      },
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

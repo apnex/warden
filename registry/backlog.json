@@ -1,0 +1,160 @@
+{
+  "meta": {
+    "title": "Warden Governance Backlog",
+    "version": "1.5.0",
+    "description": "Registry of open remediation items, technical debt, and strategic initiatives."
+  },
+  "items": [
+    {
+      "id": "FEAT_ORACLE_SANDBOX",
+      "source": "IDEA-010",
+      "description": "Implement dual-mode Oracle Learning Environment: Guided Scenarios (Tutorials) and Open Sandbox (Exploratory Lab).",
+      "priority": "P2",
+      "status": "CLOSED",
+      "created_at": "2026-01-10",
+      "closed_at": "2026-01-14"
+    },
+    {
+      "id": "BUG_REFACTOR_PATH_RESOLVER",
+      "source": "GSD_V5",
+      "description": "Refactored path_resolver.js into a functional module pattern with anchor discovery.",
+      "priority": "P2",
+      "status": "CLOSED",
+      "created_at": "2026-01-05",
+      "closed_at": "2026-01-13"
+    },
+    {
+      "id": "BUG_HARDEN_ONBOARD",
+      "source": "GSD_V5",
+      "description": "Integrate the active backlog list into the onboarding script to ensure ZK entity alignment.",
+      "priority": "P0",
+      "status": "CLOSED",
+      "created_at": "2026-01-05",
+      "closed_at": "2026-01-13"
+    },
+    {
+      "id": "FEAT_WARDEN_ORACLE",
+      "source": "IDEA-006",
+      "description": "Implemented Warden Oracle (Advisor Pattern) with dynamic guidance synthesis.",
+      "priority": "P1",
+      "status": "CLOSED",
+      "created_at": "2026-01-10",
+      "closed_at": "2026-01-13"
+    },
+    {
+      "id": "FEAT_UNIVERSAL_ORACLE",
+      "source": "IDEA-012",
+      "description": "Implemented Universal Guidance Engine with dynamic synthesis across all registries.",
+      "priority": "P0",
+      "status": "CLOSED",
+      "created_at": "2026-01-10",
+      "closed_at": "2026-01-13"
+    },
+    {
+      "id": "FEAT_ORACLE_BLUEPRINTS",
+      "source": "CON-004",
+      "description": "Implemented High-Fidelity Recursive Schema blueprint generation.",
+      "priority": "P1",
+      "status": "CLOSED",
+      "created_at": "2026-01-10",
+      "closed_at": "2026-01-13"
+    },
+    {
+      "id": "BUG_CONSOLIDATE_REPORTING",
+      "source": "PIR_V4",
+      "description": "Consolidate pir.js, report.js, and compliance.js into a single unified reporter.",
+      "priority": "P1",
+      "status": "CLOSED",
+      "created_at": "2026-01-05",
+      "closed_at": "2026-01-13"
+    },
+    {
+      "id": "FEAT_MODULAR_REGISTRY",
+      "source": "IDEA-030",
+      "description": "Implemented Modular Protocol Registry (Virtual Join) with directory-based protocols and manifest-driven hashing.",
+      "priority": "P1",
+      "status": "CLOSED",
+      "created_at": "2026-01-13",
+      "closed_at": "2026-01-13"
+    },
+    {
+      "id": "FEAT_STRUCTURED_AUDIT",
+      "source": "IDEA-031",
+      "description": "Implemented Canonical Command Model, Metadata-Driven Intent Parser, and Socratic Brake interjection.",
+      "priority": "P0",
+      "status": "CLOSED",
+      "created_at": "2026-01-13",
+      "closed_at": "2026-01-13"
+    },
+    {
+      "id": "FEAT_PORTABLE_RESOLVER",
+      "source": "IDEA-032",
+      "description": "Implemented Deterministic Portable Path Resolver with dual-root resolution.",
+      "priority": "P1",
+      "status": "CLOSED",
+      "created_at": "2026-01-13",
+      "closed_at": "2026-01-13"
+    },
+    {
+      "id": "FEAT_COGNITIVE_INTERJECTION",
+      "source": "IDEA-033",
+      "description": "Implement metadata-driven Presentation Layer for Cognitive Interjection, including Turn-Boundary Interrupts and the Double-Lock Delivery Handshake.",
+      "priority": "P1",
+      "status": "CLOSED",
+      "created_at": "2026-01-13",
+      "closed_at": "2026-01-14"
+    },
+    {
+      "id": "FEAT_COMPLIANCE_AUDIT",
+      "source": "IDEA-031",
+      "description": "Implemented CAP_V1 standalone protocol for three-way compliance ratification.",
+      "priority": "P0",
+      "status": "CLOSED",
+      "created_at": "2026-01-14",
+      "closed_at": "2026-01-14"
+    },
+    {
+      "id": "FEAT_METADATA_INDUCTION",
+      "source": "IDEA-033",
+      "description": "Implemented discrete 5-stage onboarding state machine.",
+      "priority": "P1",
+      "status": "CLOSED",
+      "created_at": "2026-01-14",
+      "closed_at": "2026-01-14"
+    },
+    {
+      "id": "FEAT_WARDEN_FIXER",
+      "source": "IDEA-026",
+      "description": "Implemented Automated Remediation Engine (remediate.js).",
+      "priority": "P1",
+      "status": "CLOSED",
+      "created_at": "2026-01-14",
+      "closed_at": "2026-01-14"
+    },
+    {
+      "id": "FEAT_SEMANTIC_LATCH",
+      "source": "IDEA-034",
+      "description": "Implement physical state gates for Latch Tokens.",
+      "priority": "P2",
+      "status": "OPEN",
+      "created_at": "2026-01-14"
+    },
+    {
+      "id": "FEAT_STREAMLINED_ONBOARDING",
+      "source": "IDEA-036",
+      "description": "Implement Proxy Guards and UI optimizations.",
+      "priority": "P1",
+      "status": "CLOSED",
+      "created_at": "2026-01-14",
+      "closed_at": "2026-01-14"
+    },
+    {
+      "id": "FEAT_ZK_FIDELITY",
+      "source": "IDEA-021",
+      "description": "Implement Turing Gate and Provenance Hardening.",
+      "priority": "P0",
+      "status": "OPEN",
+      "created_at": "2026-01-14"
+    }
+  ]
+}

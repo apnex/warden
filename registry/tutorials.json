@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "title": "Warden Oracle Tutorial Registry",
+    "version": "1.0.0",
+    "description": "Codified guided scenarios for system induction."
+  },
+  "scenarios": {
+    "GSD_BASICS": {
+      "title": "GSD Fundamental Flow",
+      "description": "Master the primary implementation loop from Initialization to Planning.",
+      "steps": [
+        {
+          "id": "INIT",
+          "instruction": "Initialize a GSD cycle with the objective: 'Learn the System'.",
+          "hint": "Syntax: node engine/warden.js init GSD_V5 \"Objective\"",
+          "validation": {
+            "type": "command_log",
+            "pattern": "init GSD_V5"
+          }
+        },
+        {
+          "id": "SURVEY_PULSE",
+          "instruction": "Perform a Knowledge Pulse to align with the latest system state.",
+          "hint": "Command: node engine/warden.js exec \"node engine/onboard.js --refresh\"",
+          "validation": {
+            "type": "command_log",
+            "pattern": "onboard.js --refresh"
+          }
+        },
+        {
+          "id": "MISSION_BRIEF",
+          "instruction": "Generate a Mission Brief using the mission.js tool.",
+          "hint": "Example: node engine/warden.js exec \"node engine/mission.js 'Context' 'Problem' 'Constraint' 'Success'\"",
+          "validation": {
+            "type": "regex_match_output",
+            "pattern": "DLR_MSN_BRIEF"
+          }
+        }
+      ]
+    }
+  }
+}

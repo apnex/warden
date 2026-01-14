@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "title": "Warden System Goals",
+    "version": "1.0.0",
+    "description": "High-level strategic outcomes driving system evolution."
+  },
+  "goals": [
+    {
+      "id": "GOAL_GUIDE",
+      "name": "Active Guidance",
+      "description": "To provide Zero-Knowledge entities with real-time, deterministic instruction through all protocol states.",
+      "priority": "P0",
+      "success_metrics": ["Zero Autonomous Phase Leaping", "100% Gate Adherence"]
+    },
+    {
+      "id": "GOAL_PROTECT",
+      "name": "Structural Protection",
+      "description": "To shield the codebase from architectural drift and unauthorized modifications through a robust governance firewall.",
+      "priority": "P0",
+      "success_metrics": ["100% Protocol Integrity", "Zero Standard Violations"]
+    },
+    {
+      "id": "GOAL_FIDELITY",
+      "name": "Audit Fidelity",
+      "description": "To maintain a bit-perfect, provable audit trail of all actor interactions and system responses.",
+      "priority": "P1",
+      "success_metrics": ["Automated Compliance Reporting", "Provenance Verification"]
+    }
+  ]
+}

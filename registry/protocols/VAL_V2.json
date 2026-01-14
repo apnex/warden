@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "title": "Concurrency Validation v2",
+    "version": "2.0.0",
+    "description": "Heisenbug Hunting: Stability requires iterative verification."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_STRESS_TEST"
+      }
+    },
+    "1_STRESS_TEST": {
+      "description": "Sequential Run",
+      "requirements": {
+        "iteration_log": {
+          "type": "regex_match_output",
+          "pattern": "100% hash parity"
+        }
+      },
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

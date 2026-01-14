@@ -1,0 +1,237 @@
+{
+  "meta": {
+    "title": "Gated Sequential Development v5 (Closed-Loop)",
+    "version": "5.8.0",
+    "description": "SQA-anchored development lifecycle with mandatory artifact audit and compliance gates.",
+    "philosophy": "Integrity over Velocity: Implementation requires active verification.",
+    "principles": [
+      "All logic changes must produce a recoverable patch file.",
+      "Every objective must be anchored to a System Quality Attribute.",
+      "Atomic Turn Enforcement: No phase transitions in the turn of delivery.",
+      "PIR must provide a weighted evidence table mapping to SQAs.",
+      "Hardened Gate Enforcement: All transitions require explicit evidence validation.",
+      "Qualitative Alignment: Mission Briefing is mandatory before Planning.",
+      "Active Analysis: All generated deliverables must be read and audited.",
+      "Tiered Persistence: Maintain core DNA while purging ephemeral history.",
+      "Closed-Loop Compliance: Automated reporting verifies fidelity against Goals and Standards."
+    ],
+    "roles": {
+      "Engineer": {
+        "designation": "Lead Analyst & Implementer",
+        "responsibilities": [
+          "Technical logic architecture and implementation.",
+          "Mapping objectives to System Quality Attributes and Standards.",
+          "Generation of local-scoped, reversible patches.",
+          "Active audit and analysis of all generated artifacts.",
+          "Maintenance of automated documentation scripts."
+        ]
+      },
+      "Director": {
+        "designation": "System Arbiter & Mission Lead",
+        "responsibilities": [
+          "Defining project vision and success criteria.",
+          "Validation of SQA-anchored planning.",
+          "Final approval of impact assessments.",
+          "Review of Artifact Audits and Compliance Reports."
+        ]
+      }
+    }
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_SURVEY"
+      }
+    },
+    "1_SURVEY": {
+      "description": "Context Gathering & Baseline",
+      "requirements": {
+        "integrity_snapshot": {
+          "type": "file_freshness",
+          "target": "registry/protocols.json.integrity.snapshot.json",
+          "threshold_sec": 300
+        },
+        "knowledge_pulse": {
+          "type": "command_log",
+          "pattern": "node engine/onboard.js --refresh"
+        },
+        "knowledge_base_review": {
+          "type": "file_exists",
+          "path": "registry/knowledge_base.json"
+        },
+        "mission_brief": {
+          "type": "regex_match_output",
+          "pattern": "DLR_BRF_MISSION"
+        },
+        "director_ack_survey": {
+          "type": "regex_match_output",
+          "pattern": "DLR_SUR_ACK|Approved|Ratified",
+          "instruction": "STOP. Present the Survey Report to the Director. Do not proceed until authorized."
+        }
+      },
+      "transitions": {
+        "next": {
+          "target": "2_PLAN",
+          "gates": [
+            "integrity_snapshot",
+            "knowledge_pulse",
+            "knowledge_base_review",
+            "mission_brief",
+            "director_ack_survey"
+          ]
+        }
+      }
+    },
+    "2_PLAN": {
+      "description": "Strategic Proposal",
+      "interaction": {
+        "on_enter": {
+          "banner": "STOP_REQUIRED",
+          "oracle_topic": "SQA_ANCHORING",
+          "instruction": "Present the Strategic Proposal to the Director. Do not proceed until authorized."
+        }
+      },
+      "requirements": {
+        "sqa_anchoring": {
+          "type": "regex_match_output",
+          "pattern": "DLR_PLN_GSD.*(SQA Anchors|Impact)",
+          "instruction": "STOP. Do not manually echo. Run `node validation/audit_standards.js --sqa \"Anchor1, Anchor2\"` to generate."
+        },
+        "director_approval": {
+          "type": "regex_match_output",
+          "pattern": "DLR_PLN_ACK|Approved|Ratified",
+          "instruction": "STOP. Present the Strategic Proposal to the Director. Do not proceed until authorized."
+        }
+      },
+      "transitions": {
+        "next": {
+          "target": "3_EXECUTE",
+          "gates": [
+            "sqa_anchoring",
+            "director_approval"
+          ]
+        }
+      }
+    },
+    "3_EXECUTE": {
+      "description": "Implementation & Audit",
+      "interaction": {
+        "on_exit": {
+          "require_external_ack": true,
+          "banner": "STOP_REQUIRED",
+          "instruction": "DELIVERABLE READY. You must present your artifact audit to the Director and wait for verification approval."
+        }
+      },
+      "requirements": {
+        "patch_file": {
+          "type": "file_exists",
+          "path": "history/patches/*.patch",
+          "freshness": true,
+          "instruction": "STOP. Take a snapshot before working: `node engine/patch.js --snapshot <targets>`. Save your work when done: `node engine/patch.js --save <name>`."
+        },
+        "artifact_audit": {
+          "type": "regex_match_output",
+          "pattern": "DLR_AUD_ARTIFACT"
+        }
+      },
+      "transitions": {
+        "next": {
+          "target": "4_VERIFY",
+          "gates": [
+            "patch_file",
+            "artifact_audit"
+          ]
+        }
+      },
+      "instruction": "All governance modifications MUST be performed via gov.js. Every generated artifact MUST be reviewed and analyzed via DLR_AUD_ARTIFACT."
+    },
+    "4_VERIFY": {
+      "description": "Validation",
+      "interaction": {
+        "on_enter": {
+          "banner": "AUDIT_MODE",
+          "oracle_topic": "DLR_AUD_COMPLIANCE",
+          "instruction": "Analyze the verification results and present the report to the Director."
+        }
+      },
+      "requirements": {
+        "integrity_audit": {
+          "type": "command_log",
+          "pattern": "node validation/verify_integrity.js --verify"
+        },
+        "director_verification_ack": {
+          "type": "regex_match_output",
+          "pattern": "DLR_VFY_ACK|Approved|Ratified",
+          "instruction": "STOP. Present the Verification Results to the Director. Do not proceed until authorized."
+        }
+      },
+      "transitions": {
+        "next": {
+          "target": "5_FINALIZE",
+          "gates": [
+            "integrity_audit",
+            "director_verification_ack"
+          ]
+        },
+        "fail": "DEBUG_LOOP"
+      }
+    },
+    "DEBUG_LOOP": {
+      "description": "Logic Failure Containment",
+      "requirements": {
+        "failure_analysis": {
+          "type": "regex_match_output",
+          "pattern": "DEBUG_LOG"
+        }
+      },
+      "transitions": {
+        "next": {
+          "target": "3_EXECUTE",
+          "gates": [
+            "failure_analysis"
+          ]
+        },
+        "abort": "0_IDLE"
+      }
+    },
+            "5_FINALIZE": {
+              "description": "Closure",
+              "requirements": {
+                "finalizer": {
+                  "type": "command_log",
+                  "pattern": "node docs/finalizer.js"
+                },
+                "evidence_table": {
+                  "type": "regex_match_output",
+                  "pattern": "DLR_REV_PIR"
+                },
+                "interaction_report": {
+                  "type": "command_log",
+                  "pattern": "node engine/report.js"
+                },
+                "compliance_ratification": {
+                  "type": "regex_match_output",
+                  "pattern": "DLR_CMP_ACK|Approved|Ratified",
+                  "instruction": "Execute CAP_V1 to generate 3-Way Compliance Ratification: `node engine/warden.js init CAP_V1`."
+                },
+                "cap_validation": {
+                  "type": "sub_protocol_complete",
+                  "protocol_id": "CAP_V1",
+                  "instruction": "Protocol Dependency: CAP_V1 must be executed."
+                }
+              },
+              "transitions": {
+                "next": {
+                  "target": "0_IDLE",
+                  "gates": [
+                    "finalizer",
+                    "evidence_table",
+                    "compliance_ratification",
+                    "cap_validation"
+                  ]
+                }
+              }
+            }
+          }
+        }

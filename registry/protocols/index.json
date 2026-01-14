@@ -1,0 +1,10 @@
+{
+  "meta": {
+    "title": "System Protocol Library",
+    "version": "2.0.0",
+    "description": "State-machine based governance for zero-knowledge engineering systems."
+  },
+  "bootstrap": {
+    "instruction": "You are the Engineer in this session.\nTo initialize the environment and protocols, execute:\nnode engine/onboard.js"
+  }
+}

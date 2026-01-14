@@ -1,0 +1,8 @@
+{
+  "id": "CON-003",
+  "source_idea": "IDEA-018",
+  "title": "Structured Interaction Specification",
+  "status": "RATIFIED",
+  "spec": "Architecture: Transition DLR_INTERACTION_RPT from flat strings to a structured object-based Citation model. Logic: Claims specify Tool, Command, and Args to allow 1:1 boolean matching in compliance.js. Rationale: Eliminates semantic ambiguity in audits and identifies both Omissions and Unclaimed (shadow) actions. Standard: Must be generated via Oracle Blueprint to ensure schema compliance.",
+  "created_at": "2026-01-10T10:57:04.289Z"
+}

@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "title": "Automated Documentation Standard v2 (Aligned)",
+    "version": "2.1.0",
+    "description": "Documentation as Code: Single Source of Truth."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_LOAD"
+      }
+    },
+    "1_LOAD": {
+      "description": "Source Verification",
+      "requirements": {
+        "json_sources": {
+          "type": "file_exists",
+          "path": "registry/*.json"
+        }
+      },
+      "transitions": {
+        "next": "2_SYNTHESIS"
+      }
+    },
+    "2_SYNTHESIS": {
+      "description": "Markdown Generation",
+      "requirements": {
+        "readme_file": {
+          "type": "regex_match_output",
+          "pattern": "DLR_DOC_README"
+        },
+        "protocols_file": {
+          "type": "regex_match_output",
+          "pattern": "DLR_DOC_PROTOCOLS"
+        }
+      },
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

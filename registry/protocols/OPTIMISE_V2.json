@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "title": "Structural Evolution & Refactoring v2",
+    "version": "2.0.0",
+    "description": "Friction-to-Flow: Structural improvement without regression."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_FRICTION"
+      }
+    },
+    "1_FRICTION": {
+      "description": "Detection",
+      "transitions": {
+        "next": "2_BASELINE"
+      }
+    },
+    "2_BASELINE": {
+      "description": "Guardrail",
+      "requirements": {
+        "performance_ceiling": {
+          "type": "command_log",
+          "pattern": "VAL_V2"
+        }
+      },
+      "transitions": {
+        "next": "3_REFACTOR"
+      }
+    },
+    "3_REFACTOR": {
+      "description": "Execution",
+      "requirements": {
+        "gsd_cycle": {
+          "type": "command_log",
+          "pattern": "GSD_V4"
+        }
+      },
+      "transitions": {
+        "next": "4_VERIFY"
+      }
+    },
+    "4_VERIFY": {
+      "description": "Regression Check",
+      "transitions": {
+        "next": "5_COMPOSITION"
+      }
+    },
+    "5_COMPOSITION": {
+      "description": "History Update",
+      "requirements": {
+        "matrix_update": {
+          "type": "command_log",
+          "pattern": "node utils/update_matrix.js"
+        }
+      },
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

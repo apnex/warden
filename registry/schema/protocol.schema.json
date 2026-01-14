@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["meta", "protocol_library"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["title", "version", "description"],
+      "properties": {
+        "title": { "type": "string" },
+        "version": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "bootstrap": {
+      "type": "object",
+      "required": ["instruction"],
+      "properties": {
+        "instruction": { "type": "string" }
+      }
+    },
+    "deliverable_registry": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "description"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "purpose": { "type": "string" },
+          "scope": { "type": "string" },
+          "persistence": { "type": "string" },
+          "confidence_weight": { "type": "number" },
+          "schema": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "compliance_registry": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "protocol", "constraint"],
+        "properties": {
+          "id": { "type": "string" },
+          "protocol": { "type": "string" },
+          "constraint": { "type": "string" },
+          "verification": { "type": "string" }
+        }
+      }
+    },
+    "protocol_library": {
+      "type": "object",
+      "patternProperties": {
+        "^[A-Z0-9_]+$": {
+          "type": "object",
+          "required": ["meta", "states"],
+          "properties": {
+            "protocol_id": { "type": "string" },
+            "meta": {
+              "type": "object",
+              "required": ["title", "version", "description"],
+              "properties": {
+                "title": { "type": "string" },
+                "version": { "type": "string" },
+                "description": { "type": "string" },
+                "philosophy": { "type": "string" },
+                "principles": { "type": "array", "items": { "type": "string" } },
+                "roles": { "type": "object" }
+              }
+            },
+            "states": {
+              "type": "object",
+              "patternProperties": {
+                "^[A-Z0-9_]+$": {
+                  "type": "object",
+                  "required": ["transitions"],
+                  "properties": {
+                    "type": { "enum": ["initial", "normal", "final"] },
+                    "description": { "type": "string" },
+                    "requirements": {
+                      "type": "object",
+                      "patternProperties": {
+                        "^[a-z_]+$": {
+                          "type": "object",
+                          "required": ["type"],
+                          "properties": {
+                            "type": { "type": "string" },
+                            "target": { "type": "string" },
+                            "pattern": { "type": "string" },
+                            "protocol_id": { "type": "string" },
+                            "threshold_sec": { "type": "number" },
+                            "freshness": { "type": "boolean" },
+                            "path": { "type": "string" }
+                          }
+                        }
+                      }
+                    },
+                    "transitions": {
+                      "type": "object",
+                      "patternProperties": {
+                        "^[a-z_]+$": {
+                          "oneOf": [
+                            { "type": "string" }, 
+                            {
+                              "type": "object",
+                              "required": ["target"],
+                              "properties": {
+                                "target": { "type": "string" },
+                                "gates": { "type": "array", "items": { "type": "string" } }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

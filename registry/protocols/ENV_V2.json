@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "title": "Environment & Resource Standard v2",
+    "version": "2.0.0",
+    "description": "Stability is Physical: Logic requires a verified environment.",
+    "philosophy": "Logic requires a verified environment to execute with fidelity."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_AUDIT"
+      }
+    },
+    "1_AUDIT": {
+      "description": "Resource Check",
+      "requirements": {
+        "env_manifest": {
+          "type": "regex_match_output",
+          "pattern": "\\[DLR_MAN_ENV\\].*"
+        }
+      },
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

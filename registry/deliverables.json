@@ -1,0 +1,236 @@
+{
+  "meta": {
+    "title": "Warden Deliverable Registry",
+    "version": "1.2.0",
+    "description": "Authoritative registry of all system-generated artifacts and echoes."
+  },
+  "deliverables": [
+    {
+      "id": "DLR_HND_ONBOARD",
+      "name": "Onboarding Handshake",
+      "description": "Initial alignment echo including principles and role acceptance.",
+      "purpose": "Establishes formal Engineer/Director stewardship.",
+      "scope": "Onboarding",
+      "persistence": "CLI Log",
+      "schema": ["Principles Echo", "Role Acceptance", "Registry Mapping", "Domain Awareness"]
+    },
+    {
+      "id": "DLR_MAN_ENV",
+      "name": "Environment Manifest",
+      "description": "Telemetry of hardware and software prerequisites.",
+      "purpose": "Ensures environment parity for multi-threaded execution.",
+      "scope": "System",
+      "persistence": "CLI Log"
+    },
+    {
+      "id": "DLR_MAP_STRUCT",
+      "name": "Structural Mapping",
+      "description": "Echo of functional domains and logic boundaries.",
+      "purpose": "Bridges the gap between process awareness and product awareness.",
+      "scope": "Contextual",
+      "persistence": "CLI Log"
+    },
+    {
+      "id": "DLR_SUR_ACK",
+      "name": "Survey Acknowledgement",
+      "description": "Explicit Director authorization to proceed from Survey to Plan.",
+      "purpose": "Enforces external validation of context gathering.",
+      "scope": "Governance",
+      "persistence": "CLI Log"
+    },
+    {
+      "id": "DLR_BRF_MISSION",
+      "name": "Mission Brief",
+      "description": "Qualitative synthesis of the context, problem, constraints, and success criteria.",
+      "purpose": "Ensures the Engineer understands the Director's intent before planning.",
+      "scope": "Survey",
+      "persistence": "CLI Log",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "Context": { "type": "string", "description": "The background and situation of the mission." },
+          "Problem": { "type": "string", "description": "The core issue to be addressed." },
+          "Constraint": { "type": "string", "description": "Any limitations or restrictions on the solution." },
+          "Success": { "type": "string", "description": "The criteria for determining if the mission is accomplished." }
+        },
+        "required": ["Context", "Problem", "Constraint", "Success"]
+      }
+    },
+    {
+      "id": "DLR_DOC_GLOSSARY",
+      "name": "System Glossary",
+      "description": "Domain-bounded semantic definitions for system taxonomy.",
+      "purpose": "Ensures shared semantic understanding between actors.",
+      "scope": "Documentation",
+      "persistence": "File (docs/glossary.json)"
+    },
+    {
+      "id": "DLR_RPT_INTERACTION",
+      "name": "Interaction Report",
+      "description": "A structured citation manifest of Engineer interactions with system tools.",
+      "purpose": "Provides granular telemetry for Post-Implementation Reviews.",
+      "scope": "Telemetry",
+      "persistence": "File (history/)",
+      "schema": ["objective", "claims"]
+    },
+    {
+      "id": "DLR_RPT_COMPLIANCE",
+      "name": "Compliance Report",
+      "description": "Automated cross-reference of session telemetry against Goals and Standards.",
+      "purpose": "Provides closed-loop verification of process fidelity.",
+      "scope": "Audit",
+      "persistence": "CLI Log",
+      "schema": ["Provenance", "Goal Alignment", "Friction Analysis", "Compliance Score"]
+    },
+    {
+      "id": "DLR_ASM_COMPLIANCE",
+      "name": "Compliance Assessment",
+      "description": "Three-way verification of Engineer Claims vs. Warden Logs.",
+      "purpose": "Validates Intent against Reality.",
+      "scope": "Audit",
+      "persistence": "CLI Log",
+      "schema": ["Claim Analysis", "Trust Score"]
+    },
+    {
+      "id": "DLR_CMP_ACK",
+      "name": "Compliance Acknowledgement",
+      "description": "Explicit Director authorization of the compliance assessment.",
+      "purpose": "Finalizes the audit loop.",
+      "scope": "Governance",
+      "persistence": "CLI Log"
+    },
+    {
+      "id": "DLR_AUD_COMPLIANCE",
+      "name": "Engineer Compliance Audit",
+      "description": "Qualitative analysis of the Warden assessment, reconciling intent vs reality.",
+      "purpose": "Provides Engineer's perspective on the audit delta.",
+      "scope": "Audit",
+      "persistence": "CLI Log"
+    },
+    {
+      "id": "DLR_AUD_ARTIFACT",
+      "name": "Artifact Audit",
+      "description": "Qualitative verification that a generated artifact meets requirements and schema.",
+      "purpose": "Prevents open-loop generation by forcing active review of outputs.",
+      "scope": "Audit",
+      "persistence": "CLI Log",
+      "schema": ["Artifact Path", "Analysis Summary", "Status (PASS/FAIL)"]
+    },
+    {
+      "id": "DLR_CRT_PROFICIENCY",
+      "name": "Proficiency Certification",
+      "description": "Evidence of successful GSD cycle execution on non-logic artifacts.",
+      "purpose": "Unlocks full Engineer designation.",
+      "scope": "Governance",
+      "persistence": "Governance History"
+    },
+    {
+      "id": "DLR_SNA_INTEGRITY",
+      "name": "Integrity Snapshot",
+      "description": "Cryptographic signature and binary baseline of all protocols.",
+      "purpose": "Ground truth for regression detection and restoration.",
+      "scope": "Integrity",
+      "persistence": "File (protocols.integrity.snapshot.json)"
+    },
+    {
+      "id": "DLR_AUD_FIDELITY",
+      "name": "Fidelity Audit",
+      "description": "Side-by-side granular diff of protocol modifications.",
+      "purpose": "Prevents unauthorized baseline drift.",
+      "scope": "Integrity",
+      "persistence": "CLI Log"
+    },
+    {
+      "id": "DLR_TRC_ERROR",
+      "name": "Error Trace",
+      "description": "Captured stack trace or syntax error location.",
+      "purpose": "Identifies root cause for emergency recovery.",
+      "scope": "Recovery",
+      "persistence": "CLI Log"
+    },
+    {
+      "id": "DLR_PLN_GSD",
+      "name": "Implementation Plan",
+      "description": "Strategic technical proposal for logic changes.",
+      "purpose": "Ensures Director/Engineer alignment before execution.",
+      "scope": "Operational",
+      "persistence": "CLI Log",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "Objective": { "type": "string", "description": "The primary goal of the implementation." },
+          "SQA Anchors": { "type": "array", "description": "Selected quality attributes for anchoring." },
+          "Standards": { "type": "array", "description": "Applicable system standards for this task." },
+          "Strategy": { "type": "string", "description": "Step-by-step technical approach." },
+          "Impact": { "type": "string", "description": "Expected outcome and system impact." }
+        },
+        "required": ["Objective", "SQA Anchors", "Standards", "Strategy", "Impact"]
+      }
+    },
+    {
+      "id": "DLR_PLN_ACK",
+      "name": "Plan Approval",
+      "description": "Explicit Director authorization to proceed from Plan to Execute.",
+      "purpose": "Enforces external validation of implementation strategy.",
+      "scope": "Governance",
+      "persistence": "CLI Log"
+    },
+    {
+      "id": "DLR_VFY_ACK",
+      "name": "Verification Approval",
+      "description": "Explicit Director authorization to proceed from Verify to Finalize.",
+      "purpose": "Enforces external validation of fidelity audit results.",
+      "scope": "Governance",
+      "persistence": "CLI Log"
+    },
+    {
+      "id": "DLR_PTC_RECOVERY",
+      "name": "Recovery Patch",
+      "description": "Unified Diff persisted as a recoverable file.",
+      "purpose": "Provides rollback capability and audit trail.",
+      "scope": "Operational",
+      "persistence": "File (patches/)"
+    },
+    {
+      "id": "DLR_REV_PIR",
+      "name": "Post-Implementation Review",
+      "description": "Synthesis of product outcome and process performance.",
+      "purpose": "Formalizes development cycle closure.",
+      "scope": "Governance",
+      "persistence": "Governance History",
+      "schema": ["Success Score", "Anomaly Analysis", "Remediation Table"]
+    },
+    {
+      "id": "DLR_KNO_ENTRY",
+      "name": "Actionable Knowledge Entry",
+      "description": "Persistent record of friction remediations and lessons learned.",
+      "purpose": "Mitigates context loss for zero-knowledge systems.",
+      "scope": "Knowledge Management",
+      "persistence": "File (knowledge_base.json)"
+    },
+    {
+      "id": "DLR_DOC_README",
+      "name": "README Document",
+      "description": "Compiled Markdown summary of the project state.",
+      "purpose": "Primary project-facing documentation.",
+      "scope": "Documentation",
+      "persistence": "File (README.md)"
+    },
+    {
+      "id": "DLR_DOC_PROTOCOLS",
+      "name": "Protocols Library",
+      "description": "Compiled Markdown manual of all system rules.",
+      "purpose": "Authoritative governance documentation.",
+      "scope": "Documentation",
+      "persistence": "File (PROTOCOLS.md)"
+    },
+    {
+      "id": "DLR_MAN_STATUS",
+      "name": "Status Report",
+      "description": "Synthesized JSON report of health and debt.",
+      "purpose": "Real-time visibility into engine state.",
+      "scope": "Telemetry",
+      "persistence": "File (status.json)"
+    }
+  ]
+}

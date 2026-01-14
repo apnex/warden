@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "Post-Implementation Review Standard v4 (Interaction Report)",
+    "version": "4.2.0",
+    "description": "Actionable post-mortem and knowledge persistence engine."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_AUDIT"
+      }
+    },
+    "1_AUDIT": {
+      "description": "Context Collection",
+      "requirements": {
+        "fidelity_status": {
+          "type": "regex_match_output",
+          "pattern": "STABLE"
+        }
+      },
+      "transitions": {
+        "next": "2_ANALYSIS"
+      }
+    },
+    "2_ANALYSIS": {
+      "description": "Root Cause Analysis",
+      "requirements": {
+        "interaction_report": {
+          "type": "regex_match_output",
+          "pattern": "DLR_RPT_INTERACTION"
+        },
+        "anomaly_analysis": {
+          "type": "regex_match_output",
+          "pattern": "Anomaly Analysis"
+        }
+      },
+      "transitions": {
+        "next": "3_SYNTHESIS"
+      }
+    },
+    "3_SYNTHESIS": {
+      "description": "Remediation Strategy",
+      "requirements": {
+        "remediation_table": {
+          "type": "regex_match_output",
+          "pattern": "Remediation Table"
+        }
+      },
+      "transitions": {
+        "next": "4_KNOWLEDGE"
+      }
+    },
+    "4_KNOWLEDGE": {
+      "description": "Persistence",
+      "requirements": {
+        "knowledge_injection": {
+          "type": "file_freshness",
+          "target": "registry/knowledge_base.json"
+        },
+        "knowledge_entry_echo": {
+          "type": "regex_match_output",
+          "pattern": "DLR_KNO_ENTRY"
+        }
+      },
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

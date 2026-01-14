@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "title": "Idea Management Protocol v1",
+    "version": "1.0.0",
+    "description": "Lifecycle management for raw ideas: Capture -> Incubate -> Germinate."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_CAPTURE"
+      }
+    },
+    "1_CAPTURE": {
+      "description": "Idea Recording",
+      "transitions": {
+        "next": "2_INCUBATE"
+      }
+    },
+    "2_INCUBATE": {
+      "description": "Refinement Dialogue",
+      "transitions": {
+        "promote": "3_GERMINATE",
+        "archive": "4_ARCHIVE"
+      }
+    },
+    "3_GERMINATE": {
+      "description": "Promotion to Strategy",
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    },
+    "4_ARCHIVE": {
+      "description": "Historical Record",
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "title": "Protocol Integrity & Artifact Audit v2",
+    "version": "2.2.0",
+    "description": "Automated governance fidelity and proactive artifact analysis.",
+    "philosophy": "Trust but Verify: Governance is only as strong as its active audit trail."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_SNAPSHOT",
+        "verify": "2_AUDIT",
+        "analyze": "4_ARTIFACT_REVIEW"
+      }
+    },
+    "1_SNAPSHOT": {
+      "description": "Baseline Creation",
+      "requirements": {
+        "snapshot_tool": {
+          "type": "command_log",
+          "pattern": "node validation/verify_integrity.js --snapshot"
+        }
+      },
+      "transitions": {
+        "next": {
+          "target": "0_IDLE",
+          "gates": [
+            "snapshot_tool"
+          ]
+        }
+      }
+    },
+    "2_AUDIT": {
+      "description": "Fidelity Verification",
+      "requirements": {
+        "verify_tool": {
+          "type": "command_log",
+          "pattern": "node validation/verify_integrity.js --verify"
+        }
+      },
+      "transitions": {
+        "next": {
+          "target": "0_IDLE",
+          "gates": [
+            "verify_tool"
+          ]
+        },
+        "fail": "3_RESTORE"
+      }
+    },
+    "3_RESTORE": {
+      "description": "Integrity Restoration",
+      "requirements": {
+        "restore_tool": {
+          "type": "command_log",
+          "pattern": "node validation/verify_integrity.js --restore"
+        }
+      },
+      "transitions": {
+        "next": {
+          "target": "2_AUDIT",
+          "gates": [
+            "restore_tool"
+          ]
+        }
+      }
+    },
+    "4_ARTIFACT_REVIEW": {
+      "description": "Active Output Analysis",
+      "requirements": {
+        "artifact_read": {
+          "type": "command_log",
+          "pattern": "cat|read_file"
+        },
+        "artifact_audit": {
+          "type": "regex_match_output",
+          "pattern": "DLR_AUD_ARTIFACT"
+        }
+      },
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

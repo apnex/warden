@@ -1,0 +1,52 @@
+{
+  "key_capabilities": [
+    {
+      "feature": "State-Machine Governance",
+      "detail": "Deterministic transition enforcement via codified JSON protocols."
+    },
+    {
+      "feature": "Automated Integrity Auditing",
+      "detail": "Cryptographic snapshotting and side-by-side fidelity verification."
+    },
+    {
+      "feature": "Decoupled Requirement Validation",
+      "detail": "Extensible handler architecture for file, command, and output verification."
+    },
+    {
+      "feature": "Unified Documentation",
+      "detail": "Single-source synchronization of JSON protocols and Markdown manuals."
+    }
+  ],
+  "module_overview": [
+    {
+      "module": "Governance API",
+      "purpose": "Transaction-safe modification of the System Protocol Library."
+    },
+    {
+      "module": "Warden Core",
+      "purpose": "The primary enforcement engine for state-machine execution."
+    },
+    {
+      "module": "Validation Suite",
+      "purpose": "Integrity and schema validation for protocols and artifacts."
+    },
+    {
+      "module": "Documentation Engine",
+      "purpose": "Automated generation of manuals, readmes, and knowledge bases."
+    }
+  ],
+  "technical_debt": [
+    {
+      "issue": "Shared Session Log",
+      "impact": "Currently lacks a persistent log of all executed commands across turns."
+    },
+    {
+      "issue": "State Conflict Resolution",
+      "impact": "Dispute handling is manual via Director override."
+    },
+    {
+      "issue": "WASM Schema Validation",
+      "impact": "Performance of large recursive schema checks could be optimized."
+    }
+  ]
+}

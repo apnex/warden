@@ -1,0 +1,16 @@
+# Engineer Proficiency Certification
+
+**Date:** 2026-01-05
+**Engineer:** apnex
+**Status:** ACTIVE / GRADUATED
+
+## Certification Manifest
+The Engineer has successfully demonstrated proficiency in the **Warden Governance System** through the following actions:
+
+1.  **Protocol Adherence:** Successfully executed `GSD_V5` (Hardened) for "Branding Normalization".
+2.  **Gate Enforcement:** Respected all `warden.js` gates, including the `DLR_SURVEY_ACK`.
+3.  **System Hardening:** Identified and remediated "Autonomous Phase Leaping" by hardening the `warden.js` engine.
+4.  **Anomaly Resolution:** Self-corrected during "Governance Hardening" mission when path regressions occurred.
+
+## Authority
+Authorized by Director via [DLR_PRY_CERT] signal.

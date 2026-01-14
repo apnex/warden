@@ -1,0 +1,39 @@
+{
+  "concepts": [
+    {
+      "id": "CON-001",
+      "title": "Oracle Sandbox (Advisor Pattern)",
+      "source_idea": "IDEA-010"
+    },
+    {
+      "id": "CON-002",
+      "title": "Universal Guidance Engine",
+      "source_idea": "IDEA-012"
+    },
+    {
+      "id": "CON-003",
+      "title": "Structured Interaction Specification",
+      "source_idea": "IDEA-018"
+    },
+    {
+      "id": "CON-004",
+      "title": "Oracle Blueprint Skeletons",
+      "source_idea": "IDEA-007"
+    },
+    {
+      "id": "CON-005",
+      "title": "Automated Remediation Engine (Warden Fixer)",
+      "source_idea": "IDEA-026"
+    },
+    {
+      "id": "CON-006",
+      "title": "CON-008",
+      "source_idea": "Strict Provenance Enforcement"
+    },
+    {
+      "id": "CON-007",
+      "title": "CON-008",
+      "source_idea": "Metadata-Driven Cognitive Interjection"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "tool_suite": "Warden Governance Engine",
+  "version": "1.6.0",
+  "components": [
+    {
+      "name": "engine/warden.js",
+      "purpose": "API-Driven State-Machine Parser and Enforcement Engine.",
+      "features": ["Self-Healing", "Safe Protocol Lookup", "Session Logging (exec)"],
+      "status": "Production"
+    },
+    {
+      "name": "engine/path_resolver.js",
+      "purpose": "Authoritative path mapping for root-less execution.",
+      "status": "Production"
+    },
+    {
+      "name": "engine/mission.js",
+      "purpose": "Standardized Mission Briefing artifact generator.",
+      "status": "Production"
+    },
+    {
+      "name": "engine/report.js",
+      "purpose": "Unified high-fidelity reporting engine (Audit, Telemetry, PIR).",
+      "status": "Production"
+    },
+    {
+      "name": "engine/backlog.js",
+      "purpose": "Lifecycle management for remediation items and technical debt.",
+      "status": "Production"
+    },
+    {
+      "name": "engine/lib/handlers.js",
+      "purpose": "Decoupled Requirement Validation Logic.",
+      "handlers": ["file_freshness", "file_exists", "command_log", "regex_match_output"],
+      "status": "Production"
+    },
+    {
+      "name": "engine/lib/loader.js",
+      "purpose": "Centralized Protocol Loading and Validation Proxy.",
+      "status": "Production"
+    },
+    {
+      "name": "docs/generate_readme.js",
+      "purpose": "Technical architecture and README generator.",
+      "status": "Production"
+    },
+    {
+      "name": "docs/finalizer.js",
+      "purpose": "Release orchestration and artifact synchronization.",
+      "status": "Production"
+    },
+    {
+      "name": "validation/validate_schema.js",
+      "purpose": "Structural Linter for Protocol state machines.",
+      "features": ["--fix flag", "recursive type validation"],
+      "status": "Production"
+    },
+    {
+      "name": "validation/verify_integrity.js",
+      "purpose": "System-wide Audit tool for protocol and component fidelity.",
+      "status": "Production"
+    },
+    {
+      "name": "validation/audit_standards.js",
+      "purpose": "Authoritative scanner for system standard violations.",
+      "status": "Production"
+    },
+    {
+      "name": "validation/test_audit.js",
+      "purpose": "Self-testing utility for the Standards Auditor.",
+      "status": "Production"
+    }
+  ],
+  "technical_debt": [
+    {
+      "issue": "Shared Session Log",
+      "impact": "Currently lacks a persistent log of all executed commands, requiring Engineer prompts for some requirements."
+    },
+    {
+      "issue": "State Conflict Resolution",
+      "impact": "Dispute handling is manual via Director override."
+    }
+  ]
+}

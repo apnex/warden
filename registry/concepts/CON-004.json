@@ -1,0 +1,8 @@
+{
+  "id": "CON-004",
+  "source_idea": "IDEA-007",
+  "title": "Oracle Blueprint Skeletons",
+  "status": "RATIFIED",
+  "spec": "Architecture: Extend engine/oracle.js with a blueprint command. Logic: Dynamically generate valid JSON skeletons based on registry/deliverables.json schema arrays. Rationale: Eliminates JSON syntax errors and ensures bit-perfect formatting for machine-readable reports. Constraint: Values must be placeholders, requiring Engineer implementation.",
+  "created_at": "2026-01-10T11:07:22.958Z"
+}

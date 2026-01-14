@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "title": "Engineer Proficiency Standard v2",
+    "version": "2.1.0",
+    "description": "Competence is Demonstrated, not Declared."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_TASKING"
+      }
+    },
+    "1_TASKING": {
+      "description": "Task Definition",
+      "transitions": {
+        "next": "2_DEMONSTRATION"
+      }
+    },
+    "2_DEMONSTRATION": {
+      "description": "Procedural Execution",
+      "requirements": {
+        "gsd_cycle": {
+          "type": "command_log",
+          "pattern": "node engine/warden.js close"
+        }
+      },
+      "transitions": {
+        "next": "3_GRADUATION"
+      }
+    },
+    "3_GRADUATION": {
+      "description": "Certification",
+      "requirements": {
+        "pry_cert": {
+          "type": "regex_match_output",
+          "pattern": "\\[DLR_CRT_PROFICIENCY\\].*"
+        }
+      },
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

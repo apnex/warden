@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "title": "Configuration Injection v2",
+    "version": "2.0.0",
+    "description": "Immutable Base, Dynamic Overlay."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_INJECTION"
+      }
+    },
+    "1_INJECTION": {
+      "description": "Injector Check",
+      "requirements": {
+        "config_resolve": {
+          "type": "command_log",
+          "pattern": "node engine/main.js"
+        }
+      },
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

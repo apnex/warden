@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "title": "Automated Status Reporting v2",
+    "version": "2.0.0",
+    "description": "System Pulse: Real-time visibility into health and debt."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_SYNTHESIS"
+      }
+    },
+    "1_SYNTHESIS": {
+      "description": "Data Aggregation",
+      "requirements": {
+        "status_tool": {
+          "type": "command_log",
+          "pattern": "node docs/generate_status.js"
+        },
+        "status_artifact": {
+          "type": "regex_match_output",
+          "pattern": "\\[DLR_MAN_STATUS\\].*"
+        }
+      },
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "title": "Intent Blueprint Registry",
+    "version": "1.0.0"
+  },
+  "schemas": {
+    "INTENT_BASE": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tool": { "type": "string" },
+        "action": { "type": "string" }
+      },
+      "required": ["id", "tool", "action"]
+    },
+    "GOVERNANCE_INTENT": {
+      "allOf": [ { "$ref": "#/schemas/INTENT_BASE" } ],
+      "properties": {
+        "protocol": { "type": "string" },
+        "trigger": { "type": "string" }
+      }
+    },
+    "SYSTEM_INTENT": {
+      "allOf": [ { "$ref": "#/schemas/INTENT_BASE" } ],
+      "properties": {
+        "args": { "type": "string" }
+      }
+    }
+  }
+}

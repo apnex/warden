@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "title": "Warden System Standards",
+    "version": "1.0.0",
+    "description": "Registry of codified best practices and technical constraints."
+  },
+  "standards": [
+    {
+      "id": "STD_FILE_CONSOLIDATION",
+      "name": "File Structure Consolidation",
+      "guidance": "Functional artifacts must be grouped into single root-level directories (engine, registry, docs, history, validation). Avoid deeply nested subfolders for core scripts.",
+      "enforcement": "Manual Audit / Path Resolver Check"
+    },
+    {
+      "id": "STD_TOOL_PATHING",
+      "name": "Authoritative Tool Pathing",
+      "guidance": "Protocols and bootstrap instructions must use explicit project-relative paths (e.g., node engine/onboard.js) instead of root-level symlinks.",
+      "enforcement": "Protocol Integrity Audit"
+    },
+    {
+      "id": "STD_TIERED_PERSISTENCE",
+      "name": "Tiered Deliverable Persistence",
+      "guidance": "Categorize deliverables by utility (Vital, Transitional, Ephemeral) to manage context window efficiency for zero-knowledge systems.",
+      "enforcement": "Registry Metadata / Cleanup Scripts"
+    },
+    {
+      "id": "STD_ZK_ENFORCEMENT",
+      "name": "Zero-Knowledge Active Enforcement",
+      "guidance": "Protocols and tools must provide active validation loops (read-back gates, provenance checks, and mandatory status pulses) to guide agents through complex state machines.",
+      "enforcement": "Hardened GSD Gates / Warden Auto-Status"
+    },
+        {
+          "id": "STD_CANONICAL_INTENT",
+          "name": "Canonical Intent Enforcement",
+          "guidance": "All interactions within a GSD cycle must be mapped to a registered intent pattern. Commands that cannot be resolved must be justified via the Socratic Brake (--justify) before execution.",
+          "enforcement": "Warden Core / Compliance Engine"
+        },
+        {
+          "id": "STD_PORTABLE_PATHS",
+          "name": "Deterministic Portable Pathing",
+          "guidance": "All system tools must utilize the 'resolve' utility from path_resolver.js rather than native path.join(__dirname, ...) or relative string literals to ensure portability.",
+          "enforcement": "Architectural Audit / Component Review"
+        },
+        {
+          "id": "STD_METADATA_PRIMACY",        "name": "Metadata-Driven Governance",      "guidance": "All business logic regarding state transitions, constraints, and gate enforcement must be defined in the Protocol Registry (protocols.json). Execution tools must act as generic interpreters of this metadata, avoiding hard-coded rules.",
+      "enforcement": "Architectural Audit / Warden Core Refactoring"
+    }
+  ]
+}

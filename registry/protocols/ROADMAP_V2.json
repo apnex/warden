@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "title": "Strategic Roadmap Evolution v2",
+    "version": "2.0.0",
+    "description": "Intentional Evolution: Strategic planning."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_ASSESSMENT"
+      }
+    },
+    "1_ASSESSMENT": {
+      "description": "State Review",
+      "transitions": {
+        "next": "2_PROJECTION"
+      }
+    },
+    "2_PROJECTION": {
+      "description": "Future Mapping",
+      "transitions": {
+        "next": "3_EXPLORATION"
+      }
+    },
+    "3_EXPLORATION": {
+      "description": "Brainstorming",
+      "transitions": {
+        "next": "4_SPECIFICATION"
+      }
+    },
+    "4_SPECIFICATION": {
+      "description": "Feature Definition",
+      "transitions": {
+        "next": "5_INJECTION"
+      }
+    },
+    "5_INJECTION": {
+      "description": "Finalization",
+      "requirements": {
+        "roadmap_update": {
+          "type": "file_exists",
+          "path": "registry/roadmap.json"
+        }
+      },
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

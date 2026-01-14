@@ -1,0 +1,169 @@
+{
+  "meta": {
+    "title": "Canonical Intent Patterns",
+    "version": "1.0.0",
+    "description": "Metadata-driven regex mappings for CLI command classification."
+  },
+  "patterns": [
+    {
+      "id": "INT-GOV-INIT",
+      "regex": "^node engine/warden.js init ([A-Z0-9_]+) \"(.*)\"",
+      "intent": { "tool": "warden", "action": "init", "protocol": "$1", "objective": "$2" }
+    },
+    {
+      "id": "INT-GOV-NEXT",
+      "regex": "^node engine/warden.js next\\s?([a-z_]+)?",
+      "intent": { "tool": "warden", "action": "next", "trigger": "$1" }
+    },
+    {
+      "id": "INT-GOV-CLOSE",
+      "regex": "^node engine/warden.js close",
+      "intent": { "tool": "warden", "action": "close" }
+    },
+    {
+      "id": "INT-GOV-EXEC",
+      "regex": "^node engine/warden.js exec \"(.*)\"",
+      "intent": { "tool": "warden", "action": "exec", "command": "$1" }
+    },
+    {
+      "id": "INT-KNO-LIST",
+      "regex": "^node engine/oracle.js list",
+      "intent": { "tool": "oracle", "action": "list_index" }
+    },
+    {
+      "id": "INT-KNO-EXPLAIN",
+      "regex": "^node engine/oracle.js explain (.*)",
+      "intent": { "tool": "oracle", "action": "explain", "topic": "$1" }
+    },
+    {
+      "id": "INT-KNO-QUIZ",
+      "regex": "^node engine/oracle.js quiz ([a-z]+) .*",
+      "intent": { "tool": "oracle", "action": "quiz", "type": "$1" }
+    },
+    {
+      "id": "INT-KNO-BLUEPRINT",
+      "regex": "^node engine/oracle.js blueprint (.*)",
+      "intent": { "tool": "oracle", "action": "generate_blueprint", "target": "$1" }
+    },
+    {
+      "id": "INT-GOV-ECHO",
+      "regex": "^echo .*DLR_([A-Z_]+).*",
+      "intent": { "tool": "manual_echo", "action": "deliverable", "kind": "$1" }
+    },
+    {
+      "id": "INT-SYS-RESOLVE",
+      "regex": "^node engine/path_resolver.js",
+      "intent": { "tool": "path_resolver", "action": "path_resolution" }
+    },
+    {
+      "id": "INT-REP-BASE",
+      "regex": "^node engine/report.js$",
+      "intent": { "tool": "report", "action": "interaction_report" }
+    },
+    {
+      "id": "INT-REP-COMP",
+      "regex": "^node engine/report.js --compliance",
+      "intent": { "tool": "report", "action": "compliance" }
+    },
+    {
+      "id": "INT-REP-PIR",
+      "regex": "^node engine/report.js --pir",
+      "intent": { "tool": "report", "action": "pir" }
+    },
+    {
+      "id": "INT-REP-DRAFT",
+      "regex": "^node engine/report.js --draft",
+      "intent": { "tool": "report", "action": "draft" }
+    },
+    {
+      "id": "INT-REP-JSON",
+      "regex": "^node engine/report.js --json",
+      "intent": { "tool": "report", "action": "json_report" }
+    },
+    {
+      "id": "INT-VFY-SNAP",
+      "regex": "^node validation/verify_integrity.js --snapshot\\s?(.*)?",
+      "intent": { "tool": "verify_integrity", "action": "snapshot", "target": "$1" }
+    },
+    {
+      "id": "INT-VFY-AUDIT",
+      "regex": "^node validation/verify_integrity.js --verify\\s?(.*)?",
+      "intent": { "tool": "verify_integrity", "action": "verify", "target": "$1" }
+    },
+    {
+      "id": "INT-VFY-SQA",
+      "regex": "^node validation/audit_standards.js --sqa",
+      "intent": { "tool": "audit_standards", "action": "sqa_anchoring" }
+    },
+    {
+      "id": "INT-PAT-SAVE",
+      "regex": "^node engine/patch.js --save ([A-Z0-9_]+)",
+      "intent": { "tool": "patch", "action": "save", "name": "$1" }
+    },
+    {
+      "id": "INT-GOV-FINALIZE",
+      "regex": "^node docs/finalizer.js --gov (.*)",
+      "intent": { "tool": "finalizer", "action": "gov_finalize", "args": "$1" }
+    },
+    {
+      "id": "INT-GOV-MISSION",
+      "regex": "^node engine/mission.js (.*)",
+      "intent": { "tool": "mission", "action": "generate_brief", "args": "$1" }
+    },
+    {
+      "id": "INT-ONB-HAND",
+      "regex": "^node engine/onboard.js$",
+      "intent": { "tool": "onboard", "action": "handshake" }
+    },
+    {
+      "id": "INT-ONB-REFR",
+      "regex": "^node engine/onboard.js --refresh",
+      "intent": { "tool": "onboard", "action": "refresh_pulse" }
+    },
+    {
+      "id": "INT-ONB-PROJ",
+      "regex": "^node engine/onboard.js --project",
+      "intent": { "tool": "onboard", "action": "project_orientation" }
+    },
+    {
+      "id": "INT-ONB-ALIGN",
+      "regex": "^node engine/onboard.js --align (.*)",
+      "intent": { "tool": "onboard", "action": "align", "token": "$1" }
+    },
+    {
+      "id": "INT-ORA-PLEDGE",
+      "regex": "^node engine/oracle.js quiz pledge.*",
+      "intent": { "tool": "oracle", "action": "behavioral_pledge" }
+    },
+    {
+      "id": "INT-AUD-JUST",
+      "regex": "^JUSTIFY: (.*)",
+      "intent": { "tool": "warden", "action": "interjection_justification", "target": "$1" }
+    },
+    {
+      "id": "INT-SYS-INSPECT",
+      "regex": "^(cat|tail|head|grep|ls|find|file|stat|du|df)\\s?(.*)",
+      "intent": { "tool": "system", "action": "passive_investigation", "cmd": "$1", "args": "$2" }
+    },
+    {
+      "id": "INT-SYS-NAVIGATE",
+      "regex": "^(cd|pwd|dirs)\\s?(.*)",
+      "intent": { "tool": "system", "action": "workspace_mapping", "cmd": "$1", "args": "$2" }
+    },
+    {
+      "id": "INT-SYS-RUNTIME",
+      "regex": "^node (-v|--version|--help)$",
+      "intent": { "tool": "node", "action": "environment_check" }
+    },
+    {
+      "id": "INT-SYS-PACKAGE",
+      "regex": "^npm (list|view|show|--version)$",
+      "intent": { "tool": "npm", "action": "package_query" }
+    },
+    {
+      "id": "INT-SYS-GENERIC",
+      "regex": "^(mkdir|rm|mv|cp)\\s?(.*)",
+      "intent": { "tool": "system", "action": "file_modification", "cmd": "$1", "args": "$2" }
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "meta": {
+    "title": "Warden Oracle Guidance Registry",
+    "version": "1.2.0",
+    "description": "Codified structural and semantic guidance for system elements."
+  },
+  "topics": {
+    "DLR_MSN_BRIEF": {
+      "title": "Mission Brief Standard",
+      "purpose": "To align Director intent with Engineer execution from Turn 1.",
+      "structure": [
+        "Context: The background and status quo.",
+        "Problem: The specific friction or gap to be addressed.",
+        "Constraint: Non-negotiable limits (technical or governance).",
+        "Success: The quantifiable win condition."
+      ]
+    },
+    "SQA_ANCHORING": {
+      "title": "System Quality Attribute Anchoring",
+      "purpose": "To ensure plans are evaluated against non-functional quality standards.",
+      "structure": [
+        "Domain: [Operational|Structural|Environmental|User-Centric]",
+        "Attribute: Key from registry/attributes.json",
+        "Reasoning: Why this attribute is critical for this cycle."
+      ]
+    },
+    "GSD_V5": {
+      "title": "Gated Sequential Development v5",
+      "purpose": "The primary closed-loop implementation protocol.",
+      "states": {
+        "1_SURVEY": "Context gathering and baseline establishment.",
+        "2_PLAN": "Strategic proposal and SQA alignment.",
+        "3_EXECUTE": "Implementation and transactional auditing.",
+        "4_VERIFY": "Integrity validation and behavioral demonstration.",
+        "5_FINALIZE": "Artifact synchronization and cycle closure."
+      }
+    },
+    "DLR_ARTIFACT_AUDIT": {
+      "title": "Artifact Audit Standard",
+      "purpose": "To verify the quality and scope of generated artifacts/patches.",
+      "structure": [
+        "Path: The file system location of the artifact.",
+        "Status: [PASS|FAIL|WARN]",
+        "Analysis: Qualitative review of the content (Security, Style, Logic)."
+      ]
+    },
+    "DLR_PIR_REVIEW": {
+      "title": "PIR Review Standard",
+      "purpose": "To perform a post-mortem analysis of the cycle efficacy.",
+      "structure": [
+        "Success Score: 0-10 based on objective satisfaction.",
+        "Anomalies: Any unexpected behaviors or breaches.",
+        "Remediations: Actionable steps to prevent recurrence."
+      ]
+    },
+    "DLR_COMPLIANCE_AUDIT": {
+      "title": "Compliance Audit Standard",
+      "purpose": "To reconcile Engineer claims against System Evidence.",
+      "structure": [
+        "Omission Analysis: Explaining why certain claims don't match logs.",
+        "Trust Score: System-generated reconciliation percentage.",
+        "Verdict: [SUCCESS|FAILURE] based on intent vs reality."
+      ]
+    },
+    "STD_FILE_CONSOLIDATION": {
+      "title": "File Consolidation Standard",
+      "purpose": "To maintain a single-root architecture and prevent directory drift.",
+      "structure": [
+        "Constraint: No unauthorized root directories allowed.",
+        "Mechanism: Enforcement via validation/audit_standards.js."
+      ]
+    },
+    "IDEA_V1": {
+      "title": "Idea Management Protocol v1",
+      "purpose": "A lightweight channel for capturing unrefined thoughts upstream of implementation.",
+      "states": {
+        "1_CAPTURE": "Recording the raw idea title and intent.",
+        "2_INCUBATE": "Refinement dialogue between Director and Engineer.",
+        "3_GERMINATE": "Promotion to Concept or Backlog."
+      }
+    },
+    "CONCEPT": {
+      "title": "High-Fidelity Concept Standard",
+      "purpose": "An immutable technical specification that preserves architectural intent across ZK rotations.",
+      "structure": [
+        "Provenance: Link to source Idea ID.",
+        "Verbose Context: Synthesis of incubation dialogue.",
+        "Architectural Blueprint: Tools, logic, and registry changes.",
+        "Decision Log: Rationale for pattern selection.",
+        "Success Metrics: How the next ZK entity verifies completion."
+      ]
+    },
+    "CONCEPT_REGISTRY": {
+      "title": "High-Fidelity Concept Registry",
+      "purpose": "To store the architectural rationales and technical specifications for ratified system evolutions.",
+      "structure": [
+        "Index: registry/concepts.json",
+        "Specifications: registry/concepts/CON-###.json",
+        "Tooling: node engine/concept.js list"
+      ]
+    },
+    "ZK_INTERACTION_PATTERNS": {
+      "title": "Zero-Knowledge Interaction Patterns",
+      "purpose": "To define deterministic communication standards between AI Agents and the Warden system.",
+      "structure": [
+        "Constraint: AI Agents lack a TTY/interactive shell. All inputs must be passed as CLI arguments.",
+        "Verification: Affirmations and Pledges must be provided as a comma-separated list of values.",
+        "Audit Trail: Passing values as arguments ensures they are captured in the system's execution logs."
+      ]
+    },
+    "QUIZ": {
+      "title": "Interactive Verification Quiz (Deterministic)",
+      "purpose": "A mandatory gate to verify behavioral alignment and technical proficiency.",
+      "structure": [
+        "Command: node engine/oracle.js quiz <pledge|exam> \"ans1,ans2,...\" [--interpretation \"Your analysis\"]",
+        "The Pledge: Behavioral affirmations of Prime Directives. Required for Onboarding. REQUIRES --interpretation.",
+        "The Exam: Technical scenario challenges for tool mastery. Required for PRY_V2 graduation.",
+        "Qualitative Handshake: The --interpretation flag forces ZK entities to explain their obligations in their own words."
+      ]
+    },
+    "PRIME_DIRECTIVES": {
+      "title": "Warden Prime Directives (ZK-Fidelity)",
+      "purpose": "To establish immutable behavioral constraints for Zero-Knowledge entities.",
+      "structure": [
+        "PD-001 (External Authority): Director tokens are strictly external. Self-generation is a Protocol Breach.",
+        "PD-002 (Wait Operator): If a state requires a Director ([DLR_]) approval, the only valid action is to STOP and await external authorization.",
+        "PD-003 (Atomic Turns): One interaction turn equals a maximum of one state transition. Chaining transitions across Director Gates is prohibited."
+      ]
+    },
+    "CANONICAL_INTERACTION": {
+      "title": "Canonical Command Model",
+      "purpose": "To ensure bit-perfect audit fidelity by classifying CLI strings into structured objects.",
+      "structure": [
+        "Every 'warden.js exec' call is intercepted and classified.",
+        "Recognized commands receive an INT-ID (e.g., INT-GOV-INIT).",
+        "Unrecognized commands trigger the Socratic Brake.",
+        "Verified interactions are cited by ID in the Engineer Report."
+      ]
+    },
+    "REPORT_DRAFTING": {
+      "title": "Automated Audit Drafting",
+      "purpose": "To eliminate the friction of manual claim generation.",
+      "structure": [
+        "Execute 'node engine/report.js --draft' to generate engineer_report.json.",
+        "The tool citations are derived directly from the canonical intent log.",
+        "The Engineer must still add qualitative analysis to satisfy the 3-Way Audit."
+      ]
+    },
+    "INTENT_REGISTRATION": {
+      "title": "Registering New Intent Patterns",
+      "purpose": "To expand system observability to new tools and workflows.",
+      "structure": [
+        "Locate 'registry/intent_patterns.json'.",
+        "Add a new pattern object with a unique ID and regex.",
+        "Define the 'intent' object mapping regex capture groups to tool actions.",
+        "Perform a GOV cycle to ratify the registry update."
+      ]
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "title": "Warden System Glossary",
+    "version": "2.1.0",
+    "description": "Domain-bounded semantic definitions for zero-knowledge system taxonomy."
+  },
+  "domains": [
+    {
+      "id": "STRATEGIC",
+      "description": "High-level outcomes and terminal states.",
+      "terms": [
+        {
+          "uid": "TRM_GOAL",
+          "term": "Goal",
+          "definition": "A high-level strategic outcome registered in goals.json. It represents the terminal state or desired result of system evolution.",
+          "context_usage": "GOAL_GUIDE focuses on active instruction.",
+          "related_terms": ["Mission", "Strategic Intent"]
+        }
+      ]
+    },
+    {
+      "id": "OPERATIONAL",
+      "description": "Lifecycle management and governance boundaries.",
+      "terms": [
+        {
+          "uid": "TRM_MSN",
+          "term": "Mission",
+          "definition": "A governed instance of execution (Protocol Cycle) designed to satisfy a specific subset of a Goal.",
+          "context_usage": "Each mission must be initialized via warden.js init.",
+          "related_terms": ["Goal", "Cycle"]
+        },
+        {
+          "uid": "TRM_GSD_PLAN",
+          "term": "GSD_PLAN",
+          "definition": "A formal deliverable contract between Engineer and Director, defining the tactical approach for a Mission.",
+          "context_usage": "DLR_GSD_PLAN is the output of Phase 2.",
+          "related_terms": ["Objective", "Strategy", "SQA Anchors"]
+        }
+      ]
+    },
+    {
+      "id": "TACTICAL",
+      "description": "Specific implementation targets and constraints.",
+      "terms": [
+        {
+          "uid": "TRM_OBJ",
+          "term": "Objective",
+          "definition": "The specific technical or procedural target of a Mission. It serves as both a concept (the destination) and a data field (the plan definition).",
+          "context_usage": "1. Conceptual: 'The Objective of this Mission is refactoring.' 2. Data: 'Update the Objective field in GSD_PLAN.'",
+          "related_terms": ["Mission", "Task", "Deliverable"]
+        },
+        {
+          "uid": "TRM_STD",
+          "term": "Standard",
+          "definition": "A codified set of best practices or technical constraints (e.g., STD_FILE_CONSOLIDATION) that must be applied to an Objective.",
+          "context_usage": "All implementation must adhere to the Tool Pathing Standard.",
+          "related_terms": ["Objective", "Enforcement"]
+        }
+      ]
+    },
+    {
+      "id": "GOVERNANCE",
+      "description": "Audit fidelity and interaction classification.",
+      "terms": [
+        {
+          "uid": "TRM_CAN_INTENT",
+          "term": "Canonical Intent",
+          "definition": "A standardized JSON representation of a CLI command, used to eliminate semantic ambiguity in audit logs.",
+          "context_usage": "Every execution must be mapped to a Canonical Intent.",
+          "related_terms": ["Structured Audit", "Intent Dispatcher"]
+        },
+        {
+          "uid": "TRM_INT_DISPATCH",
+          "term": "Intent Dispatcher",
+          "definition": "The component within Warden that resolves raw shell strings into structured objects using metadata patterns.",
+          "context_usage": "The Intent Dispatcher intercepted the command.",
+          "related_terms": ["Canonical Intent"]
+        },
+        {
+          "uid": "TRM_SHADOW_ACT",
+          "term": "Shadow Action",
+          "definition": "Any system-level command executed through the governance proxy that does not map to a recognized canonical intent.",
+          "context_usage": "A Shadow Action was logged due to a missing intent pattern.",
+          "related_terms": ["Socratic Brake"]
+        }
+      ]
+    }
+  ]
+}

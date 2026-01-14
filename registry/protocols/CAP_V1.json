@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "title": "Compliance Audit Protocol v1 (Three-Way)",
+    "version": "1.0.0",
+    "description": "Active guidance for Engineer Claims vs. Warden Logs analysis.",
+    "audit_scope": "parent"
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_CLAIM"
+      }
+    },
+    "1_CLAIM": {
+      "description": "Submission of Engineer Claims",
+      "requirements": {
+        "engineer_report": {
+          "type": "file_exists",
+          "path": "engineer_report.json"
+        }
+      },
+      "transitions": {
+        "next": "2_EVIDENCE"
+      }
+    },
+    "2_EVIDENCE": {
+      "description": "Warden Evidence Generation",
+      "requirements": {
+        "compliance_assessment": {
+          "type": "command_log",
+          "pattern": "node engine/report.js --compliance"
+        }
+      },
+      "transitions": {
+        "next": "3_ASSESS"
+      }
+    },
+    "3_ASSESS": {
+      "description": "Verification of Delta",
+      "requirements": {
+        "compliance_assessment_token": {
+          "type": "regex_match_output",
+          "pattern": "DLR_ASM_COMPLIANCE"
+        },
+        "engineer_analysis": {
+          "type": "regex_match_output",
+          "pattern": "DLR_AUD_COMPLIANCE"
+        }
+      },
+      "transitions": {
+        "next": "4_RATIFY"
+      }
+    },
+    "4_RATIFY": {
+      "description": "Director Final Approval",
+      "requirements": {
+        "director_compliance_ack": {
+          "type": "regex_match_output",
+          "pattern": "DLR_CMP_ACK|Approved|Ratified"
+        }
+      },
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

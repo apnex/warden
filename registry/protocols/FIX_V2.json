@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "title": "Emergency Recovery Standard v2",
+    "version": "2.0.0",
+    "description": "Urgency is no Excuse for Instability."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_CONTAINMENT"
+      }
+    },
+    "1_CONTAINMENT": {
+      "description": "Failure Analysis",
+      "requirements": {
+        "fix_trace": {
+          "type": "regex_match_output",
+          "pattern": "\\[DLR_TRC_ERROR\\].*"
+        }
+      },
+      "transitions": {
+        "next": "2_RECOVERY"
+      }
+    },
+    "2_RECOVERY": {
+      "description": "Targeted Repair",
+      "requirements": {
+        "fix_patch": {
+          "type": "regex_match_output",
+          "pattern": "\\[DLR_PTC_RECOVERY\\].*"
+        }
+      },
+      "transitions": {
+        "next": "3_VERIFICATION"
+      }
+    },
+    "3_VERIFICATION": {
+      "description": "Fidelity Check",
+      "requirements": {
+        "vfy_audit": {
+          "type": "command_log",
+          "pattern": "node validation/verify_integrity.js --verify"
+        }
+      },
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}

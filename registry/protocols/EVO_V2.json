@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "title": "Protocol Evolution & Amendment v2",
+    "version": "2.0.0",
+    "description": "Self-Optimizing Governance: Friction-Driven Evolution."
+  },
+  "states": {
+    "0_IDLE": {
+      "type": "initial",
+      "transitions": {
+        "start": "1_IDENTIFY"
+      }
+    },
+    "1_IDENTIFY": {
+      "description": "Friction Detection",
+      "transitions": {
+        "next": "2_RATIONALE"
+      }
+    },
+    "2_RATIONALE": {
+      "description": "Justification",
+      "requirements": {
+        "friction_analysis": {
+          "type": "regex_match_output",
+          "pattern": "RATIONALE"
+        }
+      },
+      "transitions": {
+        "next": "3_RATIFY"
+      }
+    },
+    "3_RATIFY": {
+      "description": "Director Approval",
+      "transitions": {
+        "next": "0_IDLE"
+      }
+    }
+  }
+}
