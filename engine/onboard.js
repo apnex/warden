@@ -47,6 +47,9 @@ function showGovernance(library, onboardProto) {
     
     if (!fs.existsSync(WARDEN.ONBOARD_STATE)) {
         const token = Math.random().toString(36).substring(7).toUpperCase();
+        if (!fs.existsSync(path.dirname(WARDEN.ONBOARD_STATE))) {
+            fs.mkdirSync(path.dirname(WARDEN.ONBOARD_STATE), { recursive: true });
+        }
         fs.writeFileSync(WARDEN.ONBOARD_STATE, JSON.stringify({ token, aligned: false }));
     }
 
