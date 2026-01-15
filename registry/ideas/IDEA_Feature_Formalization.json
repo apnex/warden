@@ -1,0 +1,18 @@
+{
+  "id": "IDEA-023",
+  "title": "Formalize Feature Artifacts in GSD",
+  "author": "Engineer (apnex)",
+  "status": "INCUBATING",
+  "created": "2026-01-15",
+  "description": "Update GSD_V5 to mandate the creation of a persistent Markdown Feature Plan (docs/design/FEAT_*.md) during the Planning phase, linking implementation details back to the ratified Concept.",
+  "components": [
+    {
+      "name": "Mandatory Feature Doc",
+      "concept": "Add a file_exists requirement to GSD_V5:2_PLAN for docs/design/FEAT_*.md"
+    },
+    {
+      "name": "Concept Traceability",
+      "concept": "Ensure the Feature document explicitly references its source Concept (CON-XXX)."
+    }
+  ]
+}

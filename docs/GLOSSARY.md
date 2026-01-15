@@ -26,6 +26,7 @@ Version: 2.1.0
 |:---|:---|:---|:---|
 | `TRM_OBJ` | **Objective** | The specific technical or procedural target of a Mission. It serves as both a concept (the destination) and a data field (the plan definition). | 1. Conceptual: 'The Objective of this Mission is refactoring.' 2. Data: 'Update the Objective field in GSD_PLAN.' |
 | `TRM_STD` | **Standard** | A codified set of best practices or technical constraints (e.g., STD_FILE_CONSOLIDATION) that must be applied to an Objective. | All implementation must adhere to the Tool Pathing Standard. |
+| `TRM_FEAT_SPEC` | **Feature Specification** | A persistent Markdown artifact (FEAT_*.md) that defines the technical architecture and logic of a system capability. | The GSD Plan is derived from the Feature Specification. |
 
 ## 🌐 GOVERNANCE Domain
 *Audit fidelity and interaction classification.*

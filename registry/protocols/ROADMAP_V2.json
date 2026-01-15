@@ -2,7 +2,10 @@
   "meta": {
     "title": "Strategic Roadmap Evolution v2",
     "version": "2.0.0",
-    "description": "Intentional Evolution: Strategic planning."
+    "description": "Intentional Evolution: Strategic planning.",
+    "principles": [
+      "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+    ]
   },
   "states": {
     "0_IDLE": {

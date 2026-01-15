@@ -46,16 +46,15 @@ function showGovernance(library, onboardProto) {
     console.log("To protect the system from 'Velocity Bias', you must first master the Prime Directives.");
     
     if (!fs.existsSync(WARDEN.ONBOARD_STATE)) {
-        const token = Math.random().toString(36).substring(7).toUpperCase();
         if (!fs.existsSync(path.dirname(WARDEN.ONBOARD_STATE))) {
             fs.mkdirSync(path.dirname(WARDEN.ONBOARD_STATE), { recursive: true });
         }
+        const token = Math.random().toString(36).substring(7).toUpperCase();
         fs.writeFileSync(WARDEN.ONBOARD_STATE, JSON.stringify({ token, aligned: false }));
     }
 
     console.log("\n4. Next Step");
     console.log("   - Initialize Onboarding: `node engine/warden.js init ONBOARD_V4 \"System Induction\"` ");
-    console.log("   - Then execute `node engine/oracle.js explain PRIME_DIRECTIVES` to begin alignment.");
     showFooter("Induction");
 }
 

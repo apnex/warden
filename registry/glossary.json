@@ -55,6 +55,13 @@
           "definition": "A codified set of best practices or technical constraints (e.g., STD_FILE_CONSOLIDATION) that must be applied to an Objective.",
           "context_usage": "All implementation must adhere to the Tool Pathing Standard.",
           "related_terms": ["Objective", "Enforcement"]
+        },
+        {
+          "uid": "TRM_FEAT_SPEC",
+          "term": "Feature Specification",
+          "definition": "A persistent Markdown artifact (FEAT_*.md) that defines the technical architecture and logic of a system capability.",
+          "context_usage": "The GSD Plan is derived from the Feature Specification.",
+          "related_terms": ["Concept", "GSD_PLAN"]
         }
       ]
     },

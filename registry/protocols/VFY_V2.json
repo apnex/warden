@@ -3,6 +3,9 @@
     "title": "Protocol Integrity & Artifact Audit v2",
     "version": "2.2.0",
     "description": "Automated governance fidelity and proactive artifact analysis.",
+    "principles": [
+      "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+    ],
     "philosophy": "Trust but Verify: Governance is only as strong as its active audit trail."
   },
   "states": {

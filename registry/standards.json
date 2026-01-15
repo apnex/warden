@@ -6,6 +6,18 @@
   },
   "standards": [
     {
+      "id": "STD_COGNITIVE_FIDELITY",
+      "name": "Cognitive Fidelity & Velocity Control",
+      "guidance": "Velocity must never outpace Understanding. Execution (Code) is prohibited until Design (Concept/Feature) is ratified. ZK entities must demonstrate semantic grasp of the objective before acting.",
+      "enforcement": "IDEA_V1 Gate / GSD_V5 Plan Gate"
+    },
+    {
+      "id": "STD_FEAT_STRUCT",
+      "name": "Feature Specification Structure",
+      "guidance": "Feature documents must exist in docs/design/FEAT_*.md and adhere to the standard frontmatter and sectioning (Technical Spec, Verification Plan).",
+      "enforcement": "GSD_V5 Plan Gate"
+    },
+    {
       "id": "STD_FILE_CONSOLIDATION",
       "name": "File Structure Consolidation",
       "guidance": "Functional artifacts must be grouped into single root-level directories (engine, registry, docs, history, validation). Avoid deeply nested subfolders for core scripts.",

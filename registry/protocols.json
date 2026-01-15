@@ -13,6 +13,9 @@
         "title": "Compliance Audit Protocol v1 (Three-Way)",
         "version": "1.0.0",
         "description": "Active guidance for Engineer Claims vs. Warden Logs analysis.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ],
         "audit_scope": "parent"
       },
       "states": {
@@ -80,7 +83,10 @@
       "meta": {
         "title": "Configuration Injection v2",
         "version": "2.0.0",
-        "description": "Immutable Base, Dynamic Overlay."
+        "description": "Immutable Base, Dynamic Overlay.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ]
       },
       "states": {
         "0_IDLE": {
@@ -107,7 +113,10 @@
       "meta": {
         "title": "Automated Documentation Standard v2 (Aligned)",
         "version": "2.1.0",
-        "description": "Documentation as Code: Single Source of Truth."
+        "description": "Documentation as Code: Single Source of Truth.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ]
       },
       "states": {
         "0_IDLE": {
@@ -151,6 +160,9 @@
         "title": "Environment & Resource Standard v2",
         "version": "2.0.0",
         "description": "Stability is Physical: Logic requires a verified environment.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ],
         "philosophy": "Logic requires a verified environment to execute with fidelity."
       },
       "states": {
@@ -178,7 +190,10 @@
       "meta": {
         "title": "Protocol Evolution & Amendment v2",
         "version": "2.0.0",
-        "description": "Self-Optimizing Governance: Friction-Driven Evolution."
+        "description": "Self-Optimizing Governance: Friction-Driven Evolution.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ]
       },
       "states": {
         "0_IDLE": {
@@ -217,7 +232,10 @@
       "meta": {
         "title": "Emergency Recovery Standard v2",
         "version": "2.0.0",
-        "description": "Urgency is no Excuse for Instability."
+        "description": "Urgency is no Excuse for Instability.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ]
       },
       "states": {
         "0_IDLE": {
@@ -267,10 +285,11 @@
     "GSD_V5": {
       "meta": {
         "title": "Gated Sequential Development v5 (Closed-Loop)",
-        "version": "5.8.0",
+        "version": "5.9.0",
         "description": "SQA-anchored development lifecycle with mandatory artifact audit and compliance gates.",
         "philosophy": "Integrity over Velocity: Implementation requires active verification.",
         "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding.",
           "All logic changes must produce a recoverable patch file.",
           "Every objective must be anchored to a System Quality Attribute.",
           "Atomic Turn Enforcement: No phase transitions in the turn of delivery.",
@@ -350,15 +369,20 @@
           }
         },
         "2_PLAN": {
-          "description": "Strategic Proposal",
+          "description": "Strategic Proposal & Feature Specification",
           "interaction": {
             "on_enter": {
               "banner": "STOP_REQUIRED",
               "oracle_topic": "SQA_ANCHORING",
-              "instruction": "Present the Strategic Proposal to the Director. Do not proceed until authorized."
+              "instruction": "1. Draft/Update the Feature Document (`docs/design/FEAT_*.md`).\n2. Derive the GSD Plan from the Feature.\n3. Present both to the Director."
             }
           },
           "requirements": {
+            "feature_spec": {
+              "type": "file_exists",
+              "path": "docs/design/FEAT_*.md",
+              "instruction": "The technical specification must exist and be linked to a Concept."
+            },
             "sqa_anchoring": {
               "type": "regex_match_output",
               "pattern": "DLR_PLN_GSD.*(SQA Anchors|Impact)",
@@ -374,6 +398,7 @@
             "next": {
               "target": "3_EXECUTE",
               "gates": [
+                "feature_spec",
                 "sqa_anchoring",
                 "director_approval"
               ]
@@ -504,8 +529,11 @@
     "IDEA_V1": {
       "meta": {
         "title": "Idea Management Protocol v1",
-        "version": "1.0.0",
-        "description": "Lifecycle management for raw ideas: Capture -> Incubate -> Germinate."
+        "version": "1.1.0",
+        "description": "Lifecycle management for raw ideas: Capture -> Incubate -> Germinate.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ]
       },
       "states": {
         "0_IDLE": {
@@ -516,12 +544,42 @@
         },
         "1_CAPTURE": {
           "description": "Idea Recording",
+          "requirements": {
+            "idea_file": {
+              "type": "file_exists",
+              "path": "registry/ideas/IDEA_*.json",
+              "instruction": "Capture the idea using `node engine/idea.js --create`."
+            }
+          },
           "transitions": {
             "next": "2_INCUBATE"
           }
         },
         "2_INCUBATE": {
-          "description": "Refinement Dialogue",
+          "description": "Gated Refinement Dialogue",
+          "interaction": {
+            "on_enter": {
+              "banner": "DIALOGUE_MODE",
+              "instruction": "Engage in iterative dialogue. Output must be a `registry/concepts/*.md` file."
+            }
+          },
+          "requirements": {
+            "dialogue_log": {
+              "type": "command_log",
+              "pattern": "node engine/idea.js --refine",
+              "instruction": "Record refinement notes using `node engine/idea.js --refine`."
+            },
+            "concept_artifact": {
+              "type": "file_exists",
+              "path": "registry/concepts/CON_*.md",
+              "instruction": "Crystallize the refined idea into a detailed Concept Document in `registry/concepts/`."
+            },
+            "director_ratification": {
+              "type": "regex_match_output",
+              "pattern": "DLR_IDE_ACK|Approved|Ratified",
+              "instruction": "STOP. Present the final Concept Document to the Director. Do not proceed until authorized."
+            }
+          },
           "transitions": {
             "promote": "3_GERMINATE",
             "archive": "4_ARCHIVE"
@@ -545,7 +603,10 @@
       "meta": {
         "title": "System Mapping & Contextualization v2",
         "version": "2.0.0",
-        "description": "Context precedes Logic: An entity cannot modify what it does not map."
+        "description": "Context precedes Logic: An entity cannot modify what it does not map.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ]
       },
       "states": {
         "0_IDLE": {
@@ -587,6 +648,7 @@
         "description": "Initial alignment and role assumption.",
         "philosophy": "Collaborative Stewardship: Aligning Director vision with Engineer execution from Turn 1.",
         "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding.",
           "Director owns Objective & Decision; Engineer owns Execution & Verification.",
           "Integrity of the codebase is maintained through strict protocol adherence.",
           "Transparency is achieved through mandatory initial response echoes."
@@ -717,7 +779,10 @@
       "meta": {
         "title": "Structural Evolution & Refactoring v2",
         "version": "2.0.0",
-        "description": "Friction-to-Flow: Structural improvement without regression."
+        "description": "Friction-to-Flow: Structural improvement without regression.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ]
       },
       "states": {
         "0_IDLE": {
@@ -780,7 +845,10 @@
       "meta": {
         "title": "Post-Implementation Review Standard v4 (Interaction Report)",
         "version": "4.2.0",
-        "description": "Actionable post-mortem and knowledge persistence engine."
+        "description": "Actionable post-mortem and knowledge persistence engine.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ]
       },
       "states": {
         "0_IDLE": {
@@ -851,7 +919,10 @@
       "meta": {
         "title": "Engineer Proficiency Standard v2",
         "version": "2.1.0",
-        "description": "Competence is Demonstrated, not Declared."
+        "description": "Competence is Demonstrated, not Declared.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ]
       },
       "states": {
         "0_IDLE": {
@@ -896,7 +967,10 @@
       "meta": {
         "title": "Strategic Roadmap Evolution v2",
         "version": "2.0.0",
-        "description": "Intentional Evolution: Strategic planning."
+        "description": "Intentional Evolution: Strategic planning.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ]
       },
       "states": {
         "0_IDLE": {
@@ -947,7 +1021,10 @@
       "meta": {
         "title": "Automated Status Reporting v2",
         "version": "2.0.0",
-        "description": "System Pulse: Real-time visibility into health and debt."
+        "description": "System Pulse: Real-time visibility into health and debt.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ]
       },
       "states": {
         "0_IDLE": {
@@ -978,7 +1055,10 @@
       "meta": {
         "title": "Concurrency Validation v2",
         "version": "2.0.0",
-        "description": "Heisenbug Hunting: Stability requires iterative verification."
+        "description": "Heisenbug Hunting: Stability requires iterative verification.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ]
       },
       "states": {
         "0_IDLE": {
@@ -1006,6 +1086,9 @@
         "title": "Protocol Integrity & Artifact Audit v2",
         "version": "2.2.0",
         "description": "Automated governance fidelity and proactive artifact analysis.",
+        "principles": [
+          "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+        ],
         "philosophy": "Trust but Verify: Governance is only as strong as its active audit trail."
       },
       "states": {

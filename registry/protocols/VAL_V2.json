@@ -2,7 +2,10 @@
   "meta": {
     "title": "Concurrency Validation v2",
     "version": "2.0.0",
-    "description": "Heisenbug Hunting: Stability requires iterative verification."
+    "description": "Heisenbug Hunting: Stability requires iterative verification.",
+    "principles": [
+      "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+    ]
   },
   "states": {
     "0_IDLE": {

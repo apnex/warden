@@ -1,0 +1,15 @@
+{
+  "id": "IDEA-001",
+  "title": "Verification Test",
+  "description": "Ensuring tool refactor works",
+  "status": "INCUBATING",
+  "author": "Engineer",
+  "created": "2026-01-15",
+  "dialogue": [
+    {
+      "timestamp": "2026-01-15T04:09:57.101Z",
+      "note": "Verified refinement logic."
+    }
+  ],
+  "components": []
+}

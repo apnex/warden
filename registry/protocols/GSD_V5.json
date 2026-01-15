@@ -1,10 +1,11 @@
 {
   "meta": {
     "title": "Gated Sequential Development v5 (Closed-Loop)",
-    "version": "5.8.0",
+    "version": "5.9.0",
     "description": "SQA-anchored development lifecycle with mandatory artifact audit and compliance gates.",
     "philosophy": "Integrity over Velocity: Implementation requires active verification.",
     "principles": [
+      "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding.",
       "All logic changes must produce a recoverable patch file.",
       "Every objective must be anchored to a System Quality Attribute.",
       "Atomic Turn Enforcement: No phase transitions in the turn of delivery.",
@@ -84,15 +85,20 @@
       }
     },
     "2_PLAN": {
-      "description": "Strategic Proposal",
+      "description": "Strategic Proposal & Feature Specification",
       "interaction": {
         "on_enter": {
           "banner": "STOP_REQUIRED",
           "oracle_topic": "SQA_ANCHORING",
-          "instruction": "Present the Strategic Proposal to the Director. Do not proceed until authorized."
+          "instruction": "1. Draft/Update the Feature Document (`docs/design/FEAT_*.md`).\n2. Derive the GSD Plan from the Feature.\n3. Present both to the Director."
         }
       },
       "requirements": {
+        "feature_spec": {
+          "type": "file_exists",
+          "path": "docs/design/FEAT_*.md",
+          "instruction": "The technical specification must exist and be linked to a Concept."
+        },
         "sqa_anchoring": {
           "type": "regex_match_output",
           "pattern": "DLR_PLN_GSD.*(SQA Anchors|Impact)",
@@ -108,6 +114,7 @@
         "next": {
           "target": "3_EXECUTE",
           "gates": [
+            "feature_spec",
             "sqa_anchoring",
             "director_approval"
           ]

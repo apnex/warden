@@ -1,0 +1,22 @@
+{
+  "id": "IDEA-022",
+  "title": "Enhanced Idea-to-Concept Protocol Workflow",
+  "author": "Engineer (apnex)",
+  "status": "INCUBATING",
+  "created": "2026-01-15",
+  "description": "Refine IDEA_V1 to enforce a gated incubation loop that outputs a detailed Markdown Concept, clearly distinguishing it from a GSD Feature implementation.",
+  "components": [
+    {
+      "name": "Concept Markdown",
+      "concept": "Transition registry/concepts from JSON to Markdown to support rich design documentation."
+    },
+    {
+      "name": "Gated Incubation",
+      "concept": "Enforce a Director-guided loop in IDEA_V1 state 2_INCUBATE."
+    },
+    {
+      "name": "Clear Taxonomy",
+      "concept": "Codify the distinction: Idea (Spark) -> Concept (Design) -> Feature (Implementation)."
+    }
+  ]
+}

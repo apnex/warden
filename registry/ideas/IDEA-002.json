@@ -1,0 +1,15 @@
+{
+  "id": "IDEA-002",
+  "title": "Codify Cognitive Fidelity Standard",
+  "description": "Establish STD_COGNITIVE_FIDELITY and link it to GSD/IDEA principles to ensure Velocity never outpaces Understanding.",
+  "status": "INCUBATING",
+  "author": "Engineer",
+  "created": "2026-01-15",
+  "dialogue": [
+    {
+      "timestamp": "2026-01-15T04:42:24.008Z",
+      "note": "Refined concept to include Pledge integration and standardized protocol principles block."
+    }
+  ],
+  "components": []
+}

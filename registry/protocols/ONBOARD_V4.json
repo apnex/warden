@@ -4,9 +4,9 @@
     "version": "4.1.0",
     "description": "Initial alignment and role assumption.",
     "philosophy": "Collaborative Stewardship: Aligning Director vision with Engineer execution from Turn 1.",
-    "principles": [
-      "Director owns Objective & Decision; Engineer owns Execution & Verification.",
-      "Integrity of the codebase is maintained through strict protocol adherence.",
+            "principles": [
+              "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding.",
+              "Director owns Objective & Decision; Engineer owns Execution & Verification.",      "Integrity of the codebase is maintained through strict protocol adherence.",
       "Transparency is achieved through mandatory initial response echoes."
     ],
     "roles": {

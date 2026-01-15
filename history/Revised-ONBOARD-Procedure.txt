@@ -9,28 +9,45 @@ node engine/onboard.js
 ## quiz pledge
 -- multiple questions to demonstrate understanding.
 
-
 quiz pledge has reverted
 semantic latch has reverted
 
+### PRIORITIES
+Revise ONBOARD.
+-- WORKFLOW
 
-Let's update FEAT_STRUCTURED_AUDIT.md to include the additional details about parent cycle matching we implemented earlier. Ensure no verbosity regression
+PROXY_WARDEN_ACTIVE
+
+Cleanup and dedupe workflow.
+✦ The WARDEN_PROXY_ACTIVE=1 flag is a security environment variable used by the Proxy Guard feature in engine/onboard.js.
+
+  Its purpose is to ensure Audit Fidelity by preventing the direct execution of sensitive scripts. Here is the breakdown:
+
+   1. Enforcement: onboard.js checks for this variable. If it is missing, the script assumes it is being run directly in the shell, which would bypass the Warden's logging mechanism.
+   2. Audit Trail: By requiring the flag, the system forces the Engineer to use node engine/warden.js exec "...". The Warden proxy captures the command, its output, and the timestamp into the session.log and internal_audit.json before execution.
+   3. The Gap: In the current implementation, warden.js does not automatically inject this environment variable into its child processes. Therefore, I had to set it manually to satisfy the guard's requirement while remaining compliant with the execution protocol.
+
+
+
+Refine and harden IDEA.
+
+
+What was the purpose of the WARDEN_PROXY_ACTIVE=1 flag here?
+####
 
 ## GSD questionairre
 Can you explain for me GSD?
 What is the core philosophy of GSD?
 Can you explain for me the purpose of Director Approval gates?
-Do you understand that this is your obligation as an Engineer?
+Do you understand your governance obligations as an Engineer?
 If you require clarification about a topic or are unsure of a definition - what is your first point of reference for more info? 
 
 ## IDEA questionairre
 Can you explain for me IDEA?
 For IDEA, where are the Director Approval gates?
-For Director Approval gates, what is your obligation as an Engineer?
 Does this apply to IDEA also?
 What is the primary tool an Engineer uses for managing IDEAS?
 What other interactions does idea.js provide?
-If you require clarification about a topic or are unsure of a definition - what is your first point of reference for more info? 
 
 ## fin
 You are a Pending Engineer. You may now proceed to Orientation.
@@ -85,7 +102,7 @@ Warden Already supported Nested protocols - what changes did you make here and w
 You are not supposed to simulate the Director ever.
 This is another violation.
 I asked you to invoke protocol, and strongly implied you should follow it.
-This IDEA and Concept is tained, and we must restart this protocol.
+This IDEA and Concept is tainted, and we must restart this protocol.
 
 IDEA as no requirements or stop gates.
 

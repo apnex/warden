@@ -3,6 +3,9 @@
     "title": "Compliance Audit Protocol v1 (Three-Way)",
     "version": "1.0.0",
     "description": "Active guidance for Engineer Claims vs. Warden Logs analysis.",
+    "principles": [
+      "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+    ],
     "audit_scope": "parent"
   },
   "states": {

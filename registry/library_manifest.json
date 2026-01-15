@@ -2,103 +2,103 @@
   "CAP_V1": {
     "file": "registry/protocols/CAP_V1.json",
     "version": "1.0.0",
-    "hash": "9120ee35054c82b6f3ab661ac00ffde62ca3acb84407b024f7568ac8ab705b31",
-    "updated": "2026-01-14T09:03:22.838Z"
+    "hash": "f7dd0ecfe53173da89cc609f3825a29ca19f3acada536a622325cce60fb80f73",
+    "updated": "2026-01-15T05:33:13.415Z"
   },
   "CFG_V2": {
     "file": "registry/protocols/CFG_V2.json",
     "version": "2.0.0",
-    "hash": "c5bd68dab48a1cc3fbe3baad81f72bbe26500f8023e044d752b564928312501e",
-    "updated": "2026-01-14T09:03:22.838Z"
+    "hash": "99594a555b7adaa2f1a5992032fd9a50e3a9c6a3d5bd4bab5fe3ab0da50af9ea",
+    "updated": "2026-01-15T05:33:13.416Z"
   },
   "DOC_V2": {
     "file": "registry/protocols/DOC_V2.json",
     "version": "2.1.0",
-    "hash": "767a573881e3c9f651aa3e7a0edda7d8e91684c4f2d4f024f0380579c8aab3d5",
-    "updated": "2026-01-14T09:03:22.838Z"
+    "hash": "732823639d657af62249791a6cf9266c5318e750505f3d2a6d60834e650beea0",
+    "updated": "2026-01-15T05:33:13.416Z"
   },
   "ENV_V2": {
     "file": "registry/protocols/ENV_V2.json",
     "version": "2.0.0",
-    "hash": "903960d98e89c6006194ecd55c80a427a201d751d6b67bd4266014e5b711c8b0",
-    "updated": "2026-01-14T09:03:22.838Z"
+    "hash": "cda7ec50aee881da0f5b1bc5d811cedc0d77d1bf93cae4ef78f800876a57d90e",
+    "updated": "2026-01-15T05:33:13.416Z"
   },
   "EVO_V2": {
     "file": "registry/protocols/EVO_V2.json",
     "version": "2.0.0",
-    "hash": "30a1c0ce916de63c3b0d0711e914e8151f8d8b1d11981429d854896a9387d37d",
-    "updated": "2026-01-14T09:03:22.838Z"
+    "hash": "ffb40a6fde6293c3613f215b10387e050a5b92ad90316998de96d88a77c28c6f",
+    "updated": "2026-01-15T05:33:13.416Z"
   },
   "FIX_V2": {
     "file": "registry/protocols/FIX_V2.json",
     "version": "2.0.0",
-    "hash": "b4769ff84cc655efd4640e327b8661d5a6da4339bf8a47d10b103fdad1c7f3b5",
-    "updated": "2026-01-14T09:03:22.838Z"
+    "hash": "38996a0f77653ebc2c5ca555ece3d318a53a8f2570d7168f5844047ff06ae512",
+    "updated": "2026-01-15T05:33:13.416Z"
   },
   "GSD_V5": {
     "file": "registry/protocols/GSD_V5.json",
-    "version": "5.8.0",
-    "hash": "fa981c0141233931c43b300b0c9396a533ad697824bb4c7508ea422179fa10a9",
-    "updated": "2026-01-14T09:03:22.838Z"
+    "version": "5.9.0",
+    "hash": "c04c924070b44171c1e23b8d015badb9e3a7108fc1810c649f5e08b341361442",
+    "updated": "2026-01-15T05:33:13.417Z"
   },
   "IDEA_V1": {
     "file": "registry/protocols/IDEA_V1.json",
-    "version": "1.0.0",
-    "hash": "08533d7ca9e41fa05f81795831dc09f3c8f04aeea2621c00d1521a3e5910b4af",
-    "updated": "2026-01-14T09:03:22.838Z"
+    "version": "1.1.0",
+    "hash": "bfb69d836de67aedfa9f8be754736fab6f2b9d7f6590f99eb37a2b7de2b58307",
+    "updated": "2026-01-15T05:33:13.417Z"
   },
   "MAP_V2": {
     "file": "registry/protocols/MAP_V2.json",
     "version": "2.0.0",
-    "hash": "c3e88f88614decf5825452964654cf088f43e1f83323c31ecd82c81fcee3cf06",
-    "updated": "2026-01-14T09:03:22.839Z"
+    "hash": "771bc9c680d2a2cccf723f43a43b6841c482646ae00576bc0e4b3217529103c2",
+    "updated": "2026-01-15T05:33:13.417Z"
   },
   "ONBOARD_V4": {
     "file": "registry/protocols/ONBOARD_V4.json",
     "version": "4.1.0",
-    "hash": "9369468a0ae637976334f0de11ec1674dfbff280cad48cb994853d336bc72dcb",
-    "updated": "2026-01-14T09:03:22.839Z"
+    "hash": "95fefa0283ed62116a7a91297db549dd1ec26c2fc2b54008bc6e0c0064f5aa96",
+    "updated": "2026-01-15T05:33:13.417Z"
   },
   "OPTIMISE_V2": {
     "file": "registry/protocols/OPTIMISE_V2.json",
     "version": "2.0.0",
-    "hash": "0971d34ef5a63dd4e087945168b9f912f1788880873984ed0023049829c16e4d",
-    "updated": "2026-01-14T09:03:22.839Z"
+    "hash": "f8e134916e04dccd7304893448454f4c30e84fe4ae82db25bd0d4180f75b10e6",
+    "updated": "2026-01-15T05:33:13.417Z"
   },
   "PIR_V4": {
     "file": "registry/protocols/PIR_V4.json",
     "version": "4.2.0",
-    "hash": "022acf9a4b0f53860e872dfed25b854c7c328286d09cc53933f36bf6d476ba7a",
-    "updated": "2026-01-14T09:03:22.839Z"
+    "hash": "f127d187c6e451e549910873addea7a4976cfd94e9b2332a43d32e748d0f14ba",
+    "updated": "2026-01-15T05:33:13.417Z"
   },
   "PRY_V2": {
     "file": "registry/protocols/PRY_V2.json",
     "version": "2.1.0",
-    "hash": "6b32a716194fdfd3121f425a9edde11e2ffeafc9eff377d813e22dc96733e2b9",
-    "updated": "2026-01-14T09:03:22.839Z"
+    "hash": "8bfd3773824e9fb7a09d8498e51b174733578ce8039f0185a8152238cae89882",
+    "updated": "2026-01-15T05:33:13.418Z"
   },
   "ROADMAP_V2": {
     "file": "registry/protocols/ROADMAP_V2.json",
     "version": "2.0.0",
-    "hash": "7b239b0414c39b00d92e2a0dd62626a9820adf192ae207652e78fb4bc6e71209",
-    "updated": "2026-01-14T09:03:22.839Z"
+    "hash": "2958223b77df0a88be4a915346584b094138122435c003bf91766b791cd229b8",
+    "updated": "2026-01-15T05:33:13.418Z"
   },
   "STAT_V2": {
     "file": "registry/protocols/STAT_V2.json",
     "version": "2.0.0",
-    "hash": "9c39f739b3d9b97c9f11a0d360271e1b88f3d0aaa152554478c668271b67b5ba",
-    "updated": "2026-01-14T09:03:22.839Z"
+    "hash": "e179d23d9e7d7986987cb317cde2f4024bc14799587e088c520c51e2e4558348",
+    "updated": "2026-01-15T05:33:13.418Z"
   },
   "VAL_V2": {
     "file": "registry/protocols/VAL_V2.json",
     "version": "2.0.0",
-    "hash": "7e62f6eff2bad53485e47f5ec455a4a99041fbaf4130582dce971ed27fed680e",
-    "updated": "2026-01-14T09:03:22.839Z"
+    "hash": "c9dbeee7caabb92745f014685281620b20d6b5c1d4fa7acb7386a175f3c5f705",
+    "updated": "2026-01-15T05:33:13.418Z"
   },
   "VFY_V2": {
     "file": "registry/protocols/VFY_V2.json",
     "version": "2.2.0",
-    "hash": "5e41b24915049128c52d2a760ff5dee747cfe41e8d219b1b8c858634a04f6a8b",
-    "updated": "2026-01-14T09:03:22.839Z"
+    "hash": "4cb56d3caf9a02777e75edb69274c9ac847053049c0e18279d64569367b3914e",
+    "updated": "2026-01-15T05:33:13.418Z"
   }
 }

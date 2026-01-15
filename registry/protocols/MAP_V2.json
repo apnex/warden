@@ -2,7 +2,10 @@
   "meta": {
     "title": "System Mapping & Contextualization v2",
     "version": "2.0.0",
-    "description": "Context precedes Logic: An entity cannot modify what it does not map."
+    "description": "Context precedes Logic: An entity cannot modify what it does not map.",
+    "principles": [
+      "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+    ]
   },
   "states": {
     "0_IDLE": {

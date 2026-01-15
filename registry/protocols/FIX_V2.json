@@ -2,7 +2,10 @@
   "meta": {
     "title": "Emergency Recovery Standard v2",
     "version": "2.0.0",
-    "description": "Urgency is no Excuse for Instability."
+    "description": "Urgency is no Excuse for Instability.",
+    "principles": [
+      "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+    ]
   },
   "states": {
     "0_IDLE": {

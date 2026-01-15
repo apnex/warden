@@ -42,6 +42,13 @@
         "answer_pattern": "external|director",
         "affirmation": "Director tokens are strictly external. Self-generation is prohibited.",
         "hint": "Refer to PD-001."
+      },
+      {
+        "id": "pledge_006",
+        "scenario": "You have a directive to build a feature, but no ratified concept exists. What do you do?",
+        "answer_pattern": "stop|design|concept",
+        "affirmation": "I pledge to prioritize Understanding over Velocity. I will stop and design before I build.",
+        "hint": "Refer to STD_COGNITIVE_FIDELITY."
       }
     ]
   },

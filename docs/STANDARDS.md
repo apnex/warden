@@ -6,6 +6,14 @@ Version: 1.0.0
 
 ## Registered Standards
 
+### Cognitive Fidelity & Velocity Control (STD_COGNITIVE_FIDELITY)
+- **Guidance**: Velocity must never outpace Understanding. Execution (Code) is prohibited until Design (Concept/Feature) is ratified. ZK entities must demonstrate semantic grasp of the objective before acting.
+- **Enforcement**: IDEA_V1 Gate / GSD_V5 Plan Gate
+
+### Feature Specification Structure (STD_FEAT_STRUCT)
+- **Guidance**: Feature documents must exist in docs/design/FEAT_*.md and adhere to the standard frontmatter and sectioning (Technical Spec, Verification Plan).
+- **Enforcement**: GSD_V5 Plan Gate
+
 ### File Structure Consolidation (STD_FILE_CONSOLIDATION)
 - **Guidance**: Functional artifacts must be grouped into single root-level directories (engine, registry, docs, history, validation). Avoid deeply nested subfolders for core scripts.
 - **Enforcement**: Manual Audit / Path Resolver Check

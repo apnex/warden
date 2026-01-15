@@ -1,6 +1,40 @@
 {
   "governance_changelog": [
     {
+      "version": "9.19.1",
+      "date": "2026-01-15",
+      "changes": [
+        "Add Version and Generated headers to README and BACKLOG generators"
+      ]
+    },
+    {
+      "version": "9.19.0",
+      "date": "2026-01-15",
+      "changes": [
+        "Codify STD_COGNITIVE_FIDELITY standard",
+        "Update Onboarding Pledge with Understanding vs Velocity scenario",
+        "Standardize meta.principles across all 17 protocols"
+      ]
+    },
+    {
+      "version": "9.18.0",
+      "date": "2026-01-15",
+      "changes": [
+        "Upgrade GSD_V5 to v5.9.0 with mandatory Feature Spec artifact",
+        "Refactor engine/idea.js to support full IDEA_V1 lifecycle",
+        "Register DLR_DOC_FEAT and STD_FEAT_STRUCT in registry"
+      ]
+    },
+    {
+      "version": "9.17.0",
+      "date": "2026-01-15",
+      "changes": [
+        "Implement CON-008: Structured Idea-to-Concept Taxonomy",
+        "Upgrade IDEA_V1 to v1.1.0 with Gated Incubation Loop",
+        "Register DLR_IDE_ACK in deliverables registry"
+      ]
+    },
+    {
       "version": "9.16.11",
       "date": "2026-01-14",
       "changes": [

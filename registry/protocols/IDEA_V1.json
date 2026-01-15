@@ -1,8 +1,11 @@
 {
   "meta": {
     "title": "Idea Management Protocol v1",
-    "version": "1.0.0",
-    "description": "Lifecycle management for raw ideas: Capture -> Incubate -> Germinate."
+    "version": "1.1.0",
+    "description": "Lifecycle management for raw ideas: Capture -> Incubate -> Germinate.",
+    "principles": [
+      "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+    ]
   },
   "states": {
     "0_IDLE": {
@@ -13,12 +16,42 @@
     },
     "1_CAPTURE": {
       "description": "Idea Recording",
+      "requirements": {
+        "idea_file": {
+          "type": "file_exists",
+          "path": "registry/ideas/IDEA_*.json",
+          "instruction": "Capture the idea using `node engine/idea.js --create`."
+        }
+      },
       "transitions": {
         "next": "2_INCUBATE"
       }
     },
     "2_INCUBATE": {
-      "description": "Refinement Dialogue",
+      "description": "Gated Refinement Dialogue",
+      "interaction": {
+        "on_enter": {
+          "banner": "DIALOGUE_MODE",
+          "instruction": "Engage in iterative dialogue. Output must be a `registry/concepts/*.md` file."
+        }
+      },
+      "requirements": {
+        "dialogue_log": {
+          "type": "command_log",
+          "pattern": "node engine/idea.js --refine",
+          "instruction": "Record refinement notes using `node engine/idea.js --refine`."
+        },
+        "concept_artifact": {
+          "type": "file_exists",
+          "path": "registry/concepts/CON_*.md",
+          "instruction": "Crystallize the refined idea into a detailed Concept Document in `registry/concepts/`."
+        },
+        "director_ratification": {
+          "type": "regex_match_output",
+          "pattern": "DLR_IDE_ACK|Approved|Ratified",
+          "instruction": "STOP. Present the final Concept Document to the Director. Do not proceed until authorized."
+        }
+      },
       "transitions": {
         "promote": "3_GERMINATE",
         "archive": "4_ARCHIVE"

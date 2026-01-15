@@ -11,8 +11,11 @@ function generate() {
 
     const status = JSON.parse(fs.readFileSync(SOURCES.WARDEN_STATUS, 'utf8'));
     const changelog = JSON.parse(fs.readFileSync(SOURCES.WARDEN_CHANGELOG, 'utf8'));
+    const version = changelog.warden_changelog[0].version;
 
     let md = '# 🛡️ ' + status.tool_suite + ' - v' + status.version + nl + nl;
+    md += '**Version:** ' + version + '  ' + nl;
+    md += '**Generated:** ' + new Date().toLocaleString() + '  ' + nl + nl;
     md += '> Technical Implementation and Architecture Documentation.' + nl + nl;
 
     md += '## 🧩 Component Dashboard' + nl + nl;

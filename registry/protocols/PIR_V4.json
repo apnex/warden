@@ -2,7 +2,10 @@
   "meta": {
     "title": "Post-Implementation Review Standard v4 (Interaction Report)",
     "version": "4.2.0",
-    "description": "Actionable post-mortem and knowledge persistence engine."
+    "description": "Actionable post-mortem and knowledge persistence engine.",
+    "principles": [
+      "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+    ]
   },
   "states": {
     "0_IDLE": {

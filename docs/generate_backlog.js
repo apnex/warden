@@ -9,9 +9,13 @@ function generate() {
     }
 
     const data = JSON.parse(fs.readFileSync(SOURCES.BACKLOG, 'utf8'));
+    const changelog = JSON.parse(fs.readFileSync(SOURCES.WARDEN_CHANGELOG, 'utf8'));
+    const version = changelog.warden_changelog[0].version;
     const nl = String.fromCharCode(10);
 
     let md = '# 📋 ' + data.meta.title + nl + nl;
+    md += '**Version:** ' + version + '  ' + nl;
+    md += '**Generated:** ' + new Date().toLocaleString() + '  ' + nl + nl;
     md += '> ' + data.meta.description + nl + nl;
 
     // Open Items

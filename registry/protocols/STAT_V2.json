@@ -2,7 +2,10 @@
   "meta": {
     "title": "Automated Status Reporting v2",
     "version": "2.0.0",
-    "description": "System Pulse: Real-time visibility into health and debt."
+    "description": "System Pulse: Real-time visibility into health and debt.",
+    "principles": [
+      "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+    ]
   },
   "states": {
     "0_IDLE": {

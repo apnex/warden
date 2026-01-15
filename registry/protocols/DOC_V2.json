@@ -2,7 +2,10 @@
   "meta": {
     "title": "Automated Documentation Standard v2 (Aligned)",
     "version": "2.1.0",
-    "description": "Documentation as Code: Single Source of Truth."
+    "description": "Documentation as Code: Single Source of Truth.",
+    "principles": [
+      "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+    ]
   },
   "states": {
     "0_IDLE": {

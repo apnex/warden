@@ -330,7 +330,10 @@ function cmdExec(command) {
 
     let output = "";
     try {
-        output = execSync(command, { encoding: 'utf8' });
+        output = execSync(command, { 
+            encoding: 'utf8',
+            env: { ...process.env, WARDEN_PROXY_ACTIVE: 'true' }
+        });
         process.stdout.write(output);
     } catch (e) {
         output = (e.stdout || "") + (e.stderr || "");

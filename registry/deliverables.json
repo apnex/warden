@@ -6,6 +6,14 @@
   },
   "deliverables": [
     {
+      "id": "DLR_DOC_FEAT",
+      "name": "Feature Specification",
+      "description": "Persistent Markdown blueprint of a system capability.",
+      "purpose": "Ensures design fidelity and auditability of implementation logic.",
+      "scope": "Documentation",
+      "persistence": "File (docs/design/)"
+    },
+    {
       "id": "DLR_HND_ONBOARD",
       "name": "Onboarding Handshake",
       "description": "Initial alignment echo including principles and role acceptance.",
@@ -123,6 +131,14 @@
       "purpose": "Unlocks full Engineer designation.",
       "scope": "Governance",
       "persistence": "Governance History"
+    },
+    {
+      "id": "DLR_IDE_ACK",
+      "name": "Idea Ratification",
+      "description": "Explicit Director authorization of a Design Concept.",
+      "purpose": "Gates the promotion from Idea to Strategy.",
+      "scope": "Innovation",
+      "persistence": "CLI Log"
     },
     {
       "id": "DLR_SNA_INTEGRITY",

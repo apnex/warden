@@ -3,6 +3,9 @@
     "title": "Environment & Resource Standard v2",
     "version": "2.0.0",
     "description": "Stability is Physical: Logic requires a verified environment.",
+    "principles": [
+      "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding."
+    ],
     "philosophy": "Logic requires a verified environment to execute with fidelity."
   },
   "states": {
