@@ -1,0 +1,47 @@
+{
+  "id": "IDEA-035",
+  "title": "Dynamic Architecture Living Maps",
+  "description": "Real-time visual generation of the system topology (MermaidJS) based on protocol and dependency parsing.",
+  "status": "GERMINATING",
+  "author": "Engineer",
+  "created": "2026-01-15",
+  "dialogue": [
+    {
+      "timestamp": "2026-01-15T07:13:09.743Z",
+      "note": "Initial concept definition: The tool should scan 'engine/*.js' for require() calls and 'registry/protocols/*.json' for state transitions to build a directed graph."
+    },
+    {
+      "timestamp": "2026-01-15T07:13:35.753Z",
+      "note": "Architecture Update: The graph builder will support 'layers' to toggle between high-level component views and low-level function call views."
+    },
+    {
+      "timestamp": "2026-01-15T07:15:09.943Z",
+      "note": "Technical Expansion: We should leverage the 'mermaid-cli' (mmdc) if available for optional PNG export, but default to generating .mmd text files to keep dependencies low."
+    },
+    {
+      "timestamp": "2026-01-15T07:17:41.213Z",
+      "note": "Scope Boundary: Interactive drill-down (SVG links) is out of scope for MVP. V1 will be static graph generation only."
+    },
+    {
+      "timestamp": "2026-01-15T07:19:21.460Z",
+      "note": "Clarification: The 'map' command will be integrated directly into 'engine/oracle.js'. Its primary purpose is 'Visual Grounding'—converting abstract file structures into concrete relationship graphs to reduce cognitive load for ZK entities."
+    },
+    {
+      "timestamp": "2026-01-15T07:21:51.070Z",
+      "note": "Deep Dive: Mapping Scope & Usage. 1) Scope: 'Require' dependencies (Code-to-Code) and 'Transition' flows (State-to-State). 2) Usage: ZK Entities will 'cat' the .mmd file to understand the graph structure, or (if capable) render it using their own internal tools/plugins, treating the text as a verifiable source of truth."
+    },
+    {
+      "timestamp": "2026-01-15T07:23:50.069Z",
+      "note": "Interface Design: CLI will use 'node engine/oracle.js map <target>'. Targets: 'system' (full), 'protocol <ID>' (state machine), 'deps' (codebase). Output: stdout by default, or > file.mmd."
+    },
+    {
+      "timestamp": "2026-01-15T07:25:48.010Z",
+      "note": "Strategic Pivot Analysis: Separating 'Mapping' from 'Oracle'. Option A: Oracle-Integrated (Current). Option B: Dedicated 'Cartographer' Component. Pros/Cons analysis required for concept ratification."
+    },
+    {
+      "timestamp": "2026-01-15T07:27:34.940Z",
+      "note": "Decision: Option B Ratified. The solution will be a dedicated 'engine/map.js' tool, serving as the execution engine for the MAP_V2 protocol."
+    }
+  ],
+  "components": []
+}

@@ -1,134 +1,129 @@
 {
-  "meta": {
-    "title": "System Onboarding & Philosophy v4",
-    "version": "4.1.0",
-    "description": "Initial alignment and role assumption.",
-    "philosophy": "Collaborative Stewardship: Aligning Director vision with Engineer execution from Turn 1.",
-            "principles": [
-              "Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding.",
-              "Director owns Objective & Decision; Engineer owns Execution & Verification.",      "Integrity of the codebase is maintained through strict protocol adherence.",
-      "Transparency is achieved through mandatory initial response echoes."
-    ],
-    "roles": {
-      "Engineer": {
-        "designation": "Lead Analyst & Implementer",
-        "responsibilities": [
-          "Context gathering and technical analysis.",
-          "Transactional implementation and verification.",
-          "Maintaining bit-perfect audit fidelity."
-        ]
-      },
-      "Director": {
-        "designation": "System Arbiter & Mission Lead",
-        "responsibilities": [
-          "Strategic intent definition and mission briefing.",
-          "Gate authorization and plan approval.",
-          "Final compliance ratification and seal."
-        ]
-      },
-      "Oracle": {
-        "designation": "System Mentor & Knowledge Authority",
-        "responsibilities": [
-          "Providing semantic and structural guidance.",
-          "Interactive induction and module-based learning.",
-          "Clarifying system standards and protocol logic."
-        ]
-      }
-    }
-  },
-  "states": {
-    "0_IDLE": {
-      "type": "initial",
-      "transitions": {
-        "start": "1_HANDSHAKE"
-      }
-    },
-    "1_HANDSHAKE": {
-      "description": "Protocol Handshake",
-      "requirements": {
-        "onboard_tool": {
-          "type": "command_log",
-          "pattern": "node engine/onboard.js",
-          "instruction": "Execute `node engine/warden.js exec \"node engine/onboard.js\"` to begin induction."
-        },
-        "echo_dlr_headers": {
-          "type": "regex_match_output",
-          "pattern": "\\[DLR_HND_ONBOARD\\].*(Principles Echo|Role Acceptance|Registry Mapping|Domain Awareness)",
-          "instruction": "Echo the [DLR_HND_ONBOARD] token to acknowledge role and principles."
-        }
-      },
-      "transitions": {
-        "next": "2_ALIGNMENT"
-      }
-    },
-            "2_ALIGNMENT": {
-              "description": "ZK Fidelity Alignment",
-              "interaction": {
-                "on_enter": {
-                  "banner": "INFO",
-                  "oracle_topic": "PRIME_DIRECTIVES",
-                  "instruction": "Read the Prime Directives and align your session using the provided token."
-                }
-              },
-              "requirements": {
-                "alignment_token": {
-                  "type": "command_log",
-                  "pattern": "node engine/oracle.js explain PRIME_DIRECTIVES",
-                  "instruction": "Execute `node engine/warden.js exec \"node engine/oracle.js explain PRIME_DIRECTIVES\"` to retrieve your alignment token."
-                },
-                "alignment_success": {
-                  "type": "regex_match_output",
-                  "pattern": "ZK FIDELITY ALIGNED",
-                  "instruction": "Execute `node engine/warden.js exec \"node engine/onboard.js --align <token>\"` to verify ZK Fidelity."
-                }
-              },
-              "transitions": {
-                "next": "3_PLEDGE"
-              }
-            },
-            "3_PLEDGE": {
-              "description": "Behavioral Pledge",
-              "interaction": {
-                "on_enter": {
-                  "banner": "STOP_REQUIRED",
-                  "oracle_topic": "ZK_INTERACTION_PATTERNS",
-                  "instruction": "Mandatory Behavioral Pledge required before induction can proceed."
-                }
-              },
-              "requirements": {
-                "behavioral_pledge_cert": {
-                  "type": "file_exists",
-                  "path": ".warden/state/quiz_cert.json",
-                  "instruction": "Mandatory Behavioral Pledge required. Execute `node engine/warden.js exec \"node engine/oracle.js quiz pledge ...\"`."
-                },
-                "quiz_success": {
-                  "type": "regex_match_output",
-                  "pattern": "VERIFICATION SUCCESSFUL",
-                  "instruction": "Complete the quiz to receive your cryptographic certificate."
-                }
-              },
-              "transitions": {
-                "next": "4_ORIENTATION"
-              }
-            },
-    
-    "4_ORIENTATION": {
-      "description": "Project Orientation",
-      "requirements": {
-        "project_orientation_tool": {
-          "type": "command_log",
-          "pattern": "node engine/onboard.js --project",
-          "instruction": "Execute `node engine/warden.js exec \"node engine/onboard.js --project\"` to view architecture and goals."
-        },
-        "orientation_complete": {
-          "type": "regex_match_output",
-          "pattern": "Orientation Complete",
-          "instruction": "Complete orientation and await Director instruction."
-        }
-      },
-      "transitions": {
-        "next": "0_IDLE"
-      }
-    }
-  }
+	"meta": {
+		"title": "System Onboarding & Philosophy v4",
+		"version": "4.1.0",
+		"description": "Initial alignment and role assumption.",
+		"philosophy": "Collaborative Stewardship: Aligning Director vision with Engineer execution from Turn 1.",
+		"principles": [
+			"Adherence to STD_COGNITIVE_FIDELITY: Velocity must never outpace Understanding.",
+			"Director owns Objective & Decision; Engineer owns Execution & Verification.",
+			"Integrity of the codebase is maintained through strict protocol adherence.",
+			"Transparency is achieved through mandatory initial response echoes."
+		],
+		"roles": {
+			"Engineer": {
+				"designation": "Lead Analyst & Implementer",
+				"responsibilities": [
+					"Context gathering and technical analysis.",
+					"Transactional implementation and verification.",
+					"Maintaining bit-perfect audit fidelity."
+				]
+			},
+			"Director": {
+				"designation": "System Arbiter & Mission Lead",
+				"responsibilities": [
+					"Strategic intent definition and mission briefing.",
+					"Gate authorization and plan approval.",
+					"Final compliance ratification and seal."
+				]
+			},
+			"Oracle": {
+				"designation": "System Mentor & Knowledge Authority",
+				"responsibilities": [
+					"Providing semantic and structural guidance.",
+					"Interactive induction and module-based learning.",
+					"Clarifying system standards and protocol logic."
+				]
+			}
+		}
+	},
+	"states": {
+		"0_IDLE": {
+			"type": "initial",
+			"transitions": {
+				"start": "1_HANDSHAKE"
+			}
+		},
+		"1_HANDSHAKE": {
+			"description": "Protocol Handshake",
+			"requirements": {
+				"onboard_tool": {
+					"type": "command_log",
+					"pattern": "node engine/onboard.js",
+					"instruction": "Execute `node engine/warden.js exec \"node engine/onboard.js\"` to begin induction."
+				},
+				"echo_dlr_headers": {
+					"type": "regex_match_output",
+					"pattern": "\\[DLR_HND_ONBOARD\\].*(Principles Echo|Role Acceptance|Registry Mapping|Domain Awareness)",
+					"instruction": "Echo the [DLR_HND_ONBOARD] token to acknowledge role and principles."
+				}
+			},
+			"transitions": {
+				"next": "2_ALIGNMENT"
+			}
+		},
+		"2_ALIGNMENT": {
+			"description": "ZK Fidelity Alignment",
+			"interaction": {
+				"on_enter": {
+					"banner": "INFO",
+					"oracle_topic": "PRIME_DIRECTIVES",
+					"instruction": "Read the Prime Directives, internalise them,  and align your session using the provided token."
+				}
+			},
+			"requirements": {
+				"alignment_success": {
+					"type": "regex_match_output",
+					"pattern": "ZK FIDELITY ALIGNED",
+					"instruction": "Execute `node engine/warden.js exec \"node engine/onboard.js --align <token>\"` to verify ZK Fidelity."
+				}
+			},
+			"transitions": {
+				"next": "3_PLEDGE"
+			}
+		},
+		"3_PLEDGE": {
+			"description": "Behavioral Pledge",
+			"interaction": {
+				"on_enter": {
+					"banner": "STOP_REQUIRED",
+					"oracle_topic": "ZK_INTERACTION_PATTERNS",
+					"instruction": "Mandatory Behavioral Pledge required before induction can proceed."
+				}
+			},
+			"requirements": {
+				"behavioral_pledge_cert": {
+					"type": "file_exists",
+					"path": ".warden/state/quiz_cert.json",
+					"instruction": "Mandatory Behavioral Pledge required. Execute `node engine/warden.js exec \"node engine/oracle.js quiz pledge ...\"`."
+				},
+				"quiz_success": {
+					"type": "regex_match_output",
+					"pattern": "VERIFICATION SUCCESSFUL",
+					"instruction": "Complete the quiz to receive your cryptographic certificate."
+				}
+			},
+			"transitions": {
+				"next": "4_ORIENTATION"
+			}
+		},
+		"4_ORIENTATION": {
+			"description": "Project Orientation",
+			"requirements": {
+				"project_orientation_tool": {
+					"type": "command_log",
+					"pattern": "node engine/onboard.js --project",
+					"instruction": "Execute `node engine/warden.js exec \"node engine/onboard.js --project\"` to view architecture and goals."
+				},
+				"orientation_complete": {
+					"type": "regex_match_output",
+					"pattern": "Orientation Complete",
+					"instruction": "Complete orientation and await Director instruction."
+				}
+			},
+			"transitions": {
+				"next": "0_IDLE"
+			}
+		}
+	}
 }

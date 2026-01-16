@@ -1,6 +1,13 @@
 {
   "governance_changelog": [
     {
+      "version": "9.19.2",
+      "date": "2026-01-15",
+      "changes": [
+        "FEAT_LivingMaps"
+      ]
+    },
+    {
       "version": "9.19.1",
       "date": "2026-01-15",
       "changes": [

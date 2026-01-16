@@ -131,6 +131,21 @@
       "intent": { "tool": "onboard", "action": "align", "token": "$1" }
     },
     {
+      "id": "INT-MAP-SYSTEM",
+      "regex": "^node engine/map.js system",
+      "intent": { "tool": "map", "action": "system_topology" }
+    },
+    {
+      "id": "INT-MAP-PROTO",
+      "regex": "^node engine/map.js protocol (.*)",
+      "intent": { "tool": "map", "action": "protocol_visualization", "id": "$1" }
+    },
+    {
+      "id": "INT-MAP-DEPS",
+      "regex": "^node engine/map.js deps",
+      "intent": { "tool": "map", "action": "dependency_graph" }
+    },
+    {
       "id": "INT-ORA-PLEDGE",
       "regex": "^node engine/oracle.js quiz pledge.*",
       "intent": { "tool": "oracle", "action": "behavioral_pledge" }

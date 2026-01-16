@@ -36,124 +36,67 @@ function getAuditSince(activeState, stack) {
 }
 
 function normalizeCommand(cmd) {
-
     if (!cmd) return { tool: 'unknown', args: [], original: "" };
-
     let clean = cmd.trim();
-
     if (clean.startsWith('node ')) clean = clean.substring(5).trim();
-
     const parts = clean.split(' ');
-
     let tool = path.basename(parts[0], '.js');
-
     if (tool === 'echo') tool = 'manual_echo';
-
     return { tool, args: parts.slice(1), original: clean };
-
 }
 
 
 
 function sanitizeCommand(str) {
-
     if (!str) return "";
-
     return str.replace(/["'\\,]/g, '')
-
               .replace(/\s+/g, ' ')
-
               .trim()
-
               .toLowerCase();
-
 }
 
 
 
 function matchClaim(claim, entries, since) {
-
     const claimTool = path.basename(claim.tool, '.js');
-
     const sanitizedClaimCmd = sanitizeCommand(String(claim.command));
-
     const claimArgs = (claim.args || []).map(a => sanitizeCommand(String(a))).filter(a => a !== '');
-
     const debug = process.argv.includes('--debug');
 
-
-
     return entries.some(e => {
-
         if (e.command.startsWith('[RESULT]')) return false;
-
         if (e.timestamp < (since - 100)) return false;
 
-
-
         // 1. Bit-Perfect Intent ID Match (Highest Priority)
-
         if (e.intent && claim.id && claim.id !== 'UNKNOWN') {
-
             if (e.intent.id === claim.id) {
-
                 if (debug) console.log(`[DEBUG] ID Match: ${e.intent.id}`);
-
                 return true;
-
             }
-
         }
 
-
-
         // 2. Fuzzy String Fallback
-
         const entry = normalizeCommand(e.command);
-
         const sanitizedEntryOriginal = sanitizeCommand(entry.original);
 
-        
-
         // Tool-Agnostic Shadow Matching
-
         const toolMatch = (entry.tool === claimTool) || 
-
                          (claimTool === 'unknown' && entry.tool === 'system');
 
-        
-
         if (!toolMatch) return false;
-
-
-
         let cmdMatch = false;
 
         if (entry.tool === 'warden' || entry.tool === 'manual_echo') {
-
             const claimWords = sanitizedClaimCmd.split(' ');
-
             cmdMatch = claimWords.every(word => sanitizedEntryOriginal.includes(word));
-
         } else {
-
             cmdMatch = sanitizedEntryOriginal.includes(sanitizedClaimCmd);
-
         }
 
-
-
         const argsMatch = claimArgs.every(ca => sanitizedEntryOriginal.includes(ca));
-
-
-
         return cmdMatch && argsMatch;
-
     });
-
 }
-
-
 
 function generateInteractionReport(entries) {
     if (process.argv.includes('--json')) {
