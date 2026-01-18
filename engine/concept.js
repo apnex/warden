@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+const { resolve } = require('./path_resolver');
 
-const CONCEPTS_FILE = resolve.registry('concepts.json');
-const CONCEPTS_DIR = resolve.registry('concepts');
+const CONCEPTS_FILE = resolve.active('registry', 'concepts.json');
+const CONCEPTS_DIR = resolve.active('registry', 'concepts');
 
 function loadIndex() {
     if (!fs.existsSync(CONCEPTS_FILE)) return { concepts: [] };

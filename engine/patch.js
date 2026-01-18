@@ -4,8 +4,8 @@ const { execSync } = require('child_process');
 const { resolve } = require('./path_resolver');
 
 const ROOT = resolve.root();
-const PATCH_DIR = resolve.history('patches');
-const SHADOW_ROOT = resolve.shadow('engine');
+const PATCH_DIR = resolve.active('history', 'patches');
+const SHADOW_ROOT = resolve.active('shadow', 'engine');
 
 function ensureDir(dir) {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -16,33 +16,40 @@ function snapshot(targets) {
     ensureDir(SHADOW_ROOT);
     
     targets.forEach(target => {
-        const sourcePath = resolve.root(target);
-        const shadowPath = resolve.shadow('engine', target);
+        // Fix: Use process.cwd() to resolve the user-provided relative path correctly
+        const sourcePath = path.resolve(process.cwd(), target);
+        const relativeToInternalRoot = path.relative(ROOT, sourcePath);
+        const shadowPath = path.join(SHADOW_ROOT, relativeToInternalRoot);
         
         if (!fs.existsSync(sourcePath)) {
-            console.warn(`  [!] Warning: ${target} not found. Skipping.`);
+            console.warn(`  [!] Warning: ${target} not found at ${sourcePath}. Skipping.`);
             return;
         }
 
         ensureDir(path.dirname(shadowPath));
-        fs.cpSync(sourcePath, shadowPath, { recursive: true });
-        console.log(`  [✅] Snapshot created: ${target}`);
+        if (fs.statSync(sourcePath).isDirectory()) {
+            fs.cpSync(sourcePath, shadowPath, { recursive: true });
+        } else {
+            fs.copyFileSync(sourcePath, shadowPath);
+        }
+        console.log(`  [✅] Snapshot created: ${relativeToInternalRoot}`);
     });
 }
 
 function save(patchName) {
     console.log(`🛡️ [PATCH] Generating Governance Patch: ${patchName}...`);
     ensureDir(PATCH_DIR);
-    const patchFile = resolve.history('patches', `${patchName}.patch`);
+    const patchFile = path.join(PATCH_DIR, `${patchName}.patch`);
     let fullPatch = "";
 
     // Walk shadow root to find changed files
     function walk(dir) {
+        if (!fs.existsSync(dir)) return;
         const items = fs.readdirSync(dir);
         items.forEach(item => {
             const shadowPath = path.join(dir, item);
             const relativePath = path.relative(SHADOW_ROOT, shadowPath);
-            const currentPath = resolve.root(relativePath);
+            const currentPath = path.resolve(ROOT, relativePath);
 
             if (fs.statSync(shadowPath).isDirectory()) {
                 walk(shadowPath);
@@ -51,13 +58,11 @@ function save(patchName) {
                     try {
                         // Use diff -u for unified patch format
                         const diff = execSync(`diff -u "${shadowPath}" "${currentPath}"`, { encoding: 'utf8' });
-                        // Adjust headers to look like standard patches
                         const headerAdjusted = diff
                             .replace(shadowPath, `a/${relativePath}`)
                             .replace(currentPath, `b/${relativePath}`);
                         fullPatch += headerAdjusted + "\n";
                     } catch (e) {
-                        // diff returns exit code 1 if files differ
                         if (e.stdout) {
                             const headerAdjusted = e.stdout
                                 .replace(shadowPath, `a/${relativePath}`)

@@ -1,0 +1,19 @@
+{
+  "id": "IDEA-038",
+  "title": "Zero-Copy UDP Stack",
+  "description": "Design a high-throughput network coding transport using UDP, SharedArrayBuffer for zero-copy worker handoff, and MTU-aligned symbol sizing to eliminate OS fragmentation overhead and GC pressure.",
+  "status": "INCUBATING",
+  "author": "Engineer",
+  "created": "2026-01-18",
+  "dialogue": [
+    {
+      "timestamp": "2026-01-18T08:26:27.322Z",
+      "note": "Defined a unified three-pillar stack: SharedArrayBuffer for zero-copy handoff, MTU-aligned symbol sizing (1400B/8192B), and decoupled sliding window logic."
+    },
+    {
+      "timestamp": "2026-01-18T08:44:08.321Z",
+      "note": "Architected a decoupled UDP stack with Zero-Copy Shared Memory, Wrapper-based impairment injection, and strict MTU alignment."
+    }
+  ],
+  "components": []
+}

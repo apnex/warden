@@ -1,0 +1,367 @@
+
+--- a/engine/concept.js	2026-01-18 13:09:14.239243339 +1100
++++ b/engine/concept.js	2026-01-18 13:09:43.288569562 +1100
+@@ -1,8 +1,9 @@
+ const fs = require('fs');
+ const path = require('path');
++const { resolve } = require('./path_resolver');
+ 
+-const CONCEPTS_FILE = resolve.registry('concepts.json');
+-const CONCEPTS_DIR = resolve.registry('concepts');
++const CONCEPTS_FILE = resolve.active('registry', 'concepts.json');
++const CONCEPTS_DIR = resolve.active('registry', 'concepts');
+ 
+ function loadIndex() {
+     if (!fs.existsSync(CONCEPTS_FILE)) return { concepts: [] };
+
+
+--- a/engine/idea.js	2026-01-18 13:09:14.239243339 +1100
++++ b/engine/idea.js	2026-01-18 13:09:37.122500318 +1100
+@@ -2,7 +2,7 @@
+ const path = require('path');
+ const { resolve } = require('./path_resolver');
+ 
+-const IDEAS_DIR = resolve.registry('ideas');
++const IDEAS_DIR = resolve.active('registry', 'ideas');
+ 
+ // Ensure directory exists
+ if (!fs.existsSync(IDEAS_DIR)) {
+
+
+
+
+
+
+
+
+--- a/engine/patch.js	2026-01-18 13:09:14.239243339 +1100
++++ b/engine/patch.js	2026-01-18 13:10:01.206770777 +1100
+@@ -1,11 +1,11 @@
+ const fs = require('fs');
+ const path = require('path');
+ const { execSync } = require('child_process');
+-const { resolve } = require('./path_resolver');
++const { resolve, ROOT: INTERNAL_ROOT } = require('./path_resolver');
+ 
+ const ROOT = resolve.root();
+-const PATCH_DIR = resolve.history('patches');
+-const SHADOW_ROOT = resolve.shadow('engine');
++const PATCH_DIR = resolve.active('history', 'patches');
++const SHADOW_ROOT = resolve.active('shadow', 'engine');
+ 
+ function ensureDir(dir) {
+     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+@@ -17,7 +17,7 @@
+     
+     targets.forEach(target => {
+         const sourcePath = resolve.root(target);
+-        const shadowPath = resolve.shadow('engine', target);
++        const shadowPath = path.join(SHADOW_ROOT, target);
+         
+         if (!fs.existsSync(sourcePath)) {
+             console.warn(`  [!] Warning: ${target} not found. Skipping.`);
+@@ -33,11 +33,12 @@
+ function save(patchName) {
+     console.log(`🛡️ [PATCH] Generating Governance Patch: ${patchName}...`);
+     ensureDir(PATCH_DIR);
+-    const patchFile = resolve.history('patches', `${patchName}.patch`);
++    const patchFile = path.join(PATCH_DIR, `${patchName}.patch`);
+     let fullPatch = "";
+ 
+     // Walk shadow root to find changed files
+     function walk(dir) {
++        if (!fs.existsSync(dir)) return;
+         const items = fs.readdirSync(dir);
+         items.forEach(item => {
+             const shadowPath = path.join(dir, item);
+
+--- a/engine/path_resolver.js	2026-01-18 13:09:14.239243339 +1100
++++ b/engine/path_resolver.js	2026-01-18 13:09:30.335424099 +1100
+@@ -48,6 +48,20 @@
+     target: (...parts) => {
+         const targetRoot = process.env.WARDEN_TARGET || ROOT;
+         return path.join(targetRoot, ...parts);
++    },
++
++    // Active Context Resolver (Prioritizes target for operational artifacts)
++    active: (type, ...parts) => {
++        const targetRoot = process.env.WARDEN_TARGET || ROOT;
++        switch(type) {
++            case 'registry': return path.join(targetRoot, 'registry', ...parts);
++            case 'docs':     return path.join(targetRoot, 'docs', ...parts);
++            case 'history':  return path.join(targetRoot, 'history', ...parts);
++            case 'state':    return path.join(targetRoot, '.warden', 'state', ...parts);
++            case 'shadow':   return path.join(targetRoot, '.warden', 'shadow', ...parts);
++            case 'root':     return path.join(targetRoot, ...parts);
++            default:         return path.join(targetRoot, ...parts);
++        }
+     }
+ };
+ 
+@@ -66,12 +80,12 @@
+         PROTOCOLS_INDEX: resolve.registry('protocols', 'index.json'),
+         LIBRARY_MANIFEST: resolve.registry('library_manifest.json'),
+         GOALS: resolve.registry('goals.json'),
+-        BACKLOG: resolve.registry('backlog.json'),
+-        GOVERNANCE_CHANGELOG: resolve.history('governance_changelog.json'),
++        BACKLOG: resolve.active('registry', 'backlog.json'),
++        GOVERNANCE_CHANGELOG: resolve.active('history', 'governance_changelog.json'),
+         STATUS: resolve.registry('status.json'),
+         METADATA: resolve.registry('status_metadata.json'),
+         CHANGELOG: resolve.registry('changelog.json'),
+-        ROADMAP: resolve.registry('roadmap.json'),
++        ROADMAP: resolve.active('registry', 'roadmap.json'),
+         REFACTOR_MATRIX: resolve.registry('refactor_matrix.json'),
+         KNOWLEDGE_BASE: resolve.registry('knowledge_base.json'),
+         GLOSSARY: resolve.registry('glossary.json'),
+@@ -84,22 +98,22 @@
+         QUIZ: resolve.registry('quiz.json'),
+         GUIDANCE: resolve.registry('guidance.json'),
+         TUTORIALS: resolve.registry('tutorials.json'),
+-        ENGINEER_REPORT: resolve.root('engineer_report.json')
++        ENGINEER_REPORT: resolve.active('root', 'engineer_report.json')
+     },
+     TARGETS: {
+-        README: resolve.docs('README.md'),
+-        PROTOCOLS_MD: resolve.docs('PROTOCOLS.md'),
+-        KNOWLEDGE_BASE_MD: resolve.docs('KNOWLEDGE_BASE.md'),
+-        GLOSSARY_MD: resolve.docs('GLOSSARY.md'),
+-        STANDARDS_MD: resolve.docs('STANDARDS.md'),
+-        BACKLOG_MD: resolve.docs('BACKLOG.md'),
+-        WARDEN_README: resolve.docs('README.md')
++        README: resolve.active('docs', 'README.md'),
++        PROTOCOLS_MD: resolve.active('docs', 'PROTOCOLS.md'),
++        KNOWLEDGE_BASE_MD: resolve.active('docs', 'KNOWLEDGE_BASE.md'),
++        GLOSSARY_MD: resolve.active('docs', 'GLOSSARY.md'),
++        STANDARDS_MD: resolve.active('docs', 'STANDARDS.md'),
++        BACKLOG_MD: resolve.active('docs', 'BACKLOG.md'),
++        WARDEN_README: resolve.active('docs', 'README.md')
+     },
+     WARDEN: {
+-        ACTIVE_STATE: resolve.state('active.json'),
+-        INTERNAL_AUDIT: resolve.state('internal_audit.json'),
+-        SESSION_LOG: resolve.state('session.log'),
+-        ONBOARD_STATE: resolve.state('onboard.json'),
+-        QUIZ_CERT: resolve.state('quiz_cert.json')
++        ACTIVE_STATE: resolve.active('state', 'active.json'),
++        INTERNAL_AUDIT: resolve.active('state', 'internal_audit.json'),
++        SESSION_LOG: resolve.active('state', 'session.log'),
++        ONBOARD_STATE: resolve.active('state', 'onboard.json'),
++        QUIZ_CERT: resolve.active('state', 'quiz_cert.json')
+     }
+ };
+
+
+
+--- a/engine/warden.js	2026-01-18 13:09:14.239243339 +1100
++++ b/engine/warden.js	2026-01-18 13:10:28.450076702 +1100
+@@ -11,7 +11,7 @@
+ const SESSION_LOG = process.env.WARDEN_LOG_PATH || WARDEN.SESSION_LOG;
+ 
+ // Ensure state directory exists
+-if (!fs.existsSync(STATE)) fs.mkdirSync(STATE, { recursive: true });
++if (!fs.existsSync(path.dirname(STATE_FILE))) fs.mkdirSync(path.dirname(STATE_FILE), { recursive: true });
+ 
+ function loadStack() {
+     if (!fs.existsSync(STATE_FILE)) return [];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- a/registry/library_manifest.json	2026-01-18 11:04:38.803591311 +1100
++++ b/registry/library_manifest.json	2026-01-18 11:05:35.243320658 +1100
+@@ -3,102 +3,102 @@
+     "file": "registry/protocols/CAP_V1.json",
+     "version": "1.0.0",
+     "hash": "f7dd0ecfe53173da89cc609f3825a29ca19f3acada536a622325cce60fb80f73",
+-    "updated": "2026-01-18T00:04:18.913Z"
++    "updated": "2026-01-18T00:05:35.243Z"
+   },
+   "CFG_V2": {
+     "file": "registry/protocols/CFG_V2.json",
+     "version": "2.0.0",
+     "hash": "99594a555b7adaa2f1a5992032fd9a50e3a9c6a3d5bd4bab5fe3ab0da50af9ea",
+-    "updated": "2026-01-18T00:04:18.913Z"
++    "updated": "2026-01-18T00:05:35.243Z"
+   },
+   "DOC_V2": {
+     "file": "registry/protocols/DOC_V2.json",
+     "version": "2.1.0",
+     "hash": "732823639d657af62249791a6cf9266c5318e750505f3d2a6d60834e650beea0",
+-    "updated": "2026-01-18T00:04:18.913Z"
++    "updated": "2026-01-18T00:05:35.243Z"
+   },
+   "ENV_V2": {
+     "file": "registry/protocols/ENV_V2.json",
+     "version": "2.0.0",
+     "hash": "cda7ec50aee881da0f5b1bc5d811cedc0d77d1bf93cae4ef78f800876a57d90e",
+-    "updated": "2026-01-18T00:04:18.913Z"
++    "updated": "2026-01-18T00:05:35.243Z"
+   },
+   "EVO_V2": {
+     "file": "registry/protocols/EVO_V2.json",
+     "version": "2.0.0",
+     "hash": "ffb40a6fde6293c3613f215b10387e050a5b92ad90316998de96d88a77c28c6f",
+-    "updated": "2026-01-18T00:04:18.913Z"
++    "updated": "2026-01-18T00:05:35.243Z"
+   },
+   "FIX_V2": {
+     "file": "registry/protocols/FIX_V2.json",
+     "version": "2.0.0",
+     "hash": "38996a0f77653ebc2c5ca555ece3d318a53a8f2570d7168f5844047ff06ae512",
+-    "updated": "2026-01-18T00:04:18.913Z"
++    "updated": "2026-01-18T00:05:35.243Z"
+   },
+   "GSD_V5": {
+     "file": "registry/protocols/GSD_V5.json",
+     "version": "5.9.0",
+     "hash": "c04c924070b44171c1e23b8d015badb9e3a7108fc1810c649f5e08b341361442",
+-    "updated": "2026-01-18T00:04:18.913Z"
++    "updated": "2026-01-18T00:05:35.244Z"
+   },
+   "IDEA_V1": {
+     "file": "registry/protocols/IDEA_V1.json",
+     "version": "1.1.0",
+     "hash": "bfb69d836de67aedfa9f8be754736fab6f2b9d7f6590f99eb37a2b7de2b58307",
+-    "updated": "2026-01-18T00:04:18.914Z"
++    "updated": "2026-01-18T00:05:35.244Z"
+   },
+   "MAP_V2": {
+     "file": "registry/protocols/MAP_V2.json",
+     "version": "2.0.0",
+     "hash": "771bc9c680d2a2cccf723f43a43b6841c482646ae00576bc0e4b3217529103c2",
+-    "updated": "2026-01-18T00:04:18.914Z"
++    "updated": "2026-01-18T00:05:35.244Z"
+   },
+   "ONBOARD_V4": {
+     "file": "registry/protocols/ONBOARD_V4.json",
+     "version": "4.1.0",
+     "hash": "4a36157e0d9c103d86c532d3a7018f66a7ef781c8d76eeffecb249ce640ee0b0",
+-    "updated": "2026-01-18T00:04:18.914Z"
++    "updated": "2026-01-18T00:05:35.244Z"
+   },
+   "OPTIMISE_V2": {
+     "file": "registry/protocols/OPTIMISE_V2.json",
+     "version": "2.0.0",
+     "hash": "f8e134916e04dccd7304893448454f4c30e84fe4ae82db25bd0d4180f75b10e6",
+-    "updated": "2026-01-18T00:04:18.914Z"
++    "updated": "2026-01-18T00:05:35.244Z"
+   },
+   "PIR_V4": {
+     "file": "registry/protocols/PIR_V4.json",
+     "version": "4.2.0",
+     "hash": "f127d187c6e451e549910873addea7a4976cfd94e9b2332a43d32e748d0f14ba",
+-    "updated": "2026-01-18T00:04:18.914Z"
++    "updated": "2026-01-18T00:05:35.244Z"
+   },
+   "PRY_V2": {
+     "file": "registry/protocols/PRY_V2.json",
+     "version": "2.1.0",
+     "hash": "8bfd3773824e9fb7a09d8498e51b174733578ce8039f0185a8152238cae89882",
+-    "updated": "2026-01-18T00:04:18.914Z"
++    "updated": "2026-01-18T00:05:35.244Z"
+   },
+   "ROADMAP_V2": {
+     "file": "registry/protocols/ROADMAP_V2.json",
+     "version": "2.0.0",
+     "hash": "2958223b77df0a88be4a915346584b094138122435c003bf91766b791cd229b8",
+-    "updated": "2026-01-18T00:04:18.914Z"
++    "updated": "2026-01-18T00:05:35.244Z"
+   },
+   "STAT_V2": {
+     "file": "registry/protocols/STAT_V2.json",
+     "version": "2.0.0",
+     "hash": "e179d23d9e7d7986987cb317cde2f4024bc14799587e088c520c51e2e4558348",
+-    "updated": "2026-01-18T00:04:18.914Z"
++    "updated": "2026-01-18T00:05:35.244Z"
+   },
+   "VAL_V2": {
+     "file": "registry/protocols/VAL_V2.json",
+     "version": "2.0.0",
+     "hash": "c9dbeee7caabb92745f014685281620b20d6b5c1d4fa7acb7386a175f3c5f705",
+-    "updated": "2026-01-18T00:04:18.914Z"
++    "updated": "2026-01-18T00:05:35.244Z"
+   },
+   "VFY_V2": {
+     "file": "registry/protocols/VFY_V2.json",
+     "version": "2.2.0",
+     "hash": "4cb56d3caf9a02777e75edb69274c9ac847053049c0e18279d64569367b3914e",
+-    "updated": "2026-01-18T00:04:18.914Z"
++    "updated": "2026-01-18T00:05:35.244Z"
+   }
+ }
+\ No newline at end of file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- a/registry/protocols.json.baseline	2026-01-18 11:04:38.802591298 +1100
++++ b/registry/protocols.json.baseline	2026-01-18 13:00:44.177459269 +1100
+@@ -711,15 +711,10 @@
+             "on_enter": {
+               "banner": "INFO",
+               "oracle_topic": "PRIME_DIRECTIVES",
+-              "instruction": "Read the Prime Directives and align your session using the provided token."
++              "instruction": "Read the Prime Directives, internalise them,  and align your session using the provided token."
+             }
+           },
+           "requirements": {
+-            "alignment_token": {
+-              "type": "command_log",
+-              "pattern": "node engine/oracle.js explain PRIME_DIRECTIVES",
+-              "instruction": "Execute `node engine/warden.js exec \"node engine/oracle.js explain PRIME_DIRECTIVES\"` to retrieve your alignment token."
+-            },
+             "alignment_success": {
+               "type": "regex_match_output",
+               "pattern": "ZK FIDELITY ALIGNED",
+
+
+
+
+
+
+
+
+
+

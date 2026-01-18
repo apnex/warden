@@ -1,7 +1,7 @@
 # System Protocol Library
 
 **Version:** 2.0.0  
-**Generated:** 1/15/2026, 6:44:39 PM  
+**Generated:** 1/19/2026, 12:09:24 AM  
 
 > State-machine based governance for zero-knowledge engineering systems.
 
@@ -831,7 +831,6 @@ stateDiagram-v2
 #### 📋 Requirements
 | ID | Type | Target | Details |
 |:---|:---|:---|:---|
-| **alignment_token** | `command_log` | - | Pattern: `node engine/oracle.js explain PRIME_DIRECTIVES` |
 | **alignment_success** | `regex_match_output` | - | Pattern: `ZK FIDELITY ALIGNED` |
 
 #### ➡️ Transitions
@@ -1430,6 +1429,12 @@ stateDiagram-v2
 ---
 
 ## 🕒 Governance Evolution
+
+### v9.19.4 (2026-01-18)
+- portable_pathing
+
+### v9.19.3 (2026-01-18)
+- baseline
 
 ### v9.19.2 (2026-01-15)
 - FEAT_LivingMaps

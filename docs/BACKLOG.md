@@ -1,7 +1,7 @@
 # 📋 Warden Governance Backlog
 
 **Version:** 1.6.49  
-**Generated:** 1/15/2026, 6:44:39 PM  
+**Generated:** 1/18/2026, 1:16:05 PM  
 
 > Registry of open remediation items, technical debt, and strategic initiatives.
 

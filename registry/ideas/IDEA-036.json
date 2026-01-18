@@ -1,0 +1,15 @@
+{
+  "id": "IDEA-036",
+  "title": "Hardware Math Offload",
+  "description": "Implement a Node.js Native Addon (N-API) using C++ and AVX2/PCLMULQDQ instructions to offload the RLNC critical path while maintaining high-level logic in JavaScript.",
+  "status": "INCUBATING",
+  "author": "Engineer",
+  "created": "2026-01-18",
+  "dialogue": [
+    {
+      "timestamp": "2026-01-18T05:22:20.338Z",
+      "note": "Detailed the N-API handoff and SIMD (AVX2/PCLMULQDQ) execution model."
+    }
+  ],
+  "components": []
+}
