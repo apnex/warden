@@ -55,11 +55,12 @@ function finalize() {
     // 3.5 Integrity Gate
     console.log("[System] Executing Protocol Integrity Gate...");
     try {
+        const { resolve } = require('../engine/path_resolver');
         // Synchronize Modular Registry if exists (FEAT_MODULAR_REGISTRY)
         if (fs.existsSync(SOURCES.PROTOCOLS_DIR)) {
-            execSync('node validation/audit_library.js --sync', { stdio: 'inherit' });
+            execSync(`node ${resolve.validation('audit_library.js')} --sync`, { stdio: 'inherit' });
         }
-        execSync('node validation/verify_integrity.js --verify', { stdio: 'inherit' });
+        execSync(`node ${resolve.validation('verify_integrity.js')} --verify`, { stdio: 'inherit' });
     } catch (e) {
         console.error("[Error] Integrity check failed. Finalization aborted.");
         process.exit(1);
@@ -80,12 +81,13 @@ function finalize() {
     // 6. Synchronize Artifacts
     console.log("[System] Synchronizing artifacts...");
     try {
-        execSync('node docs/generate_readme.js', { stdio: 'inherit' });
-        execSync('node docs/generate_protocols.js', { stdio: 'inherit' });
-        execSync('node docs/generate_knowledge.js', { stdio: 'inherit' });
-        execSync('node docs/generate_glossary.js', { stdio: 'inherit' });
-        execSync('node docs/generate_standards.js', { stdio: 'inherit' });
-        execSync('node docs/generate_backlog.js', { stdio: 'inherit' });
+        const { resolve } = require('../engine/path_resolver');
+        execSync(`node ${resolve.docs('generate_readme.js')}`, { stdio: 'inherit' });
+        execSync(`node ${resolve.docs('generate_protocols.js')}`, { stdio: 'inherit' });
+        execSync(`node ${resolve.docs('generate_knowledge.js')}`, { stdio: 'inherit' });
+        execSync(`node ${resolve.docs('generate_glossary.js')}`, { stdio: 'inherit' });
+        execSync(`node ${resolve.docs('generate_standards.js')}`, { stdio: 'inherit' });
+        execSync(`node ${resolve.docs('generate_backlog.js')}`, { stdio: 'inherit' });
         console.log("[Success] All artifacts synchronized.");
     } catch (e) {
         console.error("[Error] Synchronization failed:", e.message);

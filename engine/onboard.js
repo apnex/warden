@@ -139,7 +139,6 @@ function showProject(metadata) {
     console.log(" 1. DO NOT self-assign backlog items.");
     console.log(" 2. DO NOT modify any code.");
     console.log(" 3. AWAIT specific Directive from the Director.");
-    console.log(" 4. ONCE RECEIVED: Initialize GSD_V5 via `warden.js init`.\n");
     console.log("====================================================");
     console.log("Orientation Complete. STAND BY.");
     console.log("====================================================\n");

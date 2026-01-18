@@ -1,6 +1,41 @@
 {
   "warden_changelog": [
     {
+      "version": "2.0.4",
+      "date": "2026-01-18",
+      "changes": [
+        "Relocated engineer_report.json to /.warden and updated path resolver."
+      ]
+    },
+    {
+      "version": "2.0.3",
+      "date": "2026-01-18",
+      "changes": [
+        "Synchronizing documentation for Zero-Symlink architecture."
+      ]
+    },
+    {
+      "version": "2.0.2",
+      "date": "2026-01-18",
+      "changes": [
+        "Final v11 project promotion synchronization."
+      ]
+    },
+    {
+      "version": "2.0.1",
+      "date": "2026-01-18",
+      "changes": [
+        "Synchronizing project documentation for v11 promotion."
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "2026-01-18",
+      "changes": [
+        "Formal project promotion from v10 to v11. Updated all code and documentation references."
+      ]
+    },
+    {
       "version": "1.6.54",
       "date": "2026-01-18",
       "changes": [

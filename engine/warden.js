@@ -319,6 +319,22 @@ function cmdExec(command) {
         console.log(`\n[DLR_AUD_INTERJECTION] Justification: ${justification}`);
     }
 
+    // 2.5 Path Fallback (FEAT_ZERO_SYMLINK)
+    // If the command references engine/, docs/, or validation/ but they don't exist in CWD,
+    // we rewrite the command to point to the internal Warden root.
+    let resolvedCommand = command;
+    const internalTools = ['engine', 'docs', 'validation'];
+    internalTools.forEach(tool => {
+        const localToolPath = path.join(process.cwd(), tool);
+        if (!fs.existsSync(localToolPath)) {
+            // Rewrite "node engine/..." to "node <INTERNAL_ROOT>/engine/..."
+            const regex = new RegExp(`node ${tool}/`, 'g');
+            const { ROOT: internalRoot } = require('./path_resolver');
+            const internalPath = path.join(internalRoot, tool);
+            resolvedCommand = resolvedCommand.replace(regex, `node ${internalPath}/`);
+        }
+    });
+
     // 3. Execution
     const source = intent ? 'agent_exec' : 'shadow_action';
     logInteraction(command, source, protocolId, "", intent);
@@ -326,11 +342,11 @@ function cmdExec(command) {
         logInteraction(`JUSTIFY: ${command}`, 'manual_echo', protocolId, `[DLR_AUD_INTERJECTION] ${justification}`);
     }
 
-    console.log(`🚀 [WARDEN] Executing Proxy: ${command}`);
+    console.log(`🚀 [WARDEN] Executing Proxy: ${resolvedCommand}`);
 
     let output = "";
     try {
-        output = execSync(command, { 
+        output = execSync(resolvedCommand, { 
             encoding: 'utf8',
             env: { ...process.env, WARDEN_PROXY_ACTIVE: 'true' }
         });

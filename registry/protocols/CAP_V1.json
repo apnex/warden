@@ -20,7 +20,7 @@
       "requirements": {
         "engineer_report": {
           "type": "file_exists",
-          "path": "engineer_report.json"
+          "path": ".warden/engineer_report.json"
         }
       },
       "transitions": {

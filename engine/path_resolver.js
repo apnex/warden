@@ -104,7 +104,7 @@ module.exports = {
         QUIZ: resolve.registry('quiz.json'),
         GUIDANCE: resolve.registry('guidance.json'),
         TUTORIALS: resolve.registry('tutorials.json'),
-        ENGINEER_REPORT: resolve.active('root', 'engineer_report.json')
+        ENGINEER_REPORT: resolve.active('root', '.warden', 'engineer_report.json')
     },
     TARGETS: {
         README: resolve.active('docs', 'README.md'),
