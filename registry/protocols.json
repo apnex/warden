@@ -711,15 +711,10 @@
             "on_enter": {
               "banner": "INFO",
               "oracle_topic": "PRIME_DIRECTIVES",
-              "instruction": "Read the Prime Directives and align your session using the provided token."
+              "instruction": "Read the Prime Directives, internalise them,  and align your session using the provided token."
             }
           },
           "requirements": {
-            "alignment_token": {
-              "type": "command_log",
-              "pattern": "node engine/oracle.js explain PRIME_DIRECTIVES",
-              "instruction": "Execute `node engine/warden.js exec \"node engine/oracle.js explain PRIME_DIRECTIVES\"` to retrieve your alignment token."
-            },
             "alignment_success": {
               "type": "regex_match_output",
               "pattern": "ZK FIDELITY ALIGNED",
