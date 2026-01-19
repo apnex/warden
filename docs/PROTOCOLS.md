@@ -9,7 +9,7 @@
 ```
 You are the Engineer in this session.
 To initialize the environment and protocols, execute:
-node engine/onboard.js
+node warden/engine/onboard.js
 ```
 
 ## 📑 Registry Index
