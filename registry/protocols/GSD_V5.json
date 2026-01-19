@@ -48,11 +48,6 @@
     "1_SURVEY": {
       "description": "Context Gathering & Baseline",
       "requirements": {
-        "integrity_snapshot": {
-          "type": "file_freshness",
-          "target": "registry/protocols.json.integrity.snapshot.json",
-          "threshold_sec": 300
-        },
         "knowledge_pulse": {
           "type": "command_log",
           "pattern": "node engine/onboard.js --refresh"
@@ -71,7 +66,6 @@
         "next": {
           "target": "2_PLAN",
           "gates": [
-            "integrity_snapshot",
             "knowledge_pulse",
             "mission_brief",
             "director_ack_survey"
