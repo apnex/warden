@@ -60,7 +60,7 @@ function generateProxy(targetPath) {
 }
 
 function ensureProxyExists() {
-    if (!TARGET_ROOT || TARGET_ROOT !== ENGINE_ROOT) return;
+    if (!TARGET_ROOT) return;
     const proxyPath = path.join(TARGET_ROOT, 'warden');
     if (!fs.existsSync(proxyPath)) {
         if (generateProxy(TARGET_ROOT)) {
@@ -72,8 +72,8 @@ function ensureProxyExists() {
 const GLOBAL_CONFIG = loadConfig();
 ensureProxyExists();
 
-// Ensure state directory exists (only if an anchor exists)
-if (fs.existsSync(resolve.anchor()) && !fs.existsSync(resolve.state())) {
+// Ensure state directory exists (only if in a governed project context)
+if (TARGET_ROOT && !fs.existsSync(resolve.state())) {
     try { fs.mkdirSync(resolve.state(), { recursive: true }); } catch (e) {}
 }
 

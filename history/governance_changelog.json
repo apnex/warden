@@ -1,6 +1,13 @@
 {
   "governance_changelog": [
     {
+      "version": "9.21.23",
+      "date": "2026-01-20",
+      "changes": [
+        "FEAT_ROOT_PROXY"
+      ]
+    },
+    {
       "version": "9.21.22",
       "date": "2026-01-20",
       "changes": [
