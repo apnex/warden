@@ -1,7 +1,7 @@
 # System Protocol Library
 
 **Version:** 2.0.0  
-**Generated:** 1/20/2026, 6:04:56 PM  
+**Generated:** 1/20/2026, 8:48:57 PM  
 
 > State-machine based governance for zero-knowledge engineering systems.
 
@@ -1109,7 +1109,7 @@ stateDiagram-v2
 #### 📋 Requirements
 | ID | Type | Target | Details |
 |:---|:---|:---|:---|
-| **gsd_cycle** | `command_log` | - | Pattern: `node engine/warden.js close` |
+| **gsd_cycle** | `command_log` | - | Pattern: `./warden close` |
 
 #### ➡️ Transitions
 | Trigger | Target State | 🛡️ Gated By |
@@ -1422,6 +1422,15 @@ stateDiagram-v2
 ---
 
 ## 🕒 Governance Evolution
+
+### v9.21.24 (2026-01-20)
+- README_UPDATE
+
+### v9.21.23 (2026-01-20)
+- FEAT_ROOT_PROXY
+
+### v9.21.22 (2026-01-20)
+- FEAT_ROOT_PROXY
 
 ### v9.21.21 (2026-01-20)
 - Final system synchronization after pathing debt purge

@@ -3,18 +3,29 @@
 Warden is designed around the principle of **Atomic Turns**. Every engineering cycle follows a deterministic lifecycle.
 
 ### 1. Project Injection (Installation)
-To bring a new project under governance, use the system initialization command:
+#### clone and set env
 ```bash
-node engine/warden.js system init <target_path>
+git clone https://github.com/apnex/warden
+export WARDEN_ROOT=$PWD/warden
 ```
-This scaffolds the anchor and creates the local `warden` proxy script.
 
-### 2. The First Turn (Onboarding)
-Once injected, initialize the onboarding protocol:
+#### register target project
 ```bash
+cd <target/project/dir>
+$WARDEN_ROOT/warden system init
+```
+
+#### launch cli
+```bash
+opencode 
+```
+
+#### bootstrap prompt
+```text
+You are the Engineer in this session.
+To initialize the environment and protocols, execute:
 ./warden init ONBOARD_V4 "Project Induction"
 ```
-Follow the instructions to align your session and complete the behavioral pledge.
 
 ### 3. Development Cycles (GSD)
 Most work is performed using the Gated Sequential Development (`GSD`) protocol:
