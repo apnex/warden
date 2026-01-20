@@ -155,6 +155,14 @@
       "priority": "P0",
       "status": "OPEN",
       "created_at": "2026-01-14"
+    },
+    {
+      "id": "IDEA-041",
+      "source": "HIGH",
+      "description": "Implement Shadow Workspace Hardening: Automate pre-flight snapshots and add 'system rollback' command.",
+      "priority": "P2",
+      "status": "OPEN",
+      "created_at": "2026-01-20"
     }
   ]
 }

@@ -1,20 +1,21 @@
 const fs = require('fs');
 const path = require('path');
-const { SOURCES, WARDEN, ROOT, REGISTRY, resolve } = require('./path_resolver');
+const { resolve } = require('./path_resolver');
 const { loadProtocols } = require('./lib/loader');
 
 function showHeader(title) {
     console.log("\n====================================================");
-    console.log(`      🚀 WARDEN GOVERNANCE: ${title}`);
+    console.log("      🚀 WARDEN GOVERNANCE: " + title);
     console.log("====================================================\n");
 }
 
 function getLogEntries() {
-    if (!fs.existsSync(WARDEN.SESSION_LOG)) {
-        console.error(`Error: Session log not found at ${WARDEN.SESSION_LOG}`);
+    const sessionLog = resolve.state('session.log');
+    if (!fs.existsSync(sessionLog)) {
+        console.error("Error: Session log not found at " + sessionLog);
         process.exit(1);
     }
-    const logLines = fs.readFileSync(WARDEN.SESSION_LOG, 'utf8').split('\n').filter(l => l.trim() !== '');
+    const logLines = fs.readFileSync(sessionLog, 'utf8').split('\n').filter(l => l.trim() !== '');
     return logLines.map(l => JSON.parse(l));
 }
 
@@ -22,14 +23,12 @@ function getAuditSince(activeState, stack) {
     if (!activeState) return 0;
     let since = activeState.start_time;
 
-    // Metadata-Driven Scoping (Alternative A)
     const protocols = loadProtocols();
     const activeProto = protocols.protocol_library[activeState.protocol_id];
     if (activeProto && activeProto.meta && activeProto.meta.audit_scope === 'parent') {
         const parentState = stack[stack.length - 2];
         if (parentState) {
             since = parentState.start_time;
-            // Silent log if already printed
         }
     }
     return since;
@@ -45,8 +44,6 @@ function normalizeCommand(cmd) {
     return { tool, args: parts.slice(1), original: clean };
 }
 
-
-
 function sanitizeCommand(str) {
     if (!str) return "";
     return str.replace(/["'\\,]/g, '')
@@ -54,8 +51,6 @@ function sanitizeCommand(str) {
               .trim()
               .toLowerCase();
 }
-
-
 
 function matchClaim(claim, entries, since) {
     const claimTool = path.basename(claim.tool, '.js');
@@ -67,21 +62,16 @@ function matchClaim(claim, entries, since) {
         if (e.command.startsWith('[RESULT]')) return false;
         if (e.timestamp < (since - 100)) return false;
 
-        // 1. Bit-Perfect Intent ID Match (Highest Priority)
         if (e.intent && claim.id && claim.id !== 'UNKNOWN') {
             if (e.intent.id === claim.id) {
-                if (debug) console.log(`[DEBUG] ID Match: ${e.intent.id}`);
+                if (debug) console.log("[DEBUG] ID Match: " + e.intent.id);
                 return true;
             }
         }
 
-        // 2. Fuzzy String Fallback
         const entry = normalizeCommand(e.command);
         const sanitizedEntryOriginal = sanitizeCommand(entry.original);
-
-        // Tool-Agnostic Shadow Matching
-        const toolMatch = (entry.tool === claimTool) || 
-                         (claimTool === 'unknown' && entry.tool === 'system');
+        const toolMatch = (entry.tool === claimTool) || (claimTool === 'unknown' && entry.tool === 'system');
 
         if (!toolMatch) return false;
         let cmdMatch = false;
@@ -118,21 +108,22 @@ function generateInteractionReport(entries) {
     console.log("[DLR_RPT_INTERACTION]");
     entries.forEach((entry, index) => {
         const timestamp = new Date(entry.timestamp).toISOString().split('T')[1].replace('Z', '');
-        const intentId = entry.intent ? `[${entry.intent.id}]` : "[SHADOW]";
-        console.log(`${index + 1}. [${timestamp}] ${intentId} Command: ${entry.command}`);
+        const intentId = entry.intent ? "[" + entry.intent.id + "]" : "[SHADOW]";
+        console.log((index + 1) + ". [" + timestamp + "] " + intentId + " Command: " + entry.command);
         const firstLine = entry.output ? entry.output.trim().split('\n')[0] : "No output recorded.";
-        console.log(`   └─ Result: ${firstLine.substring(0, 80)}${firstLine.length > 80 ? '...' : ''}`);
+        console.log("   └─ Result: " + firstLine.substring(0, 80) + (firstLine.length > 80 ? '...' : ''));
     });
     console.log("\n====================================================");
 }
 
 function draftReport(entries) {
-    const stack = fs.existsSync(WARDEN.ACTIVE_STATE) ? JSON.parse(fs.readFileSync(WARDEN.ACTIVE_STATE, 'utf8')) : [];
+    const activeStateFile = resolve.state('active.json');
+    const stack = fs.existsSync(activeStateFile) ? JSON.parse(fs.readFileSync(activeStateFile, 'utf8')) : [];
     const activeState = stack[stack.length - 1];
     
     const since = getAuditSince(activeState, stack);
     if (since !== (activeState ? activeState.start_time : 0)) {
-        console.log(`🛡️ [WARDEN] Deep Audit Active: Scope shifted to parent cycle.`);
+        console.log("🛡️ [WARDEN] Deep Audit Active: Scope shifted to parent cycle.");
     }
 
     const currentCycleEntries = entries.filter(e => e.timestamp >= since && !e.command.startsWith('[RESULT]'));
@@ -148,13 +139,13 @@ function draftReport(entries) {
         })
     };
 
-    const draftPath = SOURCES.ENGINEER_REPORT;
+    const draftPath = resolve.anchor('engineer_report.json');
     fs.writeFileSync(draftPath, JSON.stringify(draft, null, 2));
-    console.log(`\n[Success] Audit Draft generated: ${draftPath}`);
+    console.log("\n[Success] Audit Draft generated: " + draftPath);
 }
 
 function analyzeCompliance(entries) {
-    let engineerReportPath = SOURCES.ENGINEER_REPORT;
+    let engineerReportPath = resolve.anchor('engineer_report.json');
     const idx = process.argv.indexOf('--input');
     if (idx !== -1 && process.argv[idx + 1]) engineerReportPath = process.argv[idx + 1];
 
@@ -164,12 +155,13 @@ function analyzeCompliance(entries) {
     }
 
     const engineerReport = JSON.parse(fs.readFileSync(engineerReportPath, 'utf8'));
-    const stack = fs.existsSync(WARDEN.ACTIVE_STATE) ? JSON.parse(fs.readFileSync(WARDEN.ACTIVE_STATE, 'utf8')) : [];
+    const activeStateFile = resolve.state('active.json');
+    const stack = fs.existsSync(activeStateFile) ? JSON.parse(fs.readFileSync(activeStateFile, 'utf8')) : [];
     const activeState = stack[stack.length - 1];
     
     const since = getAuditSince(activeState, stack);
     if (since !== (activeState ? activeState.start_time : 0)) {
-        console.log(`🛡️ [WARDEN] Deep Audit Active: Scope shifted to parent cycle.`);
+        console.log("🛡️ [WARDEN] Deep Audit Active: Scope shifted to parent cycle.");
     }
 
     showHeader("COMPLIANCE REPORT");
@@ -178,49 +170,46 @@ function analyzeCompliance(entries) {
     let passedChecks = 0;
     const frictionPoints = [];
 
-    // 1. Provenance
     const shadowActions = entries.filter(e => e.timestamp >= since && e.source === 'shadow_action');
     if (shadowActions.length > 0) {
-        console.warn(`⚠️ [Warning] ${shadowActions.length} Shadow Actions detected.`);
-        frictionPoints.push(`${shadowActions.length} shadow actions.`);
+        console.warn("⚠️ [Warning] " + shadowActions.length + " Shadow Actions detected.");
+        frictionPoints.push(shadowActions.length + " shadow actions.");
     } else {
         console.log("  [✅] PASS: All cycle actions mapped to Canonical Intents.");
         passedChecks++;
     }
 
-    // 2. Internal View
-    if (fs.existsSync(WARDEN.INTERNAL_AUDIT)) {
+    if (fs.existsSync(resolve.state('internal_audit.json'))) {
         console.log("  [✅] PASS: Internal Warden View reconciled.");
         passedChecks++;
     }
 
-    // 3. Goal Alignment
     console.log("[Strategic] Aligning with System Goals...");
-    const goals = fs.existsSync(SOURCES.GOALS) ? JSON.parse(fs.readFileSync(SOURCES.GOALS, 'utf8')).goals : [];
-    goals.forEach(g => console.log(`  - ${g.name}: Active`));
+    const goalsFile = resolve.registry('goals.json');
+    const goals = fs.existsSync(goalsFile) ? JSON.parse(fs.readFileSync(goalsFile, 'utf8')).goals : [];
+    goals.forEach(g => console.log("  - " + g.name + ": Active"));
 
-    // 4. Bit-Perfect Match
     console.log("\n[DLR_ASM_COMPLIANCE]");
-    console.log(`[Assessment] Analyzing Structured Intents (Canonical Model v1.0)...`);
+    console.log("[Assessment] Analyzing Structured Intents (Canonical Model v1.0)...");
     
     let matchCount = 0;
     engineerReport.claims.forEach(claim => {
         const found = matchClaim(claim, entries, since);
         if (found) {
-            console.log(`  [MATCH] Verified: ${claim.id || 'Manual'} ("${claim.command}")`);
+            console.log("  [MATCH] Verified: " + (claim.id || 'Manual') + " (\"" + claim.command + "\")");
             matchCount++;
         } else {
-            console.log(`  [OMISSION] NOT FOUND: ${claim.id || 'Manual'} ("${claim.command}")`);
-            frictionPoints.push(`Unverified: ${claim.id}`);
+            console.log("  [OMISSION] NOT FOUND: " + (claim.id || 'Manual') + " (\"" + claim.command + "\")");
+            frictionPoints.push("Unverified: " + claim.id);
         }
     });
 
     const trustScore = engineerReport.claims.length > 0 ? Math.round((matchCount / engineerReport.claims.length) * 100) : 0;
-    console.log(`[Assessment] Trust Score: ${trustScore}%`);
+    console.log("[Assessment] Trust Score: " + trustScore + "%");
     if (trustScore >= 90) passedChecks++;
 
     const score = Math.round((passedChecks / 3) * 10);
-    console.log(`\nCompliance Score: ${score}/10`);
+    console.log("\nCompliance Score: " + score + "/10");
     console.log("Status: " + (score >= 8 ? "COMPLIANT" : "NON-COMPLIANT"));
     console.log("\n====================================================");
 }
@@ -235,9 +224,9 @@ function generatePIR() {
     const [score, anomalies, remediations] = args;
     showHeader("POST-IMPLEMENTATION REVIEW");
     console.log("[DLR_REV_PIR]");
-    console.log(`Success Score: ${score}/10`);
-    console.log(`Anomaly Analysis: ${anomalies}`);
-    console.log(`Remediation Table: ${remediations}`);
+    console.log("Success Score: " + score + "/10");
+    console.log("Anomaly Analysis: " + anomalies);
+    console.log("Remediation Table: " + remediations);
     console.log("\n====================================================");
 }
 

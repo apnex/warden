@@ -1,69 +1,77 @@
-# Design Specification: Deterministic Portable Path Resolver
+# Design Specification: Deterministic Portable Path Resolver (V2)
 
 | Metadata | Value |
 | :--- | :--- |
 | **Feature ID** | FEAT_PORTABLE_RESOLVER |
 | **Concept** | CON-010 (Context-Agnostic Governance) |
-| **Status** | GERMINATED (Backlog: P1) |
+| **Status** | IN_PROGRESS (Refining for IDEA-039) |
 | **Domain** | Warden Core / Infrastructure |
-| **Reference** | IDEA-032 |
+| **Reference** | IDEA-039 (Architecture Decoupling) |
 
 ## 1. Executive Summary
-This feature implements a deterministic absolute path resolution engine for the Warden system. By transitioning from static relative mapping to a dynamic, anchor-based resolution model, we enable Warden to function as a portable governance subsystem within unrelated parent projects, CI/CD pipelines, and containerized environments without path breakage.
+This feature refactors the Warden path resolution engine to support a decoupled **Anchor + Proxy** architecture. By distinguishing between the **Engine Root** (logic) and the **Target Project Root** (context), we enable a single Warden installation to govern multiple independent projects with zero pollution and high-fidelity state isolation.
 
-## 2. Problem Statement: The "Relative Fragility" Debt
-The current `engine/path_resolver.js` relies on `__dirname` and static object exports. This creates several structural weaknesses:
-- **Execution Context Sensitivity**: Tools fail if invoked from a directory depth other than the project root or `engine/`.
-- **Embedding Friction**: Warden cannot be used as a git submodule or a `tools/` subdirectory in another project because its internal paths are not self-anchoring.
-- **Environment Rigidity**: Mapping internal registries or state files to external paths (e.g., for container mounting) requires manual code changes.
+## 2. Problem Statement: The "Single-Root" Constraint
+The current implementation conflates the Warden source code location with the target project's location. This prevents:
+- **Global Installation**: Running one `warden` instance across many projects.
+- **State Separation**: Keeping project-specific audit logs out of the engine's internal history.
+- **Registry Overlay**: Overriding global SE standards with project-specific local definitions.
 
-## 3. Solution Architecture: The Discovery Hierarchy
+## 3. Solution Architecture: The Dual-Root Resolver
 
-### 3.1 The Warden Anchor (`.warden_root`)
-We introduce a sentinel file/directory (`.warden_root`) to act as the internal project anchor.
-- **Discovery Mechanism**: Upon initialization, the resolver performs an upward recursion from its own location until the anchor is found.
-- **Result**: Warden becomes "Self-Aware" of its own root, regardless of where it is placed in a parent filesystem.
+### 3.1 Three-Point Anchoring
+The resolver identifies three distinct logical roots:
+1.  **`ENGINE_ROOT`**: The immutable location of the Warden source (Engine, Core Protocols, Validation).
+2.  **`TARGET_ROOT`**: The base directory of the project being governed (The Workspace).
+3.  **`ANCHOR_ROOT`**: The location of the `.warden/` directory (Context Anchor). Usually equals `TARGET_ROOT`.
 
-### 3.2 Dual-Root Resolution
-To support embedding, the resolver provides two distinct namespaces:
-1.  **`resolve.internal(subPath)`**: Resolves to Warden's core files (Registries, Engine, State). This is always relative to the `.warden_root` anchor.
-2.  **`resolve.target(subPath)`**: Resolves to the **Execution Target** (the codebase being governed). This defaults to the internal root but can be overridden to point to a parent project root.
+### 3.2 The Overlay Resolution Engine
+The resolver implements a **Layered Inheritance** model for registries:
+- **Local Priority**: Look for `attributes.json`, `glossary.json`, etc., in `ANCHOR_ROOT/registry/`.
+- **Global Fallback**: Fall back to `ENGINE_ROOT/registry/`.
+- **Immutable Core**: Protocols are ALWAYS loaded from `ENGINE_ROOT/registry/protocols/`.
 
-### 3.3 Multi-Layered Resolution Logic
-The resolution of any path follows a strict priority:
-1.  **Environment Overrides**: `WARDEN_REGISTRY_PATH`, `WARDEN_STATE_PATH`, etc. (Highest Priority).
-2.  **Anchor Discovery**: The location of the `.warden_root` file.
-3.  **Default Fallback**: `process.cwd()`.
+### 3.3 State Firewall
+- **Project State**: `active.json` and `session.log` are resolved relative to `ANCHOR_ROOT/state/`.
+- **Global State**: Engine-level history is resolved relative to `ENGINE_ROOT/state/`.
 
-## 4. Operational Capabilities
+## 4. Operational Requirements
 
-### 4.1 Path-Aware Auditing (Workspace Boundary)
-The `Library Auditor` and `verify_integrity.js` will utilize the resolver to identify the **Governed Workspace Boundary**. This prevents Warden from incorrectly auditing files belonging to a parent project when it is used as a submodule.
+### 4.1 Path-Aware Context Detection
+The toolchain must detect if it is running in:
+- **Local Mode**: `CWD` is the Warden Repo. `TARGET_ROOT == ENGINE_ROOT`.
+- **Proxy Mode**: `CWD` has a `.warden` anchor. `TARGET_ROOT` is the external project.
 
-### 4.2 Environment Variable Aliasing
-Standardized environment aliases enable ZK entities to re-map the entire system topology via a single `.env` file or shell session. This is critical for **CI/CD integration** where state files might be mapped to ephemeral volumes.
+### 4.2 Standard: `STD_PORTABLE_PATHS`
+Mandates that 100% of system tools utilize the `resolve` object. Hardcoded relative strings (e.g., `../registry`) are prohibited and will fail integrity audits.
 
 ## 5. Implementation Strategy
 
-### 5.1 Resolver Factory Refactor
-`path_resolver.js` will be refactored into a functional module:
+### 5.1 Resolver API (Draft)
 ```javascript
 const resolve = {
-  registry: (file) => path.join(INTERNAL_ROOT, 'registry', file),
-  state: (file) => path.join(INTERNAL_ROOT, '.warden', 'state', file),
-  // ... functional methods
+  engine: (...parts) => path.join(ENGINE_ROOT, ...parts),
+  target: (...parts) => path.join(TARGET_ROOT, ...parts),
+  anchor: (...parts) => path.join(ANCHOR_ROOT, ...parts),
+  
+  // Logic-Aware Helpers
+  registry: (filename) => {
+    // 1. Check Target Anchor first (Local Overlay)
+    // 2. Fallback to Engine Root (Global Baseline)
+  },
+  state: (filename) => {
+    // 1. Route to Target Anchor (Project State)
+    // 2. Handle Global State redirects
+  }
 };
 ```
 
-### 5.2 System-Wide Adoption (STD_PORTABLE_PATHS)
-A new system standard, **`STD_PORTABLE_PATHS`**, will be codified. It mandates that all system tools (Oracle, Warden, Patch, etc.) utilize the `resolve` utility rather than native `path.join` or relative string literals.
-
-## 6. Discussion History (IDEA-032 Refinements)
-- **Goal Alignment**: Confirmed that Warden's core goal is to be a portable governance container.
-- **Subsystem Support**: The "Discovery Hierarchy" ensures that internal paths remain stable even when Warden is a small part of a larger, unrelated project structure.
-- **Security & Integrity**: Integrating the resolver into the audit suite ensures that the "Double-Lock" on integrity is maintained across different project topologies.
+### 5.2 System Migration
+1.  **Phase 1**: Update `path_resolver.js` to support new roots.
+2.  **Phase 2**: Update `GovernanceAPI` to use the Overlay Model.
+3.  **Phase 3**: Harden `warden.js` exec to maintain context through subprocesses.
 
 ---
-**Status**: GERMINATED  
+**Status**: REFINING (IDEA-039 Implementation)  
 **Author**: Engineer  
-**Ratified**: Director (2026-01-13)
+**Reference**: [CON_ARCHITECTURE_DECOUPLING.md](../../registry/concepts/CON_ARCHITECTURE_DECOUPLING.md)

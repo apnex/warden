@@ -1,0 +1,10 @@
+{
+  "audit_level": "normal",
+  "telemetry": true,
+  "default_author": "Engineer",
+  "allowed_tools": [
+    "node",
+    "npm",
+    "git"
+  ]
+}

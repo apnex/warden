@@ -1,16 +1,15 @@
 const fs = require('fs');
 const path = require('path');
-const { resolve, SOURCES } = require('../engine/path_resolver');
+const { resolve, ENGINE_ROOT } = require('../engine/path_resolver');
 
-const ROOT = resolve.root();
-const ALLOWED_ROOT_DIRS = ['engine', 'registry', 'docs', 'history', 'validation', 'node_modules', '.git', '.gemini', '.warden'];
-const FORBIDDEN_PATTERNS = [/node [^/]+\.js/g]; // Checks for 'node script.js' without path
+const ROOT = ENGINE_ROOT;
+const ALLOWED_ROOT_DIRS = ['engine', 'registry', 'docs', 'validation', 'node_modules', '.git', '.gemini', '.warden'];
 
 function checkFileStructure() {
     console.log("[Audit] Checking STD_FILE_CONSOLIDATION...");
     const items = fs.readdirSync(ROOT);
     const violations = items.filter(item => {
-        const fullPath = resolve.root(item);
+        const fullPath = path.join(ROOT, item);
         if (fs.statSync(fullPath).isDirectory()) {
             return !ALLOWED_ROOT_DIRS.includes(item);
         }
@@ -18,7 +17,7 @@ function checkFileStructure() {
     });
 
     if (violations.length > 0) {
-        console.error(`  [❌] Violation: Unauthorized root directories found: ${violations.join(', ')}`);
+        console.error("[❌] Violation: Unauthorized root directories found: " + violations.join(', '));
         return false;
     }
     console.log("  [✅] PASS: Root structure consolidated.");
@@ -27,14 +26,14 @@ function checkFileStructure() {
 
 function checkToolPaths() {
     console.log("[Audit] Checking STD_TOOL_PATHING...");
-    const protocolsPath = SOURCES.PROTOCOLS;
+    const protocolsPath = resolve.registry('protocols.json');
     if (!fs.existsSync(protocolsPath)) return true;
 
     const content = fs.readFileSync(protocolsPath, 'utf8');
     const matches = content.match(/node [a-zA-Z0-9_]+\.js/g) || [];
     
     if (matches.length > 0) {
-        console.error(`  [❌] Violation: Root-level tool calls found in protocols: ${matches.join(', ')}`);
+        console.error("[❌] Violation: Root-level tool calls found in protocols: " + matches.join(', '));
         return false;
     }
     console.log("  [✅] PASS: All tool paths authoritative.");
@@ -58,14 +57,13 @@ function runAudit() {
 
 function validateSQA(anchors) {
     console.log("[Audit] Validating SQA Anchors...");
-    const attributesPath = SOURCES.ATTRIBUTES;
+    const attributesPath = resolve.registry('attributes.json');
     if (!fs.existsSync(attributesPath)) {
         console.error("  [❌] Error: registry/attributes.json missing.");
         process.exit(1);
     }
     const registry = JSON.parse(fs.readFileSync(attributesPath, 'utf8')).system_quality_attributes;
     
-    // Flatten registry for lookup
     const validAnchors = {};
     Object.entries(registry).forEach(([category, attrs]) => {
         Object.keys(attrs).forEach(key => {
@@ -77,23 +75,22 @@ function validateSQA(anchors) {
     const invalid = inputList.filter(a => !validAnchors[a]);
 
     if (invalid.length > 0) {
-        console.error(`  [❌] Invalid Anchors: ${invalid.join(', ')}`);
-        console.log(`  [💡] Valid Anchors: ${Object.keys(validAnchors).join(', ')}`);
+        console.error("[❌] Invalid Anchors: " + invalid.join(', '));
+        console.log("[💡] Valid Anchors: " + Object.keys(validAnchors).join(', '));
         process.exit(1);
     }
 
-    const formatted = inputList.map(a => `[${validAnchors[a]}] ${a}`).join(', ');
-    console.log(`  [✅] PASS: Anchors Verified.`);
+    const formatted = inputList.map(a => "[" + validAnchors[a] + "] " + a).join(', ');
+    console.log("  [✅] PASS: Anchors Verified.");
     
-    // Output the Deliverable Token
-    console.log(`\n[DLR_PLN_GSD] SQA Verified. SQA Anchors: ${formatted}`);
+    console.log("\n[DLR_PLN_GSD] SQA Verified. SQA Anchors: " + formatted);
 }
 
 if (require.main === module) {
     const args = process.argv.slice(2);
     if (args[0] === '--sqa') {
         if (!args[1]) {
-            console.error("Usage: node validation/audit_standards.js --sqa \"Anchor1, Anchor2\"");
+            console.error('Usage: node validation/audit_standards.js --sqa "Anchor1, Anchor2"');
             process.exit(1);
         }
         validateSQA(args[1]);

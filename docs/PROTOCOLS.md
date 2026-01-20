@@ -1,7 +1,7 @@
 # System Protocol Library
 
 **Version:** 2.0.0  
-**Generated:** 1/19/2026, 10:01:58 AM  
+**Generated:** 1/20/2026, 6:04:56 PM  
 
 > State-machine based governance for zero-knowledge engineering systems.
 
@@ -9,7 +9,7 @@
 ```
 You are the Engineer in this session.
 To initialize the environment and protocols, execute:
-node warden/engine/onboard.js
+node engine/onboard.js
 ```
 
 ## 📑 Registry Index
@@ -508,16 +508,14 @@ stateDiagram-v2
 #### 📋 Requirements
 | ID | Type | Target | Details |
 |:---|:---|:---|:---|
-| **integrity_snapshot** | `file_freshness` | registry/protocols.json.integrity.snapshot.json | Threshold: 300s |
 | **knowledge_pulse** | `command_log` | - | Pattern: `node engine/onboard.js --refresh` |
-| **knowledge_base_review** | `file_exists` | - |  |
 | **mission_brief** | `regex_match_output` | - | Pattern: `DLR_BRF_MISSION` |
 | **director_ack_survey** | `regex_match_output` | - | Pattern: `DLR_SUR_ACK|Approved|Ratified` |
 
 #### ➡️ Transitions
 | Trigger | Target State | 🛡️ Gated By |
 |:---|:---|:---|
-| `next` | **2_PLAN** | `integrity_snapshot`, `knowledge_pulse`, `knowledge_base_review`, `mission_brief`, `director_ack_survey` |
+| `next` | **2_PLAN** | `knowledge_pulse`, `mission_brief`, `director_ack_survey` |
 
 ---
 ### 2_PLAN
@@ -557,13 +555,12 @@ stateDiagram-v2
 #### 📋 Requirements
 | ID | Type | Target | Details |
 |:---|:---|:---|:---|
-| **integrity_audit** | `command_log` | - | Pattern: `node validation/verify_integrity.js --verify` |
 | **director_verification_ack** | `regex_match_output` | - | Pattern: `DLR_VFY_ACK|Approved|Ratified` |
 
 #### ➡️ Transitions
 | Trigger | Target State | 🛡️ Gated By |
 |:---|:---|:---|
-| `next` | **5_FINALIZE** | `integrity_audit`, `director_verification_ack` |
+| `next` | **5_FINALIZE** | `director_verification_ack` |
 | `fail` | **DEBUG_LOOP** | *(None)* |
 
 ---
@@ -589,15 +586,11 @@ stateDiagram-v2
 | ID | Type | Target | Details |
 |:---|:---|:---|:---|
 | **finalizer** | `command_log` | - | Pattern: `node docs/finalizer.js` |
-| **evidence_table** | `regex_match_output` | - | Pattern: `DLR_REV_PIR` |
-| **interaction_report** | `command_log` | - | Pattern: `node engine/report.js` |
-| **compliance_ratification** | `regex_match_output` | - | Pattern: `DLR_CMP_ACK|Approved|Ratified` |
-| **cap_validation** | `sub_protocol_complete` | - |  |
 
 #### ➡️ Transitions
 | Trigger | Target State | 🛡️ Gated By |
 |:---|:---|:---|
-| `next` | **0_IDLE** | `finalizer`, `evidence_table`, `compliance_ratification`, `cap_validation` |
+| `next` | **0_IDLE** | `finalizer` |
 
 ---
 
@@ -1429,6 +1422,121 @@ stateDiagram-v2
 ---
 
 ## 🕒 Governance Evolution
+
+### v9.21.21 (2026-01-20)
+- Final system synchronization after pathing debt purge
+
+### v9.21.20 (2026-01-20)
+- Purged legacy static pathing technical debt
+- Unified 100% of toolchain under the functional resolve API
+- Corrected template syntax errors in multiple scripts
+
+### v9.21.19 (2026-01-20)
+- Reordered README sections: Operational Guidance moved before Integrity Model
+
+### v9.21.18 (2026-01-20)
+- Uplifted README.md to high-fidelity technical manual
+- Externalized qualitative prose into registry/prose/
+- Implemented context-aware README generation (Local vs Proxy)
+- Refactored generate_protocols.js to isolate engine induction logs
+
+### v9.21.17 (2026-01-20)
+- Refreshed core documentation to reflect finalized IDEA-039 architecture (Post-Refactor Refresh)
+
+### v9.21.16 (2026-01-20)
+- Refreshed local documentation and synchronized project-centric generators
+
+### v9.21.15 (2026-01-20)
+- Uplifted README.md verbosity and detail
+- Implemented context-aware generation for Local vs Proxy modes
+- Resolved technical debt in documentation generators
+
+### v9.21.14 (2026-01-20)
+- Finalized Global Engine Configuration (Domain 6)
+
+### v9.21.13 (2026-01-20)
+- Implemented Global Engine Configuration (Domain 6)
+- Added 'system config' command suite
+- Established central config.json with environment overrides
+
+### v9.21.12 (2026-01-20)
+- Finalized Project Fleet Management (Domain 5)
+
+### v9.21.11 (2026-01-20)
+- Implemented Project Fleet Management (Domain 5)
+- Added 'system list', 'system prune', and 'system heartbeat' commands
+- Hardened path_resolver.js with global and project resolution helpers
+- Refactored toolchain for consistent context-aware execution
+
+### v9.21.10 (2026-01-20)
+- Refreshed core documentation to reflect finalized IDEA-039 architecture (Local Refresh)
+
+### v9.21.9 (2026-01-20)
+- Refreshed core documentation to reflect finalized IDEA-039 architecture
+
+### v9.21.8 (2026-01-20)
+- Refactored documentation generators for Project-Centric mode (Finalized)
+
+### v9.21.7 (2026-01-20)
+- Refactored documentation generators for Project-Centric mode
+- Separated System vs Project changelog rendering
+- Cleaned up generate_protocols.js to exclude engine-level artifacts in Proxy Mode
+
+### v9.21.6 (2026-01-20)
+- Migrated system changelog to .warden/changelog.json for architectural parity
+
+### v9.21.5 (2026-01-20)
+- Operationalized project-centric documentation workflow
+- Implemented dual-changelog logic (System vs Project)
+- Refactored generate_readme.js for Proxy Mode (Manifesto)
+- Updated glossary and standards generators for registry overlays
+
+### v9.21.4 (2026-01-20)
+- Purged legacy static pathing technical debt
+- Fixed path normalization in engine/patch.js
+- Unified 100% of toolchain under the functional resolve API
+
+### v9.21.3 (2026-01-20)
+- Purged legacy static pathing technical debt
+- Unified 100% of toolchain under the functional resolve API
+- Fully aligned with IDEA-039 decoupled architecture
+
+### v9.21.2 (2026-01-20)
+- "Implemented
+- warden system init
+- for
+- project
+- injection"
+- "Automated
+- project
+- scaffolding
+- and
+- context-aware
+- proxy
+- generation"
+- "Established
+- global
+- project
+- inventory
+- in
+- engine
+- state"
+
+### v9.21.1 (2026-01-20)
+- Flattened project anchor structure (removed history/ subdirectory)
+- Consolidated patches into .warden/patches/
+
+### v9.21.0 (2026-01-20)
+- Refactored path_resolver.js for Dual-Mode Portability (IDEA-039)
+- Implemented Registry Overlay Model (Local > Global)
+- Hardened State Firewall for decoupled project anchors
+- Simplified patch storage to .warden/patches/
+
+### v9.20.0 (2026-01-20)
+- Refactored path_resolver.js for Dual-Mode Portability (IDEA-039)
+- Implemented Registry Overlay Model (Local > Global)
+- Hardened State Firewall for decoupled project anchors
+- Simplified patch storage to .warden/patches/
 
 ### v9.19.4 (2026-01-18)
 - portable_pathing

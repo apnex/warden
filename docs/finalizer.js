@@ -1,6 +1,7 @@
 const fs = require('fs');
+const path = require('path');
 const { execSync } = require('child_process');
-const { SOURCES } = require('../engine/path_resolver');
+const { resolve, ENGINE_ROOT, TARGET_ROOT } = require('../engine/path_resolver');
 
 function calculateNextVersion(current, type) {
     const parts = current.split('.').map(Number);
@@ -12,7 +13,6 @@ function calculateNextVersion(current, type) {
         parts[1]++;
         parts[2] = 0;
     } else {
-        // Default: Patch
         parts[2]++;
     }
     return parts.join('.');
@@ -22,11 +22,10 @@ function finalize() {
     let args = process.argv.slice(2);
     if (args.length === 0) {
         console.error("[Error] No change descriptions provided.");
-        console.log("Usage: node tools/finalizer.js [--gov] [--major|--minor|--patch] \"Change 1\" \"Change 2\" ...");
+        console.log('Usage: node tools/finalizer.js [--gov] [--major|--minor|--patch] "Change 1" "Change 2" ...');
         process.exit(1);
     }
 
-    // 1. Detect Mode and Version Type
     let isGov = false;
     if (args[0] === '--gov') {
         isGov = true;
@@ -43,51 +42,65 @@ function finalize() {
         process.exit(1);
     }
 
-    // 2. Load Target Changelog
-    const changelogPath = isGov ? SOURCES.GOVERNANCE_CHANGELOG : SOURCES.CHANGELOG;
+    const changelogPath = isGov ? resolve.engine_root('history', 'governance_changelog.json') : resolve.anchor('changelog.json');
     const history = JSON.parse(fs.readFileSync(changelogPath, 'utf8'));
     const historyKey = isGov ? 'governance_changelog' : 'warden_changelog';
     const currentVersion = history[historyKey][0].version;
-    
-    // 3. Increment Version
     const nextVersion = calculateNextVersion(currentVersion, versionType);
 
-    // 3.5 Integrity Gate
+    const execEnv = { 
+        ...process.env, 
+        WARDEN_ENGINE_ROOT: ENGINE_ROOT, 
+        WARDEN_TARGET_ROOT: TARGET_ROOT 
+    };
+
     console.log("[System] Executing Protocol Integrity Gate...");
     try {
-        const { resolve } = require('../engine/path_resolver');
-        // Synchronize Modular Registry if exists (FEAT_MODULAR_REGISTRY)
-        if (fs.existsSync(SOURCES.PROTOCOLS_DIR)) {
-            execSync(`node ${resolve.validation('audit_library.js')} --sync`, { stdio: 'inherit' });
+        const protocolsDir = resolve.registry('protocols');
+        if (fs.existsSync(protocolsDir)) {
+            execSync("node " + resolve.validation('audit_library.js') + " --sync", { stdio: 'inherit', env: execEnv });
+            execSync("node " + resolve.validation('verify_integrity.js') + " --snapshot", { stdio: 'inherit', env: execEnv });
         }
-        execSync(`node ${resolve.validation('verify_integrity.js')} --verify`, { stdio: 'inherit' });
+        execSync("node " + resolve.validation('verify_integrity.js') + " --verify", { stdio: 'inherit', env: execEnv });
     } catch (e) {
         console.error("[Error] Integrity check failed. Finalization aborted.");
         process.exit(1);
     }
 
-    // 4. Prepare New Entry
     const newEntry = {
         version: nextVersion,
         date: new Date().toISOString().split('T')[0],
         changes: args
     };
 
-    // 5. Update Target Changelog
     history[historyKey].unshift(newEntry);
     fs.writeFileSync(changelogPath, JSON.stringify(history, null, 2));
-    console.log(`[Success] Updated ${isGov ? 'Governance' : 'Project'} changelog to v${nextVersion} (${versionType.replace('--', '')})`);
+    console.log("[Success] Updated " + (isGov ? 'Governance' : 'Project') + " changelog to v" + nextVersion + " (" + versionType.replace('--', '') + ")");
 
-    // 6. Synchronize Artifacts
     console.log("[System] Synchronizing artifacts...");
     try {
-        const { resolve } = require('../engine/path_resolver');
-        execSync(`node ${resolve.docs('generate_readme.js')}`, { stdio: 'inherit' });
-        execSync(`node ${resolve.docs('generate_protocols.js')}`, { stdio: 'inherit' });
-        execSync(`node ${resolve.docs('generate_knowledge.js')}`, { stdio: 'inherit' });
-        execSync(`node ${resolve.docs('generate_glossary.js')}`, { stdio: 'inherit' });
-        execSync(`node ${resolve.docs('generate_standards.js')}`, { stdio: 'inherit' });
-        execSync(`node ${resolve.docs('generate_backlog.js')}`, { stdio: 'inherit' });
+        const targetDocsDir = resolve.docs();
+        if (!fs.existsSync(targetDocsDir)) {
+            fs.mkdirSync(targetDocsDir, { recursive: true });
+            console.log("  [✅] Created target docs directory: " + path.relative(TARGET_ROOT, targetDocsDir));
+        }
+
+        const docGenerators = [
+            'generate_readme.js',
+            'generate_protocols.js',
+            'generate_knowledge.js',
+            'generate_glossary.js',
+            'generate_standards.js',
+            'generate_backlog.js',
+            'generate_changelog.js'
+        ];
+
+        docGenerators.forEach(gen => {
+            const genPath = resolve.sys_docs(gen);
+            if (fs.existsSync(genPath)) {
+                execSync("node " + genPath, { stdio: 'inherit', env: execEnv });
+            }
+        });
         console.log("[Success] All artifacts synchronized.");
     } catch (e) {
         console.error("[Error] Synchronization failed:", e.message);

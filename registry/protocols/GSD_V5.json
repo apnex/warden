@@ -122,7 +122,7 @@
       "requirements": {
         "patch_file": {
           "type": "file_exists",
-          "path": "history/patches/*.patch",
+          "path": ".warden/patches/*.patch",
           "freshness": true,
           "instruction": "STOP. Take a snapshot before working: `node engine/patch.js --snapshot <targets>`. Save your work when done: `node engine/patch.js --save <name>`."
         },

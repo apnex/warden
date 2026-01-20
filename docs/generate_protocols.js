@@ -1,19 +1,21 @@
 const fs = require('fs');
 const path = require('path');
-const { SOURCES, resolve } = require('../engine/path_resolver');
-
-const SOURCE_FILE = SOURCES.PROTOCOLS;
-const TARGET_FILE = resolve.docs('PROTOCOLS.md');
-const GOV_CHANGELOG = resolve.history('governance_changelog.json');
-const ONBOARD_OUTPUT = resolve.root('onboarding_output.txt');
+const { resolve, ENGINE_ROOT, TARGET_ROOT } = require('../engine/path_resolver');
 
 function generate() {
     const nl = String.fromCharCode(10);
-    if (!fs.existsSync(SOURCE_FILE)) {
+    const isLocalMode = (ENGINE_ROOT === TARGET_ROOT);
+    
+    const sourceFile = resolve.registry('protocols.json');
+    const targetFile = resolve.docs('PROTOCOLS.md');
+    const govChangelogFile = resolve.engine_root('history', 'governance_changelog.json');
+    const onboardOutputFile = resolve.engine_root('onboarding_output.txt');
+
+    if (!fs.existsSync(sourceFile)) {
         process.exit(1);
     }
 
-    const root = JSON.parse(fs.readFileSync(SOURCE_FILE, 'utf8'));
+    const root = JSON.parse(fs.readFileSync(sourceFile, 'utf8'));
     const library = root.protocol_library;
 
     let md = '# ' + root.meta.title + nl + nl;
@@ -21,17 +23,16 @@ function generate() {
     md += '**Generated:** ' + new Date().toLocaleString() + '  ' + nl + nl;
     md += '> ' + root.meta.description + nl + nl;
 
-    // --- Bootstrap ---
     if (root.bootstrap) {
         md += '## 🚀 Bootstrap' + nl;
         md += '```' + nl + root.bootstrap.instruction + nl + '```' + nl + nl;
     }
 
-    // --- Onboarding ---
-    if (fs.existsSync(ONBOARD_OUTPUT)) {
+    // Only include engine-level onboarding in Local Mode
+    if (isLocalMode && fs.existsSync(onboardOutputFile)) {
         md += '## 🚀 Onboarding' + nl;
         md += '> Initial system handshake and environmental validation output.' + nl + nl;
-        md += '```text' + nl + fs.readFileSync(ONBOARD_OUTPUT, 'utf8').trim() + nl + '```' + nl + nl;
+        md += '```text' + nl + fs.readFileSync(onboardOutputFile, 'utf8').trim() + nl + '```' + nl + nl;
     }
 
     md += '## 📑 Registry Index' + nl + nl;
@@ -42,7 +43,6 @@ function generate() {
     });
     md += nl + '---' + nl + nl;
 
-    // --- Deliverable Registry ---
     if (root.deliverable_registry) {
         md += '## 📦 Deliverable Registry' + nl;
         md += '> Global authority for all system outputs.' + nl + nl;
@@ -55,7 +55,6 @@ function generate() {
         md += nl + '---' + nl + nl;
     }
 
-    // --- Compliance Framework ---
     if (root.compliance_registry) {
         md += '## ⚖️ Compliance Framework' + nl;
         md += '> Global constraints for verified engineering cycles.' + nl + nl;
@@ -67,7 +66,6 @@ function generate() {
         md += nl + '---' + nl + nl;
     }
 
-    // --- Protocols ---
     Object.entries(library).forEach(([id, p]) => {
         const meta = p.meta;
         md += '# Protocol: ' + id + nl + nl;
@@ -148,9 +146,9 @@ function generate() {
         md += nl + '---' + nl + nl;
     });
 
-    // --- Governance Evolution ---
-    if (fs.existsSync(GOV_CHANGELOG)) {
-        const gov = JSON.parse(fs.readFileSync(GOV_CHANGELOG, 'utf8'));
+    // Only include Governance Evolution in Local Mode
+    if (isLocalMode && fs.existsSync(govChangelogFile)) {
+        const gov = JSON.parse(fs.readFileSync(govChangelogFile, 'utf8'));
         md += '## 🕒 Governance Evolution' + nl + nl;
         gov.governance_changelog.forEach(entry => {
             md += '### v' + entry.version + ' (' + entry.date + ')' + nl;
@@ -159,8 +157,8 @@ function generate() {
         });
     }
 
-    fs.writeFileSync(TARGET_FILE, md);
-    console.log('Success');
+    fs.writeFileSync(targetFile, md);
+    console.log('Success: Protocol documentation generated.');
 }
 
 generate();

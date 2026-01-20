@@ -1,15 +1,18 @@
 const fs = require('fs');
 const path = require('path');
-const { SOURCES, TARGETS } = require('../engine/path_resolver');
+const { resolve } = require('../engine/path_resolver');
 
 function generate() {
-    if (!fs.existsSync(SOURCES.STANDARDS)) {
-        console.error("Error: standards.json not found at " + SOURCES.STANDARDS);
+    const nl = String.fromCharCode(10);
+    const standardsFile = resolve.registry('standards.json');
+    const targetFile = resolve.docs('STANDARDS.md');
+
+    if (!fs.existsSync(standardsFile)) {
+        console.error("Error: standards.json not found at " + standardsFile);
         process.exit(1);
     }
 
-    const data = JSON.parse(fs.readFileSync(SOURCES.STANDARDS, 'utf8'));
-    const nl = String.fromCharCode(10);
+    const data = JSON.parse(fs.readFileSync(standardsFile, 'utf8'));
 
     let md = '# 📜 ' + data.meta.title + nl + nl;
     md += '> ' + data.meta.description + nl + nl;
@@ -17,14 +20,14 @@ function generate() {
 
     md += '## Registered Standards' + nl + nl;
     data.standards.forEach(s => {
-        md += `### ${s.name} (${s.id})` + nl;
-        md += `- **Guidance**: ${s.guidance}` + nl;
-        md += `- **Enforcement**: ${s.enforcement}` + nl + nl;
+        md += "### " + s.name + " (" + s.id + ")" + nl;
+        md += "- **Guidance**: " + s.guidance + nl;
+        md += "- **Enforcement**: " + s.enforcement + nl + nl;
     });
 
     md += '---' + nl + '*Generated via Warden Standards Tool*' + nl;
 
-    fs.writeFileSync(TARGETS.STANDARDS_MD, md);
+    fs.writeFileSync(targetFile, md);
     console.log("Success: STANDARDS.md generated.");
 }
 

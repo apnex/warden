@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { execSync } = require('child_process');
-const { SOURCES, resolve } = require('../engine/path_resolver');
+const { resolve, ENGINE_ROOT } = require('../engine/path_resolver');
 const { loadProtocols } = require('../engine/lib/loader');
 
 const SCHEMA_FILE = resolve.registry('schema', 'protocol.schema.json');
@@ -42,7 +42,7 @@ function auditStateTransitions(protocol) {
         if (stateObj.transitions) {
             Object.entries(stateObj.transitions).forEach(([trigger, trans]) => {
                 const target = typeof trans === 'string' ? trans : trans.target;
-                if (!states.includes(target)) errors.push(`[Transition Error] State ${stateName} targets non-existent state '${target}'`);
+                if (!states.includes(target)) errors.push("[Transition Error] State " + stateName + " targets non-existent state '" + target + "'");
             });
         }
     });
@@ -57,7 +57,7 @@ function auditReferentialIntegrity(protocolFile) {
     const regex = /(DLR|CMP)_[A-Z0-9_]+/g;
     let match;
     while ((match = regex.exec(content)) !== null) {
-        if (!registryIds.has(match[0])) errors.push(`[Missing] Reference ${match[0]} has no definition.`);
+        if (!registryIds.has(match[0])) errors.push("[Missing] Reference " + match[0] + " has no definition.");
     }
     Object.values(protocols.protocol_library).forEach(p => { if (p.states) errors.push(...auditStateTransitions(p)); });
     return errors;
@@ -65,20 +65,21 @@ function auditReferentialIntegrity(protocolFile) {
 
 function auditComponentInventory() {
     console.log("\n[SYSTEM COMPONENT INVENTORY]");
-    if (!fs.existsSync(SOURCES.STATUS)) {
+    const statusFile = resolve.registry('status.json');
+    if (!fs.existsSync(statusFile)) {
         console.error("  [Error] status.json missing. Cannot audit inventory.");
         return [ "status.json missing" ];
     }
-    const status = JSON.parse(fs.readFileSync(SOURCES.STATUS, 'utf8'));
+    const status = JSON.parse(fs.readFileSync(statusFile, 'utf8'));
     const errors = [];
 
     status.components.forEach(c => {
-        const fullPath = resolve.root(c.name);
+        const fullPath = path.resolve(ENGINE_ROOT, c.name);
         if (fs.existsSync(fullPath)) {
-            console.log(`  [✅] ${c.name.padEnd(30)} | Status: PRESENT`);
+            console.log("  [✅] " + c.name.padEnd(30) + " | Status: PRESENT");
         } else {
-            console.error(`  [❌] ${c.name.padEnd(30)} | Status: MISSING`);
-            errors.push(`Component missing: ${c.name}`);
+            console.error("  [❌] " + c.name.padEnd(30) + " | Status: MISSING");
+            errors.push("Component missing: " + c.name);
         }
     });
     return errors;
@@ -88,25 +89,25 @@ function runIntegrityForFile(protocolFile, mode) {
     const snapshotFile = protocolFile + '.integrity.snapshot.json';
     const baselineFile = protocolFile + '.baseline';
     const filename = path.basename(protocolFile);
-    console.log(`\n[INTEGRITY AUDIT: ${filename} - MODE: ${mode.replace('--','').toUpperCase()}]`);
+    console.log("\n[INTEGRITY AUDIT: " + filename + " - MODE: " + mode.replace('--','').toUpperCase() + "]");
     
     if (mode === '--restore') {
         if (!fs.existsSync(baselineFile)) {
-            console.error(`[Error] Baseline file not found: ${baselineFile}`);
+            console.error("[Error] Baseline file not found: " + baselineFile);
             return false;
         }
         fs.copyFileSync(baselineFile, protocolFile);
-        console.log(`[Success] Restored ${filename} from baseline.`);
+        console.log("[Success] Restored " + filename + " from baseline.");
     }
 
     if (mode === '--snapshot') {
         const sigs = getProtocolSignatures(protocolFile);
         fs.writeFileSync(snapshotFile, JSON.stringify(sigs, null, 2));
         fs.copyFileSync(protocolFile, baselineFile);
-        console.log(`[Success] Snapshot captured for ${filename}.`);
+        console.log("[Success] Snapshot captured for " + filename + ".");
         return true;
     }
-    try { execSync(`node ${VALIDATOR_TOOL} ${SCHEMA_FILE} ${protocolFile}`, { stdio: 'ignore' }); console.log("[Schema] Validation Passed."); } 
+    try { execSync("node " + VALIDATOR_TOOL + " " + SCHEMA_FILE + " " + protocolFile, { stdio: 'inherit' }); console.log("[Schema] Validation Passed."); } 
     catch (e) { console.error("[Schema] FAILED structural validation."); return false; }
     
     const oldSigs = JSON.parse(fs.readFileSync(snapshotFile, 'utf8'));
@@ -120,7 +121,7 @@ function runIntegrityForFile(protocolFile, mode) {
         if (!old) { state = "NEW"; status = "VERIFIED"; }
         else if (old.hash !== curr.hash) {
             state = "MODIFIED";
-            if (curr.stat_count < old.stat_count || (curr.req_count && curr.req_count < old.req_count)) status = "⚠️ REGRESSION";
+            if (curr.stat_count < old.hash_count || (curr.req_count && curr.req_count < old.req_count)) status = "⚠️ REGRESSION";
             else status = "VERIFIED";
         }
         w1 = Math.max(w1, id.length); w2 = Math.max(w2, state.length); w3 = Math.max(w3, status.length);
@@ -137,16 +138,20 @@ function runIntegrityForFile(protocolFile, mode) {
     });
     console.log(divider);
     const refErrors = auditReferentialIntegrity(protocolFile);
-    if (refErrors.length > 0) { console.log("\n[REFERENTIAL INTEGRITY AUDIT]"); refErrors.forEach(err => console.log(`  ${err}`)); regressionDetected = true; }
+    if (refErrors.length > 0) { 
+        console.log("\n[REFERENTIAL INTEGRITY AUDIT]"); 
+        refErrors.forEach(err => console.log("  " + err)); 
+        regressionDetected = true; 
+    }
     
     const invErrors = auditComponentInventory();
     if (invErrors.length > 0) { regressionDetected = true; }
 
-    // Modular Library Audit (FEAT_MODULAR_REGISTRY)
-    if (fs.existsSync(resolve.registry('protocols'))) {
+    const protocolsDir = resolve.registry('protocols');
+    if (fs.existsSync(protocolsDir)) {
         console.log("\n[MODULAR LIBRARY AUDIT]");
         try {
-            execSync(`node ${resolve.validation('audit_library.js')} ${mode === '--snapshot' ? '--sync' : '--verify'}`, { stdio: 'inherit' });
+            execSync("node " + resolve.validation('audit_library.js') + " " + (mode === '--snapshot' ? '--sync' : '--verify'), { stdio: 'inherit' });
         } catch (e) {
             regressionDetected = true;
         }
@@ -157,7 +162,7 @@ function runIntegrityForFile(protocolFile, mode) {
 
 function run() {
     const mode = process.argv[2] || '--verify';
-    const target = process.env.PROTOCOL_PATH || SOURCES.PROTOCOLS;
+    const target = process.env.PROTOCOL_PATH || resolve.registry('protocols.json');
     if (fs.existsSync(target)) {
         const passed = runIntegrityForFile(target, mode);
         if (!passed && mode === '--verify') process.exit(1);

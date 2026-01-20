@@ -1,14 +1,17 @@
 const fs = require('fs');
 const path = require('path');
-const { SOURCES, TARGETS } = require('../engine/path_resolver');
+const { resolve } = require('../engine/path_resolver');
 
 function generate() {
     const nl = String.fromCharCode(10);
-    if (!fs.existsSync(SOURCES.KNOWLEDGE_BASE)) {
+    const kbFile = resolve.registry('knowledge_base.json');
+    const targetFile = resolve.docs('KNOWLEDGE_BASE.md');
+
+    if (!fs.existsSync(kbFile)) {
         process.exit(1);
     }
 
-    const kb = JSON.parse(fs.readFileSync(SOURCES.KNOWLEDGE_BASE, 'utf8'));
+    const kb = JSON.parse(fs.readFileSync(kbFile, 'utf8'));
 
     let md = '# 🧠 System Knowledge Base' + nl + nl;
     md += '> Persistent memory of anomalies, lessons learned, and remediations.' + nl + nl;
@@ -25,7 +28,7 @@ function generate() {
 
     md += '---' + nl + '*Generated via Knowledge Engine Tool*' + nl;
 
-    fs.writeFileSync(TARGETS.KNOWLEDGE_BASE_MD, md);
+    fs.writeFileSync(targetFile, md);
     console.log('Success: KNOWLEDGE_BASE.md generated.');
 }
 

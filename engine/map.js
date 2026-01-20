@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { resolve, ENGINE, SOURCES } = require('./path_resolver');
+const { resolve } = require('./path_resolver');
 
 /**
  * WARDEN CARTOGRAPHER (MAP_V2)
@@ -8,20 +8,20 @@ const { resolve, ENGINE, SOURCES } = require('./path_resolver');
  */
 
 function showHeader(title) {
-    console.log(`%% WARDEN MAP: ${title}`);
-    console.log(`%% Generated: ${new Date().toISOString()}\n`);
+    console.log("%% WARDEN MAP: " + title);
+    console.log("%% Generated: " + new Date().toISOString() + "\n");
 }
 
 /**
  * PHYSICAL LAYER: Dependency Mapping
  */
 function getDependencies() {
-    const files = fs.readdirSync(ENGINE).filter(f => f.endsWith('.js'));
+    const engineDir = resolve.engine();
+    const files = fs.readdirSync(engineDir).filter(f => f.endsWith('.js'));
     const deps = [];
     
     files.forEach(file => {
-        const content = fs.readFileSync(path.join(ENGINE, file), 'utf8');
-        // Match require statements with relative paths
+        const content = fs.readFileSync(path.join(engineDir, file), 'utf8');
         const matches = content.matchAll(/require\(['"](\.?\.?\/[a-zA-Z0-9_\/]+)['"]\)/g);
         for (const match of matches) {
             let depPath = match[1];
@@ -40,7 +40,7 @@ function renderDeps() {
     deps.forEach(d => {
         nodes.add(d.from);
         nodes.add(d.to);
-        console.log(`    ${d.from.replace('.js', '')} --> ${d.to}`);
+        console.log("    " + d.from.replace('.js', '') + " --> " + d.to);
     });
     console.log("  end");
 }
@@ -49,10 +49,10 @@ function renderDeps() {
  * LOGICAL LAYER: Protocol Mapping
  */
 function getProtocol(id) {
-    const protoPath = resolve.registry('protocols', `${id}.json`);
+    const protoPath = resolve.registry('protocols', id + ".json");
     if (!fs.existsSync(protoPath)) {
-        // Fallback to protocols.json if modular one not found
-        const full = JSON.parse(fs.readFileSync(SOURCES.PROTOCOLS, 'utf8'));
+        const fullProtocolsPath = resolve.registry('protocols.json');
+        const full = JSON.parse(fs.readFileSync(fullProtocolsPath, 'utf8'));
         return full.protocol_library[id];
     }
     return JSON.parse(fs.readFileSync(protoPath, 'utf8'));
@@ -61,27 +61,26 @@ function getProtocol(id) {
 function renderProtocol(id) {
     const proto = getProtocol(id);
     if (!proto) {
-        console.error(`❌ Error: Protocol ${id} not found.`);
+        console.error("❌ Error: Protocol " + id + " not found.");
         process.exit(1);
     }
 
-    console.log(`graph LR`);
-    console.log(`  subgraph ${id} [${proto.meta.title}]`);
+    console.log("graph LR");
+    console.log("  subgraph " + id + " [" + proto.meta.title + "]");
     
     Object.entries(proto.states).forEach(([name, data]) => {
-        const label = name;
         if (data.type === 'initial') {
-            console.log(`    START(( )) --> ${name}`);
+            console.log("    START(( )) --> " + name);
         }
 
         if (data.transitions) {
             Object.entries(data.transitions).forEach(([trigger, target]) => {
                 const targetName = typeof target === 'object' ? target.target : target;
-                console.log(`    ${name} -- "${trigger}" --> ${targetName}`);
+                console.log("    " + name + " -- \"" + trigger + "\" --> " + targetName);
             });
         }
     });
-    console.log(`  end`);
+    console.log("  end");
 }
 
 /**
@@ -98,7 +97,7 @@ function renderSystem() {
     console.log("    Validation --> Registry");
     console.log("    Registry --> Protocols[protocols.json]");
     console.log("    Registry --> Standards[standards.json]");
-    console.log("    Engine --> History");
+    console.log("    Engine --> state");
     console.log("  end");
 }
 
@@ -114,7 +113,7 @@ switch (command) {
             console.error("Usage: node engine/map.js protocol <ID>");
             process.exit(1);
         }
-        showHeader(`Protocol Flow: ${arg}`);
+        showHeader("Protocol Flow: " + arg);
         renderProtocol(arg);
         break;
     case 'deps':

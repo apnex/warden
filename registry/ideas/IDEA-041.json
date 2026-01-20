@@ -1,0 +1,10 @@
+{
+  "id": "IDEA-041",
+  "title": "Shadow Workspace Hardening",
+  "description": "Automate pre-flight snapshots and implement an integrated rollback command to enhance the system safety net and ensure atomic turn boundaries.",
+  "status": "INCUBATING",
+  "author": "Engineer",
+  "created": "2026-01-20",
+  "dialogue": [],
+  "components": []
+}

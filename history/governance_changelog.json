@@ -1,6 +1,213 @@
 {
   "governance_changelog": [
     {
+      "version": "9.21.21",
+      "date": "2026-01-20",
+      "changes": [
+        "Final system synchronization after pathing debt purge"
+      ]
+    },
+    {
+      "version": "9.21.20",
+      "date": "2026-01-20",
+      "changes": [
+        "Purged legacy static pathing technical debt",
+        "Unified 100% of toolchain under the functional resolve API",
+        "Corrected template syntax errors in multiple scripts"
+      ]
+    },
+    {
+      "version": "9.21.19",
+      "date": "2026-01-20",
+      "changes": [
+        "Reordered README sections: Operational Guidance moved before Integrity Model"
+      ]
+    },
+    {
+      "version": "9.21.18",
+      "date": "2026-01-20",
+      "changes": [
+        "Uplifted README.md to high-fidelity technical manual",
+        "Externalized qualitative prose into registry/prose/",
+        "Implemented context-aware README generation (Local vs Proxy)",
+        "Refactored generate_protocols.js to isolate engine induction logs"
+      ]
+    },
+    {
+      "version": "9.21.17",
+      "date": "2026-01-20",
+      "changes": [
+        "Refreshed core documentation to reflect finalized IDEA-039 architecture (Post-Refactor Refresh)"
+      ]
+    },
+    {
+      "version": "9.21.16",
+      "date": "2026-01-20",
+      "changes": [
+        "Refreshed local documentation and synchronized project-centric generators"
+      ]
+    },
+    {
+      "version": "9.21.15",
+      "date": "2026-01-20",
+      "changes": [
+        "Uplifted README.md verbosity and detail",
+        "Implemented context-aware generation for Local vs Proxy modes",
+        "Resolved technical debt in documentation generators"
+      ]
+    },
+    {
+      "version": "9.21.14",
+      "date": "2026-01-20",
+      "changes": [
+        "Finalized Global Engine Configuration (Domain 6)"
+      ]
+    },
+    {
+      "version": "9.21.13",
+      "date": "2026-01-20",
+      "changes": [
+        "Implemented Global Engine Configuration (Domain 6)",
+        "Added 'system config' command suite",
+        "Established central config.json with environment overrides"
+      ]
+    },
+    {
+      "version": "9.21.12",
+      "date": "2026-01-20",
+      "changes": [
+        "Finalized Project Fleet Management (Domain 5)"
+      ]
+    },
+    {
+      "version": "9.21.11",
+      "date": "2026-01-20",
+      "changes": [
+        "Implemented Project Fleet Management (Domain 5)",
+        "Added 'system list', 'system prune', and 'system heartbeat' commands",
+        "Hardened path_resolver.js with global and project resolution helpers",
+        "Refactored toolchain for consistent context-aware execution"
+      ]
+    },
+    {
+      "version": "9.21.10",
+      "date": "2026-01-20",
+      "changes": [
+        "Refreshed core documentation to reflect finalized IDEA-039 architecture (Local Refresh)"
+      ]
+    },
+    {
+      "version": "9.21.9",
+      "date": "2026-01-20",
+      "changes": [
+        "Refreshed core documentation to reflect finalized IDEA-039 architecture"
+      ]
+    },
+    {
+      "version": "9.21.8",
+      "date": "2026-01-20",
+      "changes": [
+        "Refactored documentation generators for Project-Centric mode (Finalized)"
+      ]
+    },
+    {
+      "version": "9.21.7",
+      "date": "2026-01-20",
+      "changes": [
+        "Refactored documentation generators for Project-Centric mode",
+        "Separated System vs Project changelog rendering",
+        "Cleaned up generate_protocols.js to exclude engine-level artifacts in Proxy Mode"
+      ]
+    },
+    {
+      "version": "9.21.6",
+      "date": "2026-01-20",
+      "changes": [
+        "Migrated system changelog to .warden/changelog.json for architectural parity"
+      ]
+    },
+    {
+      "version": "9.21.5",
+      "date": "2026-01-20",
+      "changes": [
+        "Operationalized project-centric documentation workflow",
+        "Implemented dual-changelog logic (System vs Project)",
+        "Refactored generate_readme.js for Proxy Mode (Manifesto)",
+        "Updated glossary and standards generators for registry overlays"
+      ]
+    },
+    {
+      "version": "9.21.4",
+      "date": "2026-01-20",
+      "changes": [
+        "Purged legacy static pathing technical debt",
+        "Fixed path normalization in engine/patch.js",
+        "Unified 100% of toolchain under the functional resolve API"
+      ]
+    },
+    {
+      "version": "9.21.3",
+      "date": "2026-01-20",
+      "changes": [
+        "Purged legacy static pathing technical debt",
+        "Unified 100% of toolchain under the functional resolve API",
+        "Fully aligned with IDEA-039 decoupled architecture"
+      ]
+    },
+    {
+      "version": "9.21.2",
+      "date": "2026-01-20",
+      "changes": [
+        "\"Implemented",
+        "warden system init",
+        "for",
+        "project",
+        "injection\"",
+        "\"Automated",
+        "project",
+        "scaffolding",
+        "and",
+        "context-aware",
+        "proxy",
+        "generation\"",
+        "\"Established",
+        "global",
+        "project",
+        "inventory",
+        "in",
+        "engine",
+        "state\""
+      ]
+    },
+    {
+      "version": "9.21.1",
+      "date": "2026-01-20",
+      "changes": [
+        "Flattened project anchor structure (removed history/ subdirectory)",
+        "Consolidated patches into .warden/patches/"
+      ]
+    },
+    {
+      "version": "9.21.0",
+      "date": "2026-01-20",
+      "changes": [
+        "Refactored path_resolver.js for Dual-Mode Portability (IDEA-039)",
+        "Implemented Registry Overlay Model (Local > Global)",
+        "Hardened State Firewall for decoupled project anchors",
+        "Simplified patch storage to .warden/patches/"
+      ]
+    },
+    {
+      "version": "9.20.0",
+      "date": "2026-01-20",
+      "changes": [
+        "Refactored path_resolver.js for Dual-Mode Portability (IDEA-039)",
+        "Implemented Registry Overlay Model (Local > Global)",
+        "Hardened State Firewall for decoupled project anchors",
+        "Simplified patch storage to .warden/patches/"
+      ]
+    },
+    {
       "version": "9.19.4",
       "date": "2026-01-18",
       "changes": [

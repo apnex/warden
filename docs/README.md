@@ -1,11 +1,97 @@
 # 🛡️ Warden Governance Engine - v1.6.0
 
-**Version:** 1.6.49  
-**Generated:** 1/18/2026, 1:16:05 PM  
+**Version:** 2.0.4  
+**Generated:** 1/20/2026, 6:04:56 PM  
 
-> Technical Implementation and Architecture Documentation.
+## 📋 Overview
+The Warden Governance Engine is a high-fidelity state-machine based governance framework designed to enforce engineering standards and maintain a provable audit trail through a Zero-Knowledge (ZK) interaction model.
 
-## 🧩 Component Dashboard
+## 🏗️ Architecture: The Service-Context Model
+
+Warden operates on a decoupled **Anchor + Proxy** architecture, separating the governance logic from the project context.
+
+### 1. The Central Engine (Mechanism)
+The core logic resides in a central installation (the `ENGINE_ROOT`). This includes:
+- **`warden.js`**: The executor that parses state machines and proxies commands.
+- **`oracle.js`**: The knowledge layer providing protocol guidance and behavioral certification.
+- **`path_resolver.js`**: The deterministic logic that manages path mapping between the engine and the target.
+
+### 2. The Project Anchor (Context)
+A hidden `.warden/` directory at the project root acts as the "Anchor." It contains:
+- **`state/`**: The active governance cycle and the immutable `session.log` audit trail.
+- **`registry/`**: Project-specific overrides for standards, glossary, and attributes.
+- **`patches/`**: A record of the "Deltas" produced during governance turns.
+
+### 3. The Proxy (Bridge)
+A lightweight `warden` script in the project root forwards commands to the central engine, automatically injecting the correct project context. This allows Warden to be omnipresent but non-intrusive.
+
+## 🚦 Operational Guidance
+
+Warden is designed around the principle of **Atomic Turns**. Every engineering cycle follows a deterministic lifecycle.
+
+### 1. Project Injection (Installation)
+To bring a new project under governance, use the system initialization command:
+```bash
+node engine/warden.js system init <target_path>
+```
+This scaffolds the anchor and creates the local `warden` proxy script.
+
+### 2. The First Turn (Onboarding)
+Once injected, initialize the onboarding protocol:
+```bash
+./warden init ONBOARD_V4 "Project Induction"
+```
+Follow the instructions to align your session and complete the behavioral pledge.
+
+### 3. Development Cycles (GSD)
+Most work is performed using the Gated Sequential Development (`GSD`) protocol:
+- **SURVEY**: Assess the current state and dependencies.
+- **PLAN**: Draft a technical blueprint and secure Director approval.
+- **EXECUTE**: Perform work via `./warden exec "<cmd>"`.
+- **VERIFY**: Present deliverables for final audit.
+- **FINALIZE**: Synchronize documentation and close the cycle.
+
+### 4. Cognitive Halts
+If the engine stops and says **"Await Director Input,"** stop all work. This is a deliberate turn boundary designed to ensure alignment before high-stakes transitions.
+
+## 🛡️ The Integrity Model: Three-Way Audit
+
+Warden ensures high-fidelity engineering through a "Three-Way Audit" chain that provides non-repudiation for every change.
+
+### 1. Intent (The Registry)
+Every action must map to a **Canonical Intent** defined in the project or system registry. If an action does not match a known intent, it is flagged as a potential "Protocol Breach."
+
+### 2. Action (The Session Journal)
+All CLI interactions are proxied through `warden.js exec`. This creates a bit-perfect `session.log` that captures the exact command, the environment, and the resulting output.
+
+### 3. Verification (The Internal Audit)
+Upon completing a turn, the engine verifies that the requirements of the protocol state (Gates) have been satisfied. The successful transition is recorded in the `internal_audit.json`, cryptographically linking the intended state to the verified action.
+
+### Non-Repudiation
+By linking these three layers, Warden proves that a specific version of code was produced by a specific agent, authorized by a specific Director, following a specific verified protocol.
+
+## 🤖 Warden-Aware Agent Specification
+
+AI agents (Zero-Knowledge entities) must adhere to the following checklist when operating in a Warden-governed project:
+
+### 1. Context Discovery
+- Locate the `warden` proxy script in the project root.
+- Query the current state using `./warden status`.
+
+### 2. Knowledge Retrieval
+- Consult the Oracle before execution: `./warden exec "node engine/oracle.js explain <TOPIC>"`.
+- Use `./warden exec "node engine/oracle.js list"` to see available standards and attributes.
+
+### 3. Proxy-Only Execution
+- **Never** run critical commands directly. Always wrap them in `./warden exec "..."`.
+- Provide qualitative reasoning using the `--justify` flag when performing non-standard actions.
+
+### 4. Turn Boundary Respect
+- Observe all **Cognitive Halts**.
+- Do not chain multiple protocol transitions in a single turn without Director ratification.
+- Prioritize **Integrity over Velocity**.
+
+### Component Dashboard
 
 | Component | Purpose | Status |
 |:---|:---|:---|
@@ -28,13 +114,13 @@
 ## ⚙️ Core Capabilities
 
 ### engine/warden.js
-- **Features:** `Self-Healing`, `Safe Protocol Lookup`, `Session Logging (exec)`
+- **Engine Features:** `Self-Healing`, `Safe Protocol Lookup`, `Session Logging (exec)`
 
 ### engine/lib/handlers.js
-- **Handlers:** `file_freshness`, `file_exists`, `command_log`, `regex_match_output`
+- **Requirement Handlers:** `file_freshness`, `file_exists`, `command_log`, `regex_match_output`
 
 ### validation/validate_schema.js
-- **Features:** `--fix flag`, `recursive type validation`
+- **Engine Features:** `--fix flag`, `recursive type validation`
 
 ## ⚠️ Technical Debt
 
@@ -44,6 +130,36 @@
 ---
 
 ## 🕒 Version History
+
+### v2.0.4 (2026-01-18)
+- Relocated engineer_report.json to /.warden and updated path resolver.
+
+### v2.0.3 (2026-01-18)
+- Synchronizing documentation for Zero-Symlink architecture.
+
+### v2.0.2 (2026-01-18)
+- Final v11 project promotion synchronization.
+
+### v2.0.1 (2026-01-18)
+- Synchronizing project documentation for v11 promotion.
+
+### v2.0.0 (2026-01-18)
+- Formal project promotion from v10 to v11. Updated all code and documentation references.
+
+### v1.6.54 (2026-01-18)
+- FEAT_MODULE_PROMOTION: Orchestration logic relocated to threading tier.
+
+### v1.6.53 (2026-01-18)
+- FEAT_MATH_ISOLATION: Zero-dependency state achieved.
+
+### v1.6.52 (2026-01-18)
+- FEAT_STRIDE_ALIGNMENT: Stride-based memory padding implemented.
+
+### v1.6.51 (2026-01-18)
+- FEAT_SBOX_OPTIMIZATION: Performance restored to 4.7ms.
+
+### v1.6.50 (2026-01-18)
+- FEAT_UDP_TRANSPORT: Atomic memory safety and isolated network ingest implementation.
 
 ### v1.6.49 (2026-01-14)
 - Enhanced oracle.js quiz command to support guidance mode by displaying questions when answers are missing.

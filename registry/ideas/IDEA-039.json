@@ -1,0 +1,15 @@
+{
+  "id": "IDEA-039",
+  "title": "Architecture Decoupling",
+  "description": "Proposal to establish strict boundaries between the Warden Governance Engine and the Target Project. Focus on separating state, registries, documentation, and tooling to ensure the Governance layer remains portable and non-intrusive while maintaining high-fidelity oversight of the target project.",
+  "status": "GERMINATING",
+  "author": "Engineer",
+  "created": "2026-01-20",
+  "dialogue": [
+    {
+      "timestamp": "2026-01-20T03:41:49.628Z",
+      "note": "Refined the decoupling architecture into 5 key domains: Installation (Anchor+Proxy), State Separation (Dual-Homed), Registry Hierarchy (Layered Inheritance), Documentation Isolation (Three-Tiered), and Tooling Portability (Context-Aware Resolver). Immutable core protocols established as a primary principle."
+    }
+  ],
+  "components": []
+}
