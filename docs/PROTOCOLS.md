@@ -1,7 +1,7 @@
 # System Protocol Library
 
 **Version:** 2.0.0  
-**Generated:** 1/20/2026, 10:05:25 PM  
+**Generated:** 1/20/2026, 10:35:18 PM  
 
 > State-machine based governance for zero-knowledge engineering systems.
 
@@ -1420,4 +1420,785 @@ stateDiagram-v2
 ---
 
 ---
+
+## 🕒 Governance Evolution
+
+### v9.21.24 (2026-01-20)
+- README_UPDATE
+
+### v9.21.23 (2026-01-20)
+- FEAT_ROOT_PROXY
+
+### v9.21.22 (2026-01-20)
+- FEAT_ROOT_PROXY
+
+### v9.21.21 (2026-01-20)
+- Final system synchronization after pathing debt purge
+
+### v9.21.20 (2026-01-20)
+- Purged legacy static pathing technical debt
+- Unified 100% of toolchain under the functional resolve API
+- Corrected template syntax errors in multiple scripts
+
+### v9.21.19 (2026-01-20)
+- Reordered README sections: Operational Guidance moved before Integrity Model
+
+### v9.21.18 (2026-01-20)
+- Uplifted README.md to high-fidelity technical manual
+- Externalized qualitative prose into registry/prose/
+- Implemented context-aware README generation (Local vs Proxy)
+- Refactored generate_protocols.js to isolate engine induction logs
+
+### v9.21.17 (2026-01-20)
+- Refreshed core documentation to reflect finalized IDEA-039 architecture (Post-Refactor Refresh)
+
+### v9.21.16 (2026-01-20)
+- Refreshed local documentation and synchronized project-centric generators
+
+### v9.21.15 (2026-01-20)
+- Uplifted README.md verbosity and detail
+- Implemented context-aware generation for Local vs Proxy modes
+- Resolved technical debt in documentation generators
+
+### v9.21.14 (2026-01-20)
+- Finalized Global Engine Configuration (Domain 6)
+
+### v9.21.13 (2026-01-20)
+- Implemented Global Engine Configuration (Domain 6)
+- Added 'system config' command suite
+- Established central config.json with environment overrides
+
+### v9.21.12 (2026-01-20)
+- Finalized Project Fleet Management (Domain 5)
+
+### v9.21.11 (2026-01-20)
+- Implemented Project Fleet Management (Domain 5)
+- Added 'system list', 'system prune', and 'system heartbeat' commands
+- Hardened path_resolver.js with global and project resolution helpers
+- Refactored toolchain for consistent context-aware execution
+
+### v9.21.10 (2026-01-20)
+- Refreshed core documentation to reflect finalized IDEA-039 architecture (Local Refresh)
+
+### v9.21.9 (2026-01-20)
+- Refreshed core documentation to reflect finalized IDEA-039 architecture
+
+### v9.21.8 (2026-01-20)
+- Refactored documentation generators for Project-Centric mode (Finalized)
+
+### v9.21.7 (2026-01-20)
+- Refactored documentation generators for Project-Centric mode
+- Separated System vs Project changelog rendering
+- Cleaned up generate_protocols.js to exclude engine-level artifacts in Proxy Mode
+
+### v9.21.6 (2026-01-20)
+- Migrated system changelog to .warden/changelog.json for architectural parity
+
+### v9.21.5 (2026-01-20)
+- Operationalized project-centric documentation workflow
+- Implemented dual-changelog logic (System vs Project)
+- Refactored generate_readme.js for Proxy Mode (Manifesto)
+- Updated glossary and standards generators for registry overlays
+
+### v9.21.4 (2026-01-20)
+- Purged legacy static pathing technical debt
+- Fixed path normalization in engine/patch.js
+- Unified 100% of toolchain under the functional resolve API
+
+### v9.21.3 (2026-01-20)
+- Purged legacy static pathing technical debt
+- Unified 100% of toolchain under the functional resolve API
+- Fully aligned with IDEA-039 decoupled architecture
+
+### v9.21.2 (2026-01-20)
+- "Implemented
+- warden system init
+- for
+- project
+- injection"
+- "Automated
+- project
+- scaffolding
+- and
+- context-aware
+- proxy
+- generation"
+- "Established
+- global
+- project
+- inventory
+- in
+- engine
+- state"
+
+### v9.21.1 (2026-01-20)
+- Flattened project anchor structure (removed history/ subdirectory)
+- Consolidated patches into .warden/patches/
+
+### v9.21.0 (2026-01-20)
+- Refactored path_resolver.js for Dual-Mode Portability (IDEA-039)
+- Implemented Registry Overlay Model (Local > Global)
+- Hardened State Firewall for decoupled project anchors
+- Simplified patch storage to .warden/patches/
+
+### v9.20.0 (2026-01-20)
+- Refactored path_resolver.js for Dual-Mode Portability (IDEA-039)
+- Implemented Registry Overlay Model (Local > Global)
+- Hardened State Firewall for decoupled project anchors
+- Simplified patch storage to .warden/patches/
+
+### v9.19.4 (2026-01-18)
+- portable_pathing
+
+### v9.19.3 (2026-01-18)
+- baseline
+
+### v9.19.2 (2026-01-15)
+- FEAT_LivingMaps
+
+### v9.19.1 (2026-01-15)
+- Add Version and Generated headers to README and BACKLOG generators
+
+### v9.19.0 (2026-01-15)
+- Codify STD_COGNITIVE_FIDELITY standard
+- Update Onboarding Pledge with Understanding vs Velocity scenario
+- Standardize meta.principles across all 17 protocols
+
+### v9.18.0 (2026-01-15)
+- Upgrade GSD_V5 to v5.9.0 with mandatory Feature Spec artifact
+- Refactor engine/idea.js to support full IDEA_V1 lifecycle
+- Register DLR_DOC_FEAT and STD_FEAT_STRUCT in registry
+
+### v9.17.0 (2026-01-15)
+- Implement CON-008: Structured Idea-to-Concept Taxonomy
+- Upgrade IDEA_V1 to v1.1.0 with Gated Incubation Loop
+- Register DLR_IDE_ACK in deliverables registry
+
+### v9.16.11 (2026-01-14)
+- Synchronized docs/BACKLOG.md with latest implementation status
+- Verified bit-perfect parity between registry and documentation
+
+### v9.16.10 (2026-01-14)
+- Completed implementation review of FEAT_STREAMLINED_ONBOARDING
+- Verified Proxy Guard and Stale State Guard logic
+- Confirmed action-oriented UI prompts in warden.js
+
+### v9.16.9 (2026-01-14)
+- Finalizing streamlined onboarding mission
+
+### v9.16.8 (2026-01-14)
+- Updated FEAT_STRUCTURED_AUDIT.md to LIVE status
+- Documented deep-stack scoping and ID-First matching
+- Synchronized terminology with registry (DLR_ASM_COMPLIANCE)
+
+### v9.16.7 (2026-01-14)
+- Implemented ID-First matching logic in matchClaim
+- Added sanitizeCommand helper for fuzzy normalization
+- Reduced false-negative OMISSIONs during ratification
+
+### v9.16.6 (2026-01-14)
+- Synchronized backlog with FEAT implementation status
+- Patched backlog.js with close command and path resolution
+- Codified technical debt for Latching and Streamlining
+
+### v9.16.5 (2026-01-14)
+- Implemented metadata-driven audit scoping
+- Fixed tool-matching regression in normalizeCommand
+- Enabled parent-cycle visibility for CAP_V1
+
+### v9.16.4 (2026-01-14)
+- Implemented resolve.shadow helper
+- Registered SOURCES.ENGINEER_REPORT
+- Refactored patch.js and report.js
+- Eliminated legacy fallbacks in loader.js and audit_standards.js
+- Fixed bug in generate_protocols.js
+
+### v9.16.3 (2026-01-14)
+- Implemented resolve.shadow helper
+- Registered SOURCES.ENGINEER_REPORT
+- Refactored patch.js and report.js
+- Eliminated legacy fallbacks in loader.js and audit_standards.js
+
+### v9.16.2 (2026-01-13)
+- Purge legacy reporting scripts
+
+### v9.16.1 (2026-01-13)
+- Harden behavioral pledge with qualitative analysis
+
+### v9.16.0 (2026-01-13)
+- Implement Cognitive Interjection Presentation Layer (FEAT_COGNITIVE_INTERJECTION)
+- Implement Double-Lock Delivery Handshake
+
+### v9.15.1 (2026-01-13)
+- Finalize Universal Oracle
+
+### v9.15.0 (2026-01-13)
+- Implement Universal Oracle Uplift (FEAT_UNIVERSAL_ORACLE)
+- Implement Recursive Schema Engine for Blueprints
+
+### v9.14.2 (2026-01-13)
+- Ratify read-only intent expansion and runtime hardening
+
+### v9.14.1 (2026-01-13)
+- Finalize Portable Resolver
+
+### v9.14.0 (2026-01-13)
+- Implement Deterministic Portable Path Resolver (FEAT_PORTABLE_RESOLVER)
+- Refactor core tools to use absolute pathing
+- Codify STD_PORTABLE_PATHS
+
+### v9.13.3 (2026-01-13)
+- Ratify high-fidelity feature documentation
+
+### v9.13.2 (2026-01-13)
+- Rename and consolidate design documents to FEAT identifiers
+
+### v9.13.1 (2026-01-13)
+- Ratify System Stability post-Implementation Analysis
+
+### v9.13.0 (2026-01-13)
+- Implement Canonical Command Model (FEAT_STRUCTURED_AUDIT)
+- Implement Socratic Brake interjection logic
+- Consolidate reporting tools into unified engine/report.js
+
+### v9.12.0 (2026-01-13)
+- Implement Canonical Command Model (FEAT_STRUCTURED_AUDIT)
+- Implement Socratic Brake interjection logic
+- Consolidate reporting tools into unified engine/report.js
+
+### v9.11.0 (2026-01-13)
+- Implement Modular Protocol Registry (FEAT_MODULAR_REGISTRY)
+- Implement Virtual Join logic in GovernanceAPI and Loader
+- Create Library Auditor for manifest-driven integrity hashing
+
+### v9.10.0 (2026-01-13)
+- Refactor ONBOARD_V4 to metadata-driven state machine
+- Remove hard-coded induction logic from onboard.js
+- Migrate induction state files to consolidated directory
+
+### v9.9.51 (2026-01-13)
+- Codified STD_METADATA_PRIMACY standard.
+
+### v9.9.50 (2026-01-13)
+- Refactored Nested Protocol Enforcement to Metadata-Driven Architecture
+
+### v9.9.49 (2026-01-12)
+- Hardened GSD_V5 Finalize Gate with 3-Way Compliance integration.
+
+### v9.9.48 (2026-01-12)
+- Hardened GSD_V5 Finalize Gate with 3-Way Compliance integration.
+
+### v9.9.47 (2026-01-11)
+- Refine provenance workflow to trust auto-signed echoes
+- Suppress Protocol Breach warning for verified tokens
+- Implement post-execution provenance check in warden.js
+
+### v9.9.46 (2026-01-11)
+- Implement automated hash signatures for Acknowledgements in warden.js
+- Add automated telemetry and session ID calculation in report.js
+- Verified bit-perfect auto-population of Phase A schemas
+
+### v9.9.45 (2026-01-11)
+- Upgrade all Core Audit Loop deliverables (ACK, AUD, RPT) to High-Fidelity schemas
+- Implement SHA-256 hash_ref and telemetry property definitions
+- Verified bit-perfect blueprint generation for all uplifted items
+
+### v9.9.44 (2026-01-11)
+- Perform deep semantic analysis of all 25 system deliverables
+- Generate SCHEMA_ANALYSIS.md with proposed JSON Schema upgrades
+- Group deliverables by Kind for shared schema traits
+
+### v9.9.43 (2026-01-11)
+- Rename all deliverables to DLR_<KIND>_<SUBKIND> format
+- Update protocol references to match new taxonomy
+- Implement validation/audit_taxonomy.js
+
+### v9.9.42 (2026-01-11)
+- Implement recursive JSON Schema parsing in oracle.js
+- Upgrade DLR_MSN_BRIEF and DLR_GSD_PLAN to High-Fidelity format
+- Update validation suite for schema compatibility
+
+### v9.9.41 (2026-01-11)
+- Transition Interaction Report to structured JSON model
+- Implement deterministic claim matching in compliance.js
+- Add --json flag to report.js
+
+### v9.9.40 (2026-01-11)
+- Implement dynamic JSON blueprint generation in oracle.js
+- Add smart initialization for plural schema keys
+- Implement automated blueprint audit script
+
+### v9.9.39 (2026-01-11)
+- Clarify Onboarding Hold Protocol in engine/onboard.js
+
+### v9.9.38 (2026-01-10)
+- --auto-close
+- Implemented Oracle Blueprints (FEAT_ORACLE_BLUEPRINTS)
+- Added blueprint command and Concept Registry guidance
+
+### v9.9.37 (2026-01-10)
+- --auto-close
+- Groomed Governance Backlog
+- Closed 6 items and restored onboarding visibility
+
+### v9.9.36 (2026-01-10)
+- --auto-close
+- Codified CON-002 (Universal Guidance Engine)
+- Added verbose technical specification and Oracle fallback logic
+
+### v9.9.35 (2026-01-10)
+- --auto-close
+- Implemented Universal Registry & Guidance Engine
+- Decoupled deliverables and implemented multi-source synthesis
+
+### v9.9.34 (2026-01-10)
+- --auto-close
+- Formalized Concept Registry
+- Added registry/concepts and engine/concept.js tool
+
+### v9.9.33 (2026-01-10)
+- --auto-close
+- Expanded GSD Tutorial to Full Lifecycle
+- Implemented Director Proxy and remediated registry structural fidelity
+
+### v9.9.32 (2026-01-10)
+- --auto-close
+- Implemented Oracle Tutorial (Mode A)
+- Hardened warden.js logging and added tutorial engine
+
+### v9.9.31 (2026-01-10)
+- --auto-close
+- Implemented Oracle Sandbox (Mode B)
+- Decoupled engine paths and added sandbox command
+
+### v9.9.30 (2026-01-10)
+- --auto-close
+- Expanded Oracle Guidance Registry
+- Added 4 new complex audit topics to registry/guidance.json
+
+### v9.9.29 (2026-01-10)
+- --auto-close
+- Remediated role schema inconsistency
+- Fixed generator crash by adding responsibilities array
+
+### v9.9.28 (2026-01-10)
+- --auto-close
+- Integrated Warden Oracle into Onboarding
+- Updated role model and induction scope
+
+### v9.9.27 (2026-01-10)
+- --auto-close
+- Implemented Warden Oracle (FEAT_WARDEN_ORACLE)
+- Added engine/oracle.js and registry/guidance.json
+
+### v9.9.26 (2026-01-10)
+- --auto-close
+- Finalized Idea Management System
+- Corrected finalization sequence
+
+### v9.9.25 (2026-01-10)
+- --auto-close
+- Implemented Idea Management System
+- Added IDEA_V1 protocol and engine/idea.js tool
+
+### v9.9.24 (2026-01-10)
+- --auto-close
+- Finalized automated closure
+- Fixed recursive logging deadlock and syntax errors
+
+### v9.9.23 (2026-01-10)
+- --auto-close
+- Remediated recursive closure deadlock
+- Refactored warden.js to log before execution
+
+### v9.9.22 (2026-01-10)
+- --auto-close
+- Implemented Automated Cycle Closure
+- Added --auto-close to finalizer.js
+
+### v9.9.21 (2026-01-10)
+- Implemented Automated Patch Management
+- Hardened GSD with transactional snapshot/save instructions
+
+### v9.9.20 (2026-01-10)
+- Restored Exit Gate visibility
+- Updated onboarding handshake with PRY and PIR refs
+
+### v9.9.19 (2026-01-10)
+- Decoupled Onboarding into Governance and Project phases
+- Refactored onboard.js for modularity
+
+### v9.9.18 (2026-01-10)
+- Remediated Registry Centralization
+- Fixed documentation generator hardcoded paths
+
+### v9.9.17 (2026-01-10)
+- Centralized state files into /registry
+- Updated path_resolver.js and protocols.json
+
+### v9.9.16 (2026-01-10)
+- Implemented Validated SQA Anchoring
+- Added --sqa validation to audit_standards.js
+
+### v9.9.15 (2026-01-10)
+- Refined Journaling DX
+- Fixed onboarding syntax error
+
+### v9.9.14 (2026-01-10)
+- Implemented Explicit CLI Documentation
+- Enforced JIT Guidance with Example syntax
+
+### v9.9.13 (2026-01-10)
+- Implemented proactive gate instructions
+- Hardened registry with explicit STOP commands
+
+### v9.9.12 (2026-01-10)
+- Analyzed impact of splitting protocols.json
+- Rejected split proposal
+
+### v9.9.11 (2026-01-06)
+- Codified Engineer Audit
+- Relaxed approval gates to support Approved/Ratified language
+
+### v9.9.10 (2026-01-06)
+- Refactored Governance Engine for Nested Stacks
+- Enabled modular protocol recursion
+
+### v9.9.9 (2026-01-06)
+- Refactored GSD Phase 5
+- Removed redundant legacy gates
+- Delegated compliance to CAP ratification seal
+
+### v9.9.8 (2026-01-06)
+- Implemented CAP_V1
+- Updated GSD_V5 Phase 5 requirements
+
+### v9.9.7 (2026-01-06)
+- Implemented Three-Way Compliance Verification
+- Updated compliance.js
+- Updated protocols.json
+
+### v9.9.6 (2026-01-06)
+- Hardened GSD_V5 with mandatory Director Verification Approval gate.
+
+### v9.9.5 (2026-01-06)
+- Hardened GSD_V5 with mandatory Director Plan Approval gate.
+
+### v9.9.4 (2026-01-05)
+- Remediated legacy gsd.js reference in PRY_V2 protocol
+- Normalized Warden branding references in knowledge base
+
+### v9.9.3 (2026-01-04)
+- Normalized Warden for independent operation; remediated separation inconsistencies
+
+### v9.9.2 (2026-01-04)
+- Unified gsd.js references into Warden framework
+
+### v9.9.1 (2026-01-04)
+- Remediated Autonomous Phase Leap violation
+- Reinforced Role Boundaries in Knowledge Base
+
+### v9.9.0 (2026-01-04)
+- Implemented Warden Session Logger and Governance Proxy for automated evidence verification.
+
+### v9.8.1 (2026-01-04)
+- Operationalized Knowledge Base with automated onboarding pulse and documentation.
+
+### v9.8.0 (2026-01-04)
+- Integrated Governance API into Warden and implemented safe protocol lookup for resilience.
+- Mandated gov.js usage in GSD_V5 instructions.
+
+### v9.7.0 (2026-01-04)
+- Implemented Governance API and gov.js CLI for robust protocol transactions.
+- Modernized Warden suite to v1.4.0.
+
+### v9.6.0 (2026-01-04)
+- Evolved PIR to V4 with Actionable post-mortems and Knowledge Base persistence.
+
+### v9.5.0 (2026-01-04)
+- Implemented GSD_V5 (Quality Engine) and PIR_V3 with SQA anchoring.
+
+### v9.4.0 (2026-01-04)
+- Implemented GSD_V5 (Quality Engine) with SQA anchoring and weighted evidence.
+- Upgraded PIR to V3 with SQA Impact Reporting.
+
+### v9.3.12 (2026-01-04)
+- Performed PIR on Turn Boundary violation in Rename cycle.
+
+### v9.3.11 (2026-01-04)
+- Modernized governance testing infrastructure and implemented Warden unit tests.
+
+### v9.3.10 (2026-01-04)
+- Implemented dynamic column alignment in verify_integrity.js table output.
+
+### v9.3.9 (2026-01-04)
+- Renamed all protocols_v2 artifacts to protocols.
+
+### v9.3.8 (2026-01-04)
+- Promoted GSD_V4 to production status by removing the Pilot tag.
+
+### v9.3.7 (2026-01-04)
+- Standardized transition triggers to 'next' across the protocol library and enhanced Warden error guidance.
+
+### v9.3.6 (2026-01-04)
+- Modularized Warden Governance Engine and decoupled requirement handlers.
+
+### v9.3.5 (2026-01-04)
+- Renamed initial transition triggers from 'init' to 'start' across all v2 protocols.
+
+### v9.3.4 (2026-01-04)
+- Fully deprecated Protocol v1 and refactored verify_integrity.js.
+
+### v9.3.3 (2026-01-04)
+- Deprecated and removed redundant gsd.js wrapper.
+- Established warden.js as the single authoritative governance entry point.
+
+### v9.3.2 (2026-01-04)
+- Established technical documentation infrastructure for Warden suite in tools/docs/.
+- Implemented dynamic README generation for Warden technical artifacts.
+
+### v9.3.1 (2026-01-04)
+- Implemented automated JSON repair in validator and grace windows in Warden to reduce protocol friction.
+
+### v9.3.0 (2026-01-04)
+- Unified session authority under Protocol v2 and Warden framework.
+- Refactored toolchain for state-machine governance.
+
+### v9.2.0 (2026-01-04)
+- Implemented Warden Governance Engine for dynamic Protocol v2 enforcement.
+- Refactored gsd.js as a wrapper for Warden.
+
+### v9.1.12 (2026-01-04)
+- Refined DLR_ONB_HANDSHAKE with mandatory schema and enhanced ONBOARD_V4 enforcement.
+
+### v9.1.11 (2026-01-04)
+- Enhanced verify_integrity.js to support multi-library auditing and Protocol v2 enforcement.
+
+### v9.1.10 (2026-01-04)
+- Aligned Protocol v2 title and bootstrap formatting with v1.
+
+### v9.1.9 (2026-01-04)
+- Achieved 100% detail parity between Protocol v1 and v2 documentation.
+
+### v9.1.8 (2026-01-04)
+- Migrated all remaining protocols to Protocol v2 Library.
+
+### v9.1.7 (2026-01-04)
+- Refactored Protocol v2 to Library structure and migrated VFY Protocol.
+
+### v9.1.6 (2026-01-04)
+- Migrated GSD metadata and detailed specifications from Protocol v1 to v2.
+
+### v9.1.5 (2026-01-04)
+- Implemented Protocol v2 documentation generator and generated PROTOCOLS_v2.md.
+
+### v9.1.4 (2026-01-04)
+- Implemented Protocol v2 Schema and Validator for Integrity Enforcement.
+
+### v9.1.3 (2026-01-04)
+- Designed and implemented Protocol v2.0 Schema pilot (GSD_V4).
+
+### v9.1.2 (2026-01-04)
+- Codified Atomic Turn Enforcement in GSD_V3 to prevent unauthorized phase transitions.
+
+### v9.1.1 (2026-01-04)
+- Removed git status dependency from STAT_V1 reporting.
+
+### v9.1.0 (2026-01-04)
+- Implemented tools/gsd.js for active GSD state tracking and gate enforcement.
+- Updated GSD_V3 protocol to mandate tools/gsd.js usage.
+
+### v9.0.10 (2026-01-04)
+- Expanded VFY_V1 coverage to include deliverable_registry and compliance_registry via _GLOBAL_REGISTRIES.
+
+### v9.0.9 (2026-01-04)
+- Clarified PRY_V1 transition in onboard.js output.
+
+### v9.0.8 (2026-01-04)
+- Clarified DLR_VFY_SNAPSHOT persistence file path.
+
+### v9.0.7 (2026-01-04)
+- Standardized nomenclature by replacing 'Ratification' with 'Approval' across all protocols and documentation.
+- Renamed EVO_V1 key 'ratification_standard' to 'approval_standard' for schema consistency.
+- Synchronized all governance gates and historical records with the new approval standard.
+
+### v9.0.6 (2026-01-04)
+- Removed redundant Bootstrap section from README.md.
+- Centralized session initialization instructions in the System Protocol Library.
+
+### v9.0.5 (2026-01-04)
+- Codified the Compliance Registry (CMP_ identifiers) to formalize development constraints.
+- Updated PIR_V1 to mandate auditing against the codified compliance framework.
+- Enhanced verify_integrity.js and generate_protocols.js to support the new registry.
+
+### v9.0.4 (2026-01-04)
+- Integrated Friction Disclosure into PIR_V1 compliance audit.
+- Codified 'High Friction Signal' as a trigger for EVO_V1 evolution.
+- Updated deliverable_registry and onboarding to reflect dual-purpose auditing.
+
+### v9.0.2 (2026-01-04)
+- Added total protocol count to the verify_integrity.js audit output.
+- Improved audit summary visibility for governance verification turns.
+
+### v9.0.1 (2026-01-04)
+- Optimized Deliverable Registry UI in PROTOCOLS.md using vertical detail blocks.
+- Improved readability for CLI and standard displays without detail loss.
+- Maintained cross-protocol anchor links for DLR_ identifiers.
+
+### v9.0.0 (2026-01-04)
+- Implemented Evidence-Based Verification and Confidence Scoring in VFY_V1 and PIR_V1.
+- Upgraded deliverable_registry with confidence weighting for high-value artifacts.
+- Implemented automated hyperlinking for DLR_ identifiers in PROTOCOLS.md.
+- Bridged the gap between mechanical verification and cognitive integrity.
+
+### v8.5.9 (2026-01-04)
+- Implemented centralized Deliverable Registry in protocols.json.
+- Updated all protocols to reference codified DLR_ IDs.
+- Enhanced tools/verify_integrity.js with automated referential integrity auditing.
+- Updated tools/generate_protocols.js to render the high-verbosity deliverable glossary.
+
+### v8.5.8 (2026-01-04)
+- Codified mandatory Protocol Compliance Audit in PIR_V1.
+- Added self-audit step to PIR operational workflow to ensure procedural adherence.
+- Synchronized governance documentation with the new review standard.
+
+### v8.5.7 (2026-01-04)
+- Renamed REV_V1 to PIR_V1 (Post-Implementation Review) for improved descriptive clarity.
+- Implemented FIX_V1 (Emergency Recovery Standard) to codify hotfix procedures.
+- Synchronized governance history and documentation with new nomenclature.
+
+### v8.5.6 (2026-01-04)
+- Recovered tools/onboard.js from syntax regressions introduced during schema evolution.
+- Hardened template literal handling in the Knowledge Pulse briefing.
+- Restored full functional parity for the Actionable Onboarding entry point.
+
+### v8.5.5 (2026-01-04)
+- Implemented Active Knowledge Refresh mechanism via onboard.js --refresh.
+- Codified mandatory Knowledge Pulse in GSD_V3 Phase 1 Survey.
+- Updated EVO_V1 to mandate re-synchronization after protocol amendments.
+
+### v8.5.4 (2026-01-04)
+- Decoupled governance history from the application baseline.
+- Established tools/governance_changelog.json as the authoritative governance record.
+- Updated tools/generate_protocols.js to render the Governance Evolution history.
+- Refactored tools/finalizer.js to support the --gov routing flag.
+
+### v8.5.3 (2026-01-04)
+- Implemented high-verbosity side-by-side fidelity comparison in VFY_V1.
+- Hardened integrity diff logic to resiliently handle and report schema regressions.
+- Improved visibility into granular protocol changes during the verification phase.
+
+### v8.5.2 (2026-01-04)
+- Integrated VFY and REV protocols directly into GSD_V3 operational phases.
+- Hardened tools/finalizer.js to enforce integrity checks before committing.
+- Eliminated 'Phantom Gate' risk by synchronizing governance documentation with automation machinery.
+
+### v8.5.1 (2026-01-04)
+- Implemented dynamic semantic versioning in tools/finalizer.js.
+- Added support for --major, --minor, and --patch CLI flags.
+- Codified version justification in PIR_V1 review standard.
+
+### v8.5.0 (2026-01-04)
+- Upgraded ONBOARD_V3 to include the PRY_V1 proficiency exit gate.
+- Implemented PRY_V1 (Engineer Proficiency Standard) to formalize procedural demonstration.
+- Updated tools/onboard.js to reflect the pending Engineer status during onboarding.
+
+### v8.4.2 (2026-01-04)
+- Implemented PIR_V1 (Post-Implementation Review Standard) to formalize development cycle closure.
+- Integrated PIR_V1 as a mandatory step in GSD_V3 Phase 5 finalization.
+- Ensured debug history and process transparency are codified in system reviews.
+
+### v8.4.1 (2026-01-04)
+- Implemented ENV_V1 (Environment Standard) and VFY_V1 (Protocol Integrity Verification).
+- Created tools/verify_integrity.js to perform protocol snapshotting and fidelity audits.
+- Standardized pre-flight and post-flight integrity checks for governance changes.
+
+### v8.4.0 (2026-01-04)
+- Implemented MAP_V1 (System Mapping & Contextualization) protocol to bridge the zero-knowledge gap.
+- Standardized the 'Discovery & Mapping' process to maintain protocol modularity.
+- Updated tools/onboard.js to automate the MAP_V1 discovery phase.
+- Incremented system version to v8.4.0 reflecting the major structural addition.
+
+### v8.3.13 (2026-01-03)
+- Implemented actionable onboarding via tools/onboard.js.
+- Updated Bootstrap instructions to prioritize execution over passive reading.
+- Codified environmental validation in ONBOARD_V2 and DOC_V1 standards.
+
+### v8.3.12 (2026-01-03)
+- Restored Bootstrap instruction formatting in PROTOCOLS.md (regression fix).
+- Ensured multi-line code block parity between documentation generators.
+
+### v8.3.11 (2026-01-03)
+- Unified all protocol interaction standards into a consistent trigger-based tabular schema.
+- Refactored tools/generate_protocols.js with dynamic table rendering for *_standard keys.
+- Eliminated orphan strings and descriptive prose from the protocol library interaction rules.
+
+### v8.3.10 (2026-01-03)
+- Renamed documentation heading to 'System Protocol Library' for improved descriptive accuracy.
+
+### v8.3.9 (2026-01-03)
+- Standardized interaction standards across ONBOARD_V2, GSD_V3, and VAL_V1 using codified tables.
+- Updated tools/generate_protocols.js to support new tabular rendering keys.
+- Maintained operational workflow integrity across all protocol amendments.
+
+### v8.3.8 (2026-01-03)
+- Codified EVO_V1 Post-Mortem Standard as a structured interaction rule.
+- Updated tools/generate_protocols.js to support Post-Mortem Standard tabular rendering.
+- Improved cross-protocol consistency by standardizing trigger points.
+
+### v8.3.7 (2026-01-03)
+- Implemented tools/finalizer.js to automate versioning and documentation synchronization.
+- Updated GSD_V3, STAT_V1, and DOC_V1 to mandate automated finalization.
+- Centralized Phase 5 logic to prevent JSON syntax regressions.
+
+### v8.3.6 (2026-01-04)
+- Formalized structured data_requirements across all active protocols in the library.
+- Standardized interaction_standard schema for auditability and dependency transparency.
+- Synchronized PROTOCOLS.md with updated cross-protocol requirement tables.
+
+### v8.3.5 (2026-01-04)
+- Restored Bootstrap instruction formatting in PROTOCOLS.md (regression fix).
+- Ensured multi-line code block parity between documentation generators.
+
+### v8.3.4 (2026-01-04)
+- Evolved data_requirements schema to structured objects (Name/Description).
+- Updated tools/generate_protocols.js to render Data Requirements as Markdown tables.
+- Refined PROTOCOLS.md layout for improved descriptive clarity.
+
+### v8.3.3 (2026-01-04)
+- Amended ONBOARD_V2 and GSD_V3 protocols to remove redundant 'git status' checks in baseline phases.
+- Streamlined onboarding and survey workflows for improved velocity.
+- Synchronized, renamed, and multi-line code-blocked the Bootstrap section in documentation generators.
+- Created tools/ directory and relocated PROTOCOLS.md, generate_protocols.js, and protocols.json.
+- Removed redundant active_protocols from status.json; README.md now derives protocols directly from authority source.
+- Implemented centralized tools/path_resolver.js to eliminate fragile relative pathing in documentation scripts.
+
+### v8.3.2 (2026-01-03)
+- Cleaned up registry_index in protocols.json to directly map to protocol library keys.
+- Synchronized documentation artifacts.
+
+### v8.3.1 (2026-01-03)
+- Created generate_protocols.js utility for automated manual synthesis.
+- Generated PROTOCOLS.md featuring a structured Registry Index and detailed Phase breakdowns.
+- Ensured protocol documentation is synchronized with JSON state.
+
+### v8.3.0 (2026-01-03)
+- Upgraded operational loop to GSD_V3 (Verified Implementation & Debug Loop).
+- Implemented mandatory Syntax Check and Visual Audit (PPIC) in Execution phase.
+- Formalized 'Fix-Forward' Debug Loop in Verification phase.
+- Upgraded EVO_V1 to v1.1.0 with mandatory Protocol Post-Mortem requirement.
+
+### v8.1.0 (2026-01-03)
+- Upgraded operational loop to GSD_V2 (5-Phase Gated Development).
+- Implemented ONBOARD_V2 with Collaborative Stewardship philosophy.
+- Introduced Artifact Persistence (mandatory patch generation for logic changes).
+- Established Visual Audit (PPIC) as a requirement for code injection.
+
+### v7.1.0 (2026-01-03)
+- Implemented ONBOARD_V1 protocol with self-bootstrapping handshake.
+- Created generate_readme.js utility for automated documentation.
+- Finalized Test Library (T1-T6) covering Systematic vs. Full-Coded modes.
+
+### v7.0.0 (2026-01-01)
+- Initialized GSD_V1 protocol for gated development.
 

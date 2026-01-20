@@ -1,6 +1,14 @@
 {
   "warden_changelog": [
     {
+      "version": "0.0.3",
+      "date": "2026-01-20",
+      "changes": [
+        "Fixed ENOENT error in warden init",
+        "Added recursive directory creation in saveStack and updateInternalAudit"
+      ]
+    },
+    {
       "version": "0.0.2",
       "date": "2026-01-20",
       "changes": [

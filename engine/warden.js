@@ -91,6 +91,8 @@ function loadStack() {
 }
 
 function saveStack(stack) {
+    const dir = path.dirname(STATE_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(STATE_FILE, JSON.stringify(stack, null, 2));
 }
 
@@ -104,6 +106,8 @@ function updateInternalAudit(action, details) {
         try { audit = JSON.parse(fs.readFileSync(AUDIT_FILE, 'utf8')); } catch (e) {}
     }
     audit.history.push({ timestamp: Date.now(), action, ...details });
+    const dir = path.dirname(AUDIT_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(AUDIT_FILE, JSON.stringify(audit, null, 2));
 }
 

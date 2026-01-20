@@ -1,7 +1,7 @@
 # 🛡️ Warden Governance Engine - v1.6.0
 
-**Version:** 0.0.2  
-**Generated:** 1/20/2026, 10:05:25 PM  
+**Version:** 0.0.3  
+**Generated:** 1/20/2026, 10:35:18 PM  
 
 ## 📋 Overview
 The Warden Governance Engine is a high-fidelity state-machine based governance framework designed to enforce engineering standards and maintain a provable audit trail through a Zero-Knowledge (ZK) interaction model.
@@ -141,6 +141,10 @@ AI agents (Zero-Knowledge entities) must adhere to the following checklist when 
 ---
 
 ## 🕒 Version History
+
+### v0.0.3 (2026-01-20)
+- Fixed ENOENT error in warden init
+- Added recursive directory creation in saveStack and updateInternalAudit
 
 ### v0.0.2 (2026-01-20)
 - Migrate changelogs to registry domain
