@@ -48,7 +48,29 @@ function saveConfig(config) {
 
 // --- End Configuration Management ---
 
+function generateProxy(targetPath) {
+    const proxyPath = path.join(targetPath, 'warden');
+    const proxyContent = "#!/usr/bin/env node\nconst { spawnSync } = require('child_process');\nconst path = require('path');\n\nconst ENGINE_ROOT = \"" + ENGINE_ROOT + "\";\n\nconst result = spawnSync('node', [path.join(ENGINE_ROOT, 'engine', 'warden.js'), ...process.argv.slice(2)], {\n    stdio: 'inherit',\n    env: { ...process.env, WARDEN_ENGINE_ROOT: ENGINE_ROOT, WARDEN_TARGET_ROOT: process.cwd() }\n});\n\nprocess.exit(result.status);\n";
+    try {
+        fs.writeFileSync(proxyPath, proxyContent, { mode: 0o755 });
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+function ensureProxyExists() {
+    if (!TARGET_ROOT) return;
+    const proxyPath = path.join(TARGET_ROOT, 'warden');
+    if (!fs.existsSync(proxyPath)) {
+        if (generateProxy(TARGET_ROOT)) {
+            console.log("🛡️ [WARDEN] Self-healing: Proxy injected into project root.");
+        }
+    }
+}
+
 const GLOBAL_CONFIG = loadConfig();
+ensureProxyExists();
 
 // Ensure state directory exists (only if in a governed project context)
 if (TARGET_ROOT && !fs.existsSync(resolve.state())) {
@@ -253,10 +275,9 @@ function cmdSystemInit(target) {
     fs.writeFileSync(path.join(anchorPath, 'changelog.json'), JSON.stringify(baselineChangelog, null, 2));
     console.log("  [✅] Seeded local registries.");
 
-    const proxyPath = path.join(targetPath, 'warden');
-    const proxyContent = "#!/usr/bin/env node\nconst { spawnSync } = require('child_process');\nconst path = require('path');\n\nconst ENGINE_ROOT = \"" + ENGINE_ROOT + "\";\n\nconst result = spawnSync('node', [path.join(ENGINE_ROOT, 'engine', 'warden.js'), ...process.argv.slice(2)], {\n    stdio: 'inherit',\n    env: { ...process.env, WARDEN_ENGINE_ROOT: ENGINE_ROOT, WARDEN_TARGET_ROOT: process.cwd() }\n});\n\nprocess.exit(result.status);\n";
-    fs.writeFileSync(proxyPath, proxyContent, { mode: 0o755 });
-    console.log("  [✅] Generated proxy executable: ./warden");
+    if (generateProxy(targetPath)) {
+        console.log("  [✅] Generated proxy executable: ./warden");
+    }
 
     const projectsPath = resolve.state('global', 'projects.json');
     let projects = [];
@@ -444,6 +465,15 @@ function cmdSystemFactoryReset() {
 function cmdStatus() {
     const stack = loadStack();
     displayStatus(stack);
+}
+
+function cmdOracle(args) {
+    const oraclePath = resolve.engine('oracle.js');
+    try {
+        execSync("node " + oraclePath + " " + args.join(' '), { stdio: 'inherit' });
+    } catch (e) {
+        // Errors are handled by the child process output
+    }
 }
 
 function cmdNext(trigger) {
@@ -636,6 +666,7 @@ switch (action) {
     case 'status': cmdStatus(); break;
     case 'next': cmdNext(arg1); break;
     case 'exec': cmdExec(arg1); break;
+    case 'oracle': cmdOracle(process.argv.slice(3)); break;
     case 'close': cmdClose(); break;
     case 'system':
         if (arg1 === 'init') cmdSystemInit(arg2);
@@ -654,6 +685,7 @@ switch (action) {
         console.log("  status                       Display active protocol state.");
         console.log("  next [trigger]               Transition to the next state.");
         console.log("  exec <command_string>        Execute a command through the governance proxy.");
+        console.log("  oracle [args]                Execute a command through the Warden Oracle.");
         console.log("  system init [target]         Injected Warden into a target project (Anchor + Proxy).");
         console.log("  system list                  Display all projects in the fleet.");
         console.log("  system prune                 Remove stale project entries.");

@@ -50,7 +50,7 @@
 				"onboard_tool": {
 					"type": "command_log",
 					"pattern": "node engine/onboard.js",
-					"instruction": "Execute `node engine/warden.js exec \"node engine/onboard.js\"` to begin induction."
+					"instruction": "Execute `./warden exec \"node engine/onboard.js\"` to begin induction."
 				},
 				"echo_dlr_headers": {
 					"type": "regex_match_output",
@@ -75,7 +75,7 @@
 				"alignment_success": {
 					"type": "regex_match_output",
 					"pattern": "ZK FIDELITY ALIGNED",
-					"instruction": "Execute `node engine/warden.js exec \"node engine/onboard.js --align <token>\"` to verify ZK Fidelity."
+					"instruction": "Execute `./warden exec \"node engine/onboard.js --align <token>\"` to verify ZK Fidelity."
 				}
 			},
 			"transitions": {
@@ -95,7 +95,7 @@
 				"behavioral_pledge_cert": {
 					"type": "file_exists",
 					"path": ".warden/state/quiz_cert.json",
-					"instruction": "Mandatory Behavioral Pledge required. Execute `node engine/warden.js exec \"node engine/oracle.js quiz pledge ...\"`."
+					"instruction": "Mandatory Behavioral Pledge required. Execute `./warden exec \"./warden oracle quiz pledge ...\"`."
 				},
 				"quiz_success": {
 					"type": "regex_match_output",
@@ -113,7 +113,7 @@
 				"project_orientation_tool": {
 					"type": "command_log",
 					"pattern": "node engine/onboard.js --project",
-					"instruction": "Execute `node engine/warden.js exec \"node engine/onboard.js --project\"` to view architecture and goals."
+					"instruction": "Execute `./warden exec \"node engine/onboard.js --project\"` to view architecture and goals."
 				},
 				"orientation_complete": {
 					"type": "regex_match_output",
