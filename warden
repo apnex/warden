@@ -2,7 +2,7 @@
 const { spawnSync } = require('child_process');
 const path = require('path');
 
-const ENGINE_ROOT = "/home/apnex/warden-current";
+const ENGINE_ROOT = path.resolve(__dirname);
 
 const result = spawnSync('node', [path.join(ENGINE_ROOT, 'engine', 'warden.js'), ...process.argv.slice(2)], {
     stdio: 'inherit',

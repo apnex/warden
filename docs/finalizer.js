@@ -42,9 +42,36 @@ function finalize() {
         process.exit(1);
     }
 
-    const changelogPath = isGov ? resolve.engine_root('history', 'governance_changelog.json') : resolve.anchor('changelog.json');
-    const history = JSON.parse(fs.readFileSync(changelogPath, 'utf8'));
     const historyKey = isGov ? 'governance_changelog' : 'warden_changelog';
+    const legacyPath = isGov ? resolve.engine_root('history', 'governance_changelog.json') : resolve.anchor('changelog.json');
+    const changelogPath = isGov ? resolve.registry('governance.json') : resolve.registry('changelog.json');
+
+    let history;
+
+    // --- Migration Logic ---
+    if (!fs.existsSync(changelogPath) && fs.existsSync(legacyPath)) {
+        console.log(`[System] Migrating legacy history to registry domain...`);
+        const parentDir = path.dirname(changelogPath);
+        if (!fs.existsSync(parentDir)) fs.mkdirSync(parentDir, { recursive: true });
+        fs.renameSync(legacyPath, changelogPath);
+    }
+
+    // --- Hardened Loading ---
+    if (fs.existsSync(changelogPath)) {
+        try {
+            history = JSON.parse(fs.readFileSync(changelogPath, 'utf8'));
+        } catch (e) {
+            console.error(`[Error] Corrupt changelog detected at ${changelogPath}. Aborting.`);
+            process.exit(1);
+        }
+    } else {
+        console.log(`[System] No ${isGov ? 'Governance' : 'Project'} history found. Initializing baseline...`);
+        const parentDir = path.dirname(changelogPath);
+        if (!fs.existsSync(parentDir)) fs.mkdirSync(parentDir, { recursive: true });
+        
+        history = { [historyKey]: [{ version: "0.0.0", date: new Date().toISOString().split('T')[0], changes: ["Baseline Initialized"] }] };
+    }
+
     const currentVersion = history[historyKey][0].version;
     const nextVersion = calculateNextVersion(currentVersion, versionType);
 

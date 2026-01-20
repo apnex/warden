@@ -1,0 +1,26 @@
+{
+  "warden_changelog": [
+    {
+      "version": "0.0.2",
+      "date": "2026-01-20",
+      "changes": [
+        "Migrate changelogs to registry domain",
+        "Harden finalizer against missing files"
+      ]
+    },
+    {
+      "version": "0.0.1",
+      "date": "2026-01-20",
+      "changes": [
+        "Test Initialization Logic"
+      ]
+    },
+    {
+      "version": "0.0.0",
+      "date": "2026-01-20",
+      "changes": [
+        "Baseline Initialized"
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@ const { resolve } = require('../engine/path_resolver');
 
 function generate() {
     const nl = String.fromCharCode(10);
-    const changelogFile = resolve.anchor('changelog.json');
+    const changelogFile = resolve.registry('changelog.json');
     const targetFile = resolve.docs('CHANGELOG.md');
 
     if (!fs.existsSync(changelogFile)) {

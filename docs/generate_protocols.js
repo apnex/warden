@@ -8,7 +8,7 @@ function generate() {
     
     const sourceFile = resolve.registry('protocols.json');
     const targetFile = resolve.docs('PROTOCOLS.md');
-    const govChangelogFile = resolve.engine_root('history', 'governance_changelog.json');
+    const govChangelogFile = resolve.registry('governance.json');
     const onboardOutputFile = resolve.engine_root('onboarding_output.txt');
 
     if (!fs.existsSync(sourceFile)) {

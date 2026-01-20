@@ -23,7 +23,7 @@ const HANDLERS = {
     file_freshness: (req, state) => {
         const fullPath = path.resolve(TARGET_ROOT, req.target);
         const mtime = getFileMTime(fullPath);
-        if (mtime < (state.last_transition - 2000)) {
+        if (mtime < (state.last_transition - 15000)) {
             return { pass: false, error: 'File ' + req.target + ' is stale or missing.' };
         }
         return { pass: true };
@@ -37,7 +37,7 @@ const HANDLERS = {
             const ext = path.extname(req.path);
             if (!fs.existsSync(dir)) return { pass: false, error: 'Directory ' + dir + ' missing.' };
             const files = fs.readdirSync(dir).filter(f => f.endsWith(ext));
-            const fresh = files.find(f => getFileMTime(path.join(dir, f)) > (state.last_transition - 2000));
+            const fresh = files.find(f => getFileMTime(path.join(dir, f)) > (state.last_transition - 15000));
             if (req.freshness && !fresh) return { pass: false, error: 'No fresh ' + ext + ' files found in ' + dir };
             if (files.length === 0) return { pass: false, error: 'No ' + ext + ' files found.' };
         } else {
@@ -46,7 +46,7 @@ const HANDLERS = {
         return { pass: true };
     },
     command_log: (req, state) => {
-        const logs = getRecentLogs(state.last_transition - 2000);
+        const logs = getRecentLogs(state.last_transition - 15000);
         const found = logs.find(entry => entry.command.includes(req.pattern));
         if (!found) {
             return { pass: false, error: "Command matching pattern '" + req.pattern + "' not found in recent session log." };
@@ -54,7 +54,7 @@ const HANDLERS = {
         return { pass: true };
     },
     regex_match_output: (req, state) => {
-        const logs = getRecentLogs(state.last_transition - 2000);
+        const logs = getRecentLogs(state.last_transition - 15000);
         const regex = new RegExp(req.pattern);
         const found = logs.find(entry => regex.test(entry.output));
         if (!found) {

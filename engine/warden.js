@@ -50,7 +50,12 @@ function saveConfig(config) {
 
 function generateProxy(targetPath) {
     const proxyPath = path.join(targetPath, 'warden');
-    const proxyContent = "#!/usr/bin/env node\nconst { spawnSync } = require('child_process');\nconst path = require('path');\n\nconst ENGINE_ROOT = \"" + ENGINE_ROOT + "\";\n\nconst result = spawnSync('node', [path.join(ENGINE_ROOT, 'engine', 'warden.js'), ...process.argv.slice(2)], {\n    stdio: 'inherit',\n    env: { ...process.env, WARDEN_ENGINE_ROOT: ENGINE_ROOT, WARDEN_TARGET_ROOT: process.cwd() }\n});\n\nprocess.exit(result.status);\n";
+    const isLocal = (path.resolve(targetPath) === path.resolve(ENGINE_ROOT));
+    const engineRootDef = isLocal 
+        ? "const ENGINE_ROOT = path.resolve(__dirname);" 
+        : "const ENGINE_ROOT = \"" + ENGINE_ROOT + "\";";
+
+    const proxyContent = "#!/usr/bin/env node\nconst { spawnSync } = require('child_process');\nconst path = require('path');\n\n" + engineRootDef + "\n\nconst result = spawnSync('node', [path.join(ENGINE_ROOT, 'engine', 'warden.js'), ...process.argv.slice(2)], {\n    stdio: 'inherit',\n    env: { ...process.env, WARDEN_ENGINE_ROOT: ENGINE_ROOT, WARDEN_TARGET_ROOT: process.cwd() }\n});\n\nprocess.exit(result.status);\n";
     try {
         fs.writeFileSync(proxyPath, proxyContent, { mode: 0o755 });
         return true;
@@ -272,7 +277,7 @@ function cmdSystemInit(target) {
 
     fs.writeFileSync(path.join(anchorPath, 'registry', 'goals.json'), JSON.stringify(baselineGoals, null, 2));
     fs.writeFileSync(path.join(anchorPath, 'registry', 'backlog.json'), JSON.stringify(baselineBacklog, null, 2));
-    fs.writeFileSync(path.join(anchorPath, 'changelog.json'), JSON.stringify(baselineChangelog, null, 2));
+    fs.writeFileSync(path.join(anchorPath, 'registry', 'changelog.json'), JSON.stringify(baselineChangelog, null, 2));
     console.log("  [✅] Seeded local registries.");
 
     if (generateProxy(targetPath)) {

@@ -12,7 +12,7 @@ function generate() {
     const nl = String.fromCharCode(10);
     const isLocalMode = (ENGINE_ROOT === TARGET_ROOT);
     
-    const changelogFile = resolve.anchor('changelog.json');
+    const changelogFile = resolve.registry('changelog.json');
     const targetFile = resolve.docs('README.md');
 
     if (isLocalMode) {
